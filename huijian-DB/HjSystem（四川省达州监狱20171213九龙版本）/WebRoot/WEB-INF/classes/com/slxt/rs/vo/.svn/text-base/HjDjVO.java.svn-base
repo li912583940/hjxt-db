@@ -1,0 +1,134 @@
+package com.slxt.rs.vo;
+
+import java.sql.Timestamp;
+
+public class HjDjVO {
+	private String hjid;
+	private String jy;
+	private String jqNo;
+	private String jqName;
+	private String frNo;
+	private String frName;
+	private String qsInfo1;
+	private String hjTime;
+	private String hjInfo;
+	private String hjType;
+	private String monitorFlag;
+	private String fpFlag;
+	private String zw;
+	private String djUser;
+	private String djTime;
+	private String cancelInfo;
+	private String hjIndex;
+	private String fpTzfrFlag;
+	public String getFpTzfrFlag() {
+		return fpTzfrFlag;
+	}
+	public void setFpTzfrFlag(String fpTzfrFlag) {
+		this.fpTzfrFlag = fpTzfrFlag;
+	}
+	public String getHjIndex() {
+		return hjIndex;
+	}
+	public void setHjIndex(String hjIndex) {
+		this.hjIndex = hjIndex;
+	}
+	public String getCancelInfo() {
+		return cancelInfo;
+	}
+	public void setCancelInfo(String cancelInfo) {
+		this.cancelInfo = cancelInfo;
+	}
+	public String getDjUser() {
+		return djUser;
+	}
+	public void setDjUser(String djUser) {
+		this.djUser = djUser;
+	}
+	public String getDjTime() {
+		return djTime;
+	}
+	public void setDjTime(String djTime) {
+		this.djTime = djTime;
+	}
+	public String getHjid() {
+		return hjid;
+	}
+	public void setHjid(String hjid) {
+		this.hjid = hjid;
+	}
+	public String getJy() {
+		return jy;
+	}
+	public void setJy(String jy) {
+		this.jy = jy;
+	}
+	public String getJqNo() {
+		return jqNo;
+	}
+	public void setJqNo(String jqNo) {
+		this.jqNo = jqNo;
+	}
+	public String getJqName() {
+		return jqName;
+	}
+	public void setJqName(String jqName) {
+		this.jqName = jqName;
+	}
+	public String getFrNo() {
+		return frNo;
+	}
+	public void setFrNo(String frNo) {
+		this.frNo = frNo;
+	}
+	public String getFrName() {
+		return frName;
+	}
+	public void setFrName(String frName) {
+		this.frName = frName;
+	}
+	public String getQsInfo1() {
+		return qsInfo1;
+	}
+	public void setQsInfo1(String qsInfo1) {
+		this.qsInfo1 = qsInfo1;
+	}
+	public String getHjTime() {
+		return hjTime;
+	}
+	public void setHjTime(String hjTime) {
+		this.hjTime = hjTime;
+	}
+	public String getHjInfo() {
+		return hjInfo;
+	}
+	public void setHjInfo(String hjInfo) {
+		this.hjInfo = hjInfo;
+	}
+	public String getHjType() {
+		return hjType;
+	}
+	public void setHjType(String hjType) {
+		this.hjType = hjType;
+	}
+	public String getMonitorFlag() {
+		return monitorFlag;
+	}
+	public void setMonitorFlag(String monitorFlag) {
+		this.monitorFlag = monitorFlag;
+	}
+	public String getFpFlag() {
+		return fpFlag;
+	}
+	public void setFpFlag(String fpFlag) {
+		this.fpFlag = fpFlag;
+	}
+	public String getZw() {
+		return zw;
+	}
+	public void setZw(String zw) {
+		this.zw = zw;
+	}
+	
+	
+}

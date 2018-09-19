@@ -1,0 +1,320 @@
+package com.slxt.rs.action;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONArray;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.actions.DispatchAction;
+import com.slxt.rs.model.SysLog;
+import com.slxt.rs.model.SysMenu;
+import com.slxt.rs.model.SysUser;
+import com.slxt.rs.svc.Rsservice;
+
+//public class LoginAction extends DispatchAction implements Printable{
+public class LoginAction extends DispatchAction{
+	private Rsservice rs;
+	public void setRs(Rsservice rs) {
+		this.rs = rs;
+	}
+	public ActionForward login(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+			String username = java.net.URLDecoder.decode((String)request.getParameter("aa"),"UTF-8") ;
+			String password = java.net.URLDecoder.decode((String)request.getParameter("bb"),"UTF-8") ;
+			List list=rs.login(username, password);
+			if(list.size()>0){
+				SysUser users=(SysUser)list.get(0);
+				Calendar c = Calendar.getInstance();   
+			    SimpleDateFormat simpleDateTimeFormat  =   new  SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );   
+			    c  =  Calendar.getInstance(Locale.CHINESE);   
+			    String loginTime = simpleDateTimeFormat.format(c.getTime());
+			    SysLog sl=new SysLog();
+			    sl.setType("正常");
+			    sl.setLogTime(loginTime);
+			    sl.setInfo("用户"+users.getUserNo()+"登录");
+			    sl.setModel("用户登录");
+			    sl.setOp("登录");
+			    sl.setUserName(users.getUserName());
+			    sl.setUserNo(users.getUserNo());
+			    sl.setUserIp(request.getRemoteAddr());
+			    rs.save(sl);
+			    request.getSession().setAttribute("loginTime", loginTime);
+				request.getSession().setAttribute("users", users);
+				JSONArray json=JSONArray.fromObject(0);
+				response.getWriter().println(json.toString());
+			}else{
+				Calendar c = Calendar.getInstance();   
+	      	    SimpleDateFormat simpleDateTimeFormat  =   new  SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );   
+	      	    c  =  Calendar.getInstance(Locale.CHINESE);   
+	      	    String loginTime = simpleDateTimeFormat.format(c.getTime());
+	      	    SysLog sl=new SysLog();
+	      	    sl.setType("严重");
+	      	    sl.setLogTime(loginTime);
+	      	    sl.setInfo("用户"+username+"登录密码错误");
+	      	    sl.setModel("用户登录");
+	      	    sl.setOp("密码错误");
+	      	    sl.setUserName("");
+	      	    sl.setUserNo(username);
+	      	    sl.setUserIp(request.getRemoteAddr());
+	      	    rs.save(sl);
+	        	JSONArray json=JSONArray.fromObject(1);
+	        	response.getWriter().println(json.toString());
+			}
+			return null;
+	}
+	//用户登陆成功后 查询每个用户的权限菜单 
+	public ActionForward search(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+			SysUser sys_user=(SysUser)request.getSession().getAttribute("users");
+		    if(sys_user!=null){
+		    	List<SysMenu> list=null;
+		    	if(sys_user.getIsSuper()==1) {
+		    		String hql="from SysMenu sm where 1=1 order by sm.menuIndex";
+		    		list=rs.searchAll(hql);
+		    		request.setAttribute("listMenu", list);
+		    	}else{
+		    		if(sys_user.getGroupNo().equals("Admin")){
+		    			String hql="from SysMenu sm where 1=1 order by sm.menuIndex";
+		    			list=rs.searchAll(hql);
+		    			request.setAttribute("listMenu", list);
+		    		}else{
+		    			StringBuffer str=new StringBuffer("select sm.webId,sm.menuNo,sm.menuName,sm.menuUrl,sm.menuIndex,sm.menuAdmin from SysMenu sm,SysUserMenu sp,SysUser su  where su.groupNo=sp.groupNo and sm.menuNo=sp.menuNo");
+		    			str.append(" and su.groupNo='"+sys_user.getGroupNo()+"'");
+		    			str.append(" and su.userNo='"+sys_user.getUserNo()+"'");
+		    			str.append(" order by sm.menuIndex");
+		    			list=rs.searchAll(str.toString());  
+		    			List newList = new ArrayList() ;
+		    			Iterator it=list.iterator();
+		    			while(it.hasNext()){
+		    				Object ob[] = (Object[]) it.next() ;
+		    				SysMenu sm= new SysMenu() ;
+		    				sm.setWebId(Integer.valueOf(ob[0].toString())) ;
+		    				sm.setMenuNo(ob[1].toString()) ;
+		    				sm.setMenuName(ob[2].toString()) ;
+		    				sm.setMenuUrl(ob[3].toString()) ;
+		    				sm.setMenuIndex(Integer.valueOf(ob[4].toString())) ;
+		    				sm.setMenuAdmin(Integer.valueOf(ob[5].toString())) ;
+		    				newList.add(sm);
+		    			}
+		    			request.getSession().setAttribute("listMenu", newList);  
+		    		}
+		    	}
+		    }
+		    return mapping.findForward("success");
+	}
+//	public ActionForward testKj(ActionMapping mapping, ActionForm form,
+//			HttpServletRequest request, HttpServletResponse response)
+//			throws Exception {
+//		   String sfz= request.getParameter("sfz");
+//		   String zpAddress= request.getParameter("zpAddress");
+//		   String khdIp=request.getRemoteAddr();
+//		   String url1="http://"+khdIp+":9009/"+zpAddress.replace(":", "").replace("\\", "/");
+//		   URL url=new URL(url1);
+//		   url.openConnection();
+//		   InputStream fis = url.openStream();
+//		   byte[] byte1 = new byte[fis.available()];
+//		   //StringBuilder str = new StringBuilder();//不建议用String
+//		   fis.read(byte1);
+////		   for(byte bs:byte1){
+////		       str.append(Integer.toBinaryString(bs));//转换为二进制
+////		    }
+//		   JyJlQsxx jyJlQsxx3=(JyJlQsxx)rs.findById(JyJlQsxx.class, 17750L);
+//		   jyJlQsxx3.setZp(byte1);
+//		   System.out.println(jyJlQsxx3.getZp().length);
+//		   rs.update(jyJlQsxx3);
+//		   request.setAttribute("JyJlQsxx2", jyJlQsxx3);
+//		   return mapping.findForward("showPhoto");
+//	}
+//	public ActionForward showPhoto(ActionMapping mapping, ActionForm form,
+//			HttpServletRequest request, HttpServletResponse response)
+//			throws Exception {
+//			String sql="from JyJlQsxx jy where jy.qsid=17750";
+//	        List<JyJlQsxx> list=rs.searchAll(sql);
+//	        JyJlQsxx obj=(JyJlQsxx)list.get(0);
+//	        ServletOutputStream sos = response.getOutputStream(); 
+//	        response.setContentType( "image/jpeg "); 
+//	        for(int i=0;i<obj.getZp().length;i++) { 
+//	        	sos.write(obj.getZp()[i]); 
+//	        } 
+//	        sos.close(); 
+//		    return null;
+//	}
+
+	
+	
+	//用户登陆成功后 查询每个用户的权限菜单 
+//	public ActionForward search(ActionMapping mapping, ActionForm form,
+//			HttpServletRequest request, HttpServletResponse response)
+//			throws Exception {
+//		    SysUser sys_user=(SysUser)request.getSession().getAttribute("users");
+//		    JlYj jlYj=(JlYj)request.getSession().getAttribute("jlYj");
+//		    if(sys_user!=null){
+//			    List<SysMenu> list=null;
+//			    String sphql="from SysParam sp where sp.paramName='QQ_Task'";
+//			    SysParam sysParam=(SysParam)rs.searchAll(sphql).get(0);
+//			    if(sysParam.getParamData1().equals("1")){
+//				    if(sys_user.getIsSuper()==1) {
+//				    	 String hql="from SysMenu sm where 1=1 order by sm.menuIndex";
+//				    	 list=rs.searchAll(hql);
+//				    	 request.setAttribute("listMenu", list);
+//				    }else{
+//				    	 if(sys_user.getGroupNo().equals("Admin")){
+//				    		String hql="from SysMenu sm where 1=1 order by sm.menuIndex";
+//					    	 list=rs.searchAll(hql);
+//					    	 request.setAttribute("listMenu", list);
+//				    	 }else{
+//				    		 StringBuffer str=new StringBuffer("select sm.webId,sm.menuNo,sm.menuName,sm.menuUrl,sm.menuIndex,sm.menuAdmin from SysMenu sm,SysUserMenu sp,SysUser su  where su.groupNo=sp.groupNo and sm.menuNo=sp.menuNo");
+//				    		 str.append(" and su.groupNo='"+sys_user.getGroupNo()+"'");
+//				    		 str.append(" and su.userNo='"+sys_user.getUserNo()+"'");
+//				    		 str.append(" order by sm.menuIndex");
+//				    		 list=rs.searchAll(str.toString());  
+//				    		 List newList = new ArrayList() ;
+//				    		 Iterator it=list.iterator();
+//				    		 while(it.hasNext()){
+//				    		    	 Object ob[] = (Object[]) it.next() ;
+//				    		         SysMenu sm= new SysMenu() ;
+//				    		       	 sm.setWebId(Integer.valueOf(ob[0].toString())) ;
+//				    		       	 sm.setMenuNo(ob[1].toString()) ;
+//				    		       	 sm.setMenuName(ob[2].toString()) ;
+//				    		       	 sm.setMenuUrl(ob[3].toString()) ;
+//				    		       	 sm.setMenuIndex(Integer.valueOf(ob[4].toString())) ;
+//				    		       	 sm.setMenuAdmin(Integer.valueOf(ob[5].toString())) ;
+//				    		       	 newList.add(sm);
+//				    		}
+//				    		request.getSession().setAttribute("listMenu", newList);  
+//				    	}
+//				    }
+//			    }else{
+//			    	    if(sys_user.getIsSuper()==1) {
+//					    	 String hql="from SysMenu sm where sm.menuNo!='15' order by sm.menuIndex";
+//					    	 list=rs.searchAll(hql);
+//					    	 request.setAttribute("listMenu", list);
+//					    }else{
+//					    	 if(sys_user.getGroupNo().equals("Admin"))
+//					    	 {
+//					    		String hql="from SysMenu sm where sm.menuNo!='15' order by sm.menuIndex";
+//						    	 list=rs.searchAll(hql);
+//						    	 request.setAttribute("listMenu", list);
+//					    	 }else{
+//					    		 StringBuffer str=new StringBuffer("select sm.webId,sm.menuNo,sm.menuName,sm.menuUrl,sm.menuIndex,sm.menuAdmin from SysMenu sm,SysUserMenu sp,SysUser su  where su.groupNo=sp.groupNo and sm.menuNo=sp.menuNo and sm.menuNo!='15'");
+//					    		 str.append(" and su.groupNo='"+sys_user.getGroupNo()+"'");
+//					    		 str.append(" and su.userNo='"+sys_user.getUserNo()+"'");
+//					    		 str.append(" order by sm.menuIndex");
+//					    		 list=rs.searchAll(str.toString());  
+//					    		 List newList = new ArrayList() ;
+//					    		 Iterator it=list.iterator();
+//					    		 while(it.hasNext()){
+//					    		    	 Object ob[] = (Object[]) it.next() ;
+//					    		         SysMenu sm= new SysMenu() ;
+//					    		       	 sm.setWebId(Integer.valueOf(ob[0].toString())) ;
+//					    		       	 sm.setMenuNo(ob[1].toString()) ;
+//					    		       	 sm.setMenuName(ob[2].toString()) ;
+//					    		       	 sm.setMenuUrl(ob[3].toString()) ;
+//					    		       	 sm.setMenuIndex(Integer.valueOf(ob[4].toString())) ;
+//					    		       	 sm.setMenuAdmin(Integer.valueOf(ob[5].toString())) ;
+//					    		       	 newList.add(sm);
+//					    		 }
+//					    		 request.getSession().setAttribute("listMenu", newList);  
+//					    	}
+//					     }
+//			       }
+//		    }
+//		    if(jlYj!=null){
+//		    	List newList=new ArrayList();
+//		    	SysMenu sm= new SysMenu();
+//		    	sm.setMenuName("狱警管理");
+//		    	sm.setMenuUrl("yjSelfMessage.do?method=search");
+//		    	newList.add(sm);
+//		    	request.getSession().setAttribute("listMenu", newList);  
+//		    }
+//		    return mapping.findForward("success");
+//	}	
+//	private int PAGES = 0;
+//    private String printStr;
+//    private String printStr1;
+//    /*
+//     * Graphic指明打印的图形环境；PageFormat指明打印页格式（页面大小以点为计量单位，
+//     * 1点为1英寸的1/72，1英寸为25.4毫米。A4纸大致为595×842点）；page指明页号
+//     */
+//    public int print(Graphics gp, PageFormat pf, int page)
+//            throws PrinterException {
+//        Graphics2D g2 = (Graphics2D) gp;
+//        g2.setPaint(Color.black); // 设置打印颜色为黑色
+//        if (page >= PAGES) // 当打印页号大于需要打印的总页数时，打印工作结束
+//            return Printable.NO_SUCH_PAGE;
+//        g2.translate(pf.getImageableX(), pf.getImageableY());// 转换坐标，确定打印边界
+//        Font font = new Font("宋体", Font.PLAIN, 24);// 创建字体
+//        g2.setFont(font);
+//        // 打印当前页文本
+//        int printFontCount = printStr.length();// 打印字数
+//        int printFontSize = font.getSize();// Font 的磅值大小
+////        float printX = 595 / 2; // 给定字符点阵，X页面正中
+////        float printY = 842 / 2; // 给定字符点阵，Y页面正中
+////        float printMX = printX - (printFontCount * printFontSize / 2);// 打印到正中间
+////        float printMY = printY - printFontSize / 2;// 打印到正中间
+//        float printX = 595 / 2; // 给定字符点阵，X页面正中
+//        float printY = 50; // 给定字符点阵，Y页面正中
+//        float printMX = printX - (printFontCount * printFontSize / 2);// 打印到正中间
+//        float printMY = printY - printFontSize / 2;// 打印到正中间
+//        float printX1 = 150; // 给定字符点阵，X页面正中
+//        float printY1 = 90; // 给定字符点阵，Y页面正中
+//        float printMX1 = printX1 - (printFontCount * printFontSize / 2);// 打印到正中间
+//        float printMY1 = printY1 - printFontSize / 2;// 打印到正中间
+//        g2.drawString(printStr, printMX, printMY); // 具体打印每一行文本，同时走纸移位
+////        g2.drawString(printStr, printMX - printFontSize * printFontCount,
+////                printMY + printFontSize); // 具体打印每一行文本，同时走纸移位
+////        g2.drawString(printStr, printMX + printFontSize * printFontCount,
+////                printMY + printFontSize); // 具体打印每一行文本，同时走纸移位
+////        g2.drawString(printStr, printMX, printMY + printFontSize * 2); // 具体打印每一行文本，同时走纸移位
+//        
+//        g2.drawString(printStr1, printMX1, printMY1); // 具体打印每一行文本，同时走纸移位
+////        g2.drawString(printStr1, printMX1 - printFontSize * printFontCount,
+////                printMY + printFontSize); // 具体打印每一行文本，同时走纸移位
+////        g2.drawString(printStr1, printMX1 + printFontSize * printFontCount,
+////                printMY1 + printFontSize); // 具体打印每一行文本，同时走纸移位
+////        g2.drawString(printStr1, printMX1, printMY1 + printFontSize * 2); // 具体打印每一行文本，同时走纸移位
+//        return Printable.PAGE_EXISTS; // 存在打印页时，继续打印工作
+//    }
+//
+//    // 打印内容到指定位置
+//    public void printContent() {
+//       // printStr = "打印测试内容";// 获取需要打印的目标文本
+//        if (printStr != null && printStr.length() > 0) // 当打印内容不为空时
+//        {
+//            PAGES = 1; // 获取打印总页数
+//            // 指定打印输出格式
+//            DocFlavor flavor = DocFlavor.SERVICE_FORMATTED.PRINTABLE;
+//            // 定位默认的打印服务
+//            PrintService printService = PrintServiceLookup
+//                    .lookupDefaultPrintService();
+//            // 创建打印作业
+//            DocPrintJob job = printService.createPrintJob();
+//            // 设置打印属性
+//            PrintRequestAttributeSet pras = new HashPrintRequestAttributeSet();
+//            // 设置纸张大小,也可以新建MediaSize类来自定义大小
+//            pras.add(MediaSizeName.ISO_A4);
+//            DocAttributeSet das = new HashDocAttributeSet();
+//            // 指定打印内容
+//            Doc doc = new SimpleDoc(this, flavor, das);
+//            // 不显示打印对话框，直接进行打印工作
+//            try {
+//                job.print(doc, pras); // 进行每一页的具体打印操作
+//            } catch (PrintException pe) {
+//                pe.printStackTrace();
+//            }
+//        } else {
+//            // 如果打印内容为空时，提示用户打印将取消
+//            JOptionPane.showConfirmDialog(null,"Sorry, Printer Job is Empty, Print Cancelled!","Empty", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE);
+//        }
+//    }
+}

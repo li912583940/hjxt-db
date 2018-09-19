@@ -1,0 +1,30 @@
+package com.slxt.rs.vo;
+
+import java.util.List;
+
+import com.slxt.rs.model.JlQs;
+
+public class QueryQs {
+	private List<JlQs> list;
+	private int hjTime;
+	private String enter;
+	public List<JlQs> getList() {
+		return list;
+	}
+	public void setList(List<JlQs> list) {
+		this.list = list;
+	}
+	public int getHjTime() {
+		return hjTime;
+	}
+	public void setHjTime(int hjTime) {
+		this.hjTime = hjTime;
+	}
+	public String getEnter() {
+		return enter;
+	}
+	public void setEnter(String enter) {
+		this.enter = enter;
+	}
+	
+}

@@ -1,0 +1,110 @@
+package com.slxt.rs.action;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import net.sf.json.JSONArray;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.actions.DispatchAction;
+import com.slxt.rs.model.SysHjServer;
+import com.slxt.rs.model.SysLog;
+import com.slxt.rs.model.SysUser;
+import com.slxt.rs.svc.JySetService;
+public class JySetAction extends DispatchAction{
+	private JySetService jss;
+	public void setJss(JySetService jss) {
+		this.jss = jss;
+	}
+    //查询服务器表
+	public ActionForward search(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		    SysUser user=(SysUser)request.getSession().getAttribute("users");
+		    if(user==null){
+		    	return mapping.findForward("sessionFailure");
+		    }
+		    String hql="from SysHjServer";
+		    List<SysHjServer> list=jss.searchAll(hql);
+		    request.setAttribute("sysHjServerList", list);
+		    return mapping.findForward("jySetMain");
+	}
+	//修改服务器表
+	public ActionForward updateJySet(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		    SysUser user=(SysUser)request.getSession().getAttribute("users");
+		    if(user==null){
+		    	return mapping.findForward("sessionFailure");
+		    }
+		    String jyId=request.getParameter("jyId");
+		    SysHjServer sysQqServer=(SysHjServer)jss.findById(SysHjServer.class, Integer.parseInt(jyId));
+		    request.setAttribute("sysQqServer", sysQqServer);
+		    return mapping.findForward("updateJySet");
+	}
+	//保存服务器修改后设置
+	public ActionForward saveJySet(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		  	SysUser user=(SysUser)request.getSession().getAttribute("users");
+		  	if(user==null){
+		  		return mapping.findForward("sessionFailure");
+		  	}
+		  	String jyId=request.getParameter("jyId");
+		  	SysHjServer sysQqServer=(SysHjServer)jss.findById(SysHjServer.class,Integer.parseInt(jyId));
+		  	String port=request.getParameter("port");
+		  	String audioPort=request.getParameter("audioPort");
+		  	String serverIP = java.net.URLDecoder.decode((String)request.getParameter("serverIP"),"UTF-8") ;
+		  	String recordURL = java.net.URLDecoder.decode((String)request.getParameter("recordURL"),"UTF-8") ;
+		  	StringBuffer str=new StringBuffer("update SysHjServer sqs set sqs.ip='");
+		  	str.append(serverIP+"',");
+		  	StringBuffer str1=new StringBuffer("");
+		  	if(!sysQqServer.getIp().trim().equals(serverIP.trim())){
+		  		str1.append("服务器IP由"+sysQqServer.getIp()+"修改为"+serverIP);
+			}
+		  	if(recordURL!=""){
+				str.append("sqs.recUrl='"+recordURL);
+			    str.append("',");
+				if(!sysQqServer.getRecUrl().trim().equals(recordURL.trim())){
+					  str1.append("  服务器URL"+sysQqServer.getRecUrl()+"修改为"+recordURL);
+				}
+		  	}else{
+				str.append("sqs.recUrl='',");
+				if(!sysQqServer.getRecUrl().trim().equals(recordURL.trim())){
+					  str1.append("  服务器URL"+sysQqServer.getRecUrl()+"修改为"+recordURL);
+				}
+		  	}
+		  	str.append("sqs.port="+Integer.parseInt(port)+",");
+		  	if(sysQqServer.getPort()!=Integer.parseInt(port.trim())){
+				str1.append("  服务器状态端口"+sysQqServer.getPort()+"修改为"+port);
+		  	}
+		  	str.append("sqs.audioPort="+Integer.parseInt(audioPort));
+		  	if(sysQqServer.getAudioPort()!=Integer.parseInt(audioPort.trim())){
+				str1.append("  服务器监听端口"+sysQqServer.getAudioPort()+"修改为"+audioPort);
+		  	}
+		  	str.append(" where sqs.webId=?");
+		  	Object[] obj={Integer.parseInt(jyId)};
+		  	jss.updates(str.toString(), obj);
+		  	if(!str1.toString().equals("")){
+				Calendar c = Calendar.getInstance();   
+				SimpleDateFormat simpleDateTimeFormat  =   new  SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );   
+				c  =  Calendar.getInstance(Locale.CHINESE);   
+				String loginTime = simpleDateTimeFormat.format(c.getTime());
+				SysLog sl=new SysLog();
+				sl.setType("正常");
+				sl.setLogTime(loginTime);
+				sl.setUserName(user.getUserName());
+				sl.setUserNo(user.getUserNo());
+				sl.setUserIp(request.getRemoteAddr());
+				sl.setModel("系统参数");
+			    sl.setInfo(str1.toString());
+			    sl.setOp("系统参数");
+			    jss.save(sl);
+		  	}
+		  	JSONArray json=JSONArray.fromObject(null);
+		  	response.getWriter().println(json.toString());
+		  	return null;
+	}
+	
+}

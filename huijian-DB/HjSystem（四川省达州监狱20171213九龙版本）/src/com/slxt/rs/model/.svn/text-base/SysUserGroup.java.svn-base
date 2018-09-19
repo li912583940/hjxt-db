@@ -1,0 +1,63 @@
+package com.slxt.rs.model;
+
+/**
+ * SysUserGroup entity. @author MyEclipse Persistence Tools
+ */
+
+public class SysUserGroup implements java.io.Serializable {
+
+	// Fields
+
+	private Integer webId;
+	private String groupNo;
+	private String groupName;
+	private Integer isAdmin;
+
+	// Constructors
+
+	/** default constructor */
+	public SysUserGroup() {
+	}
+
+	/** full constructor */
+	public SysUserGroup(String groupNo, String groupName, Integer isAdmin) {
+		this.groupNo = groupNo;
+		this.groupName = groupName;
+		this.isAdmin = isAdmin;
+	}
+
+	// Property accessors
+
+	public Integer getWebId() {
+		return this.webId;
+	}
+
+	public void setWebId(Integer webId) {
+		this.webId = webId;
+	}
+
+	public String getGroupNo() {
+		return this.groupNo;
+	}
+
+	public void setGroupNo(String groupNo) {
+		this.groupNo = groupNo;
+	}
+
+	public String getGroupName() {
+		return this.groupName;
+	}
+
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
+	}
+
+	public Integer getIsAdmin() {
+		return this.isAdmin;
+	}
+
+	public void setIsAdmin(Integer isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+
+}

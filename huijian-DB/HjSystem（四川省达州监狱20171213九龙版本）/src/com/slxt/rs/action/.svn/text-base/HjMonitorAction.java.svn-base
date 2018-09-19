@@ -1,0 +1,361 @@
+package com.slxt.rs.action;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONArray;
+
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.actions.DispatchAction;
+import com.slxt.rs.model.JlHjMon;
+import com.slxt.rs.model.JlMonitorVoc;
+import com.slxt.rs.model.SysHjServer;
+import com.slxt.rs.model.SysUser;
+import com.slxt.rs.svc.HjMonitorService;
+import com.slxt.rs.vo.HjMonitor;
+
+public class HjMonitorAction extends DispatchAction{
+	private HjMonitorService  hms;
+	public void setHms(HjMonitorService hms) {
+		this.hms = hms;
+	}
+	//查询所有线路
+	public ActionForward search(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		    SysUser user=(SysUser)request.getSession().getAttribute("users");
+		    if(user==null){
+		    	return mapping.findForward("sessionFailure");
+		    }
+		    StringBuffer str=null;
+			StringBuffer str5=new StringBuffer();
+		    if(user.getIsSuper()==1 || user.getIsSuper()==0 && user.getGroupNo().equals("Admin")){
+		    	str=new StringBuffer("select bb.Line_No, bb.JY, bb.Line_Type, bb.ZW, bb.HJState, bb.HJID, bb.AcdBH, bb.AcdFr, bb.Monitor_State, bb.Monitor_JQ, bb.Monitor_FR, bb.Monitor_QS,  bb.Monitor_YJ, bb.Monitor_Time, bb.Monitor_JKBZ, bb.Monitor_CallID, bb.IP, bb.Port, bb.AudioPort, jqm.User_No, jqm.WebID, jqm.Write_Txt from  (select sl.Line_No, sl.JY, sl.Line_Type, sl.ZW, sl.HJState, sl.HJID, sl.AcdBH, sl.AcdFr, sl.Monitor_State, sl.Monitor_JQ, sl.Monitor_FR,  sl.Monitor_QS, sl.Monitor_YJ, sl.Monitor_Time, sl.Monitor_JKBZ, sl.Monitor_CallID, ss.IP, ss.Port, ss.AudioPort from   SYS_HJ_LINE sl, SYS_HJ_SERVER as ss where  sl.JY = ss.Server_Name) as bb left join JL_HJ_MON AS jqm ON bb.Monitor_CallID = jqm.Call_ID AND jqm.User_No='"+user.getUserNo()+"'");
+		    	String hql="from SysHjServer";
+		    	List<SysHjServer> sysHjServer=hms.searchAll(hql.toString());
+				request.setAttribute("sysQqServerList", sysHjServer);
+				for(int i=0;i<sysHjServer.size();i++){
+					SysHjServer sysServer=(SysHjServer)sysHjServer.get(i);
+					if(i==0){
+						str5.append(sysServer.getServerName());
+						str5.append(","+sysServer.getIp());
+						str5.append(","+sysServer.getPort());
+					}else{
+						str5.append("|");
+						str5.append(sysServer.getServerName());
+						str5.append(","+sysServer.getIp());
+						str5.append(","+sysServer.getPort());
+					}
+				}
+		    }else{
+		    	str=new StringBuffer("select bb.Line_No, bb.JY, bb.Line_Type, bb.ZW, bb.HJState, bb.HJID, bb.AcdBH, bb.AcdFr, bb.Monitor_State, bb.Monitor_JQ, bb.Monitor_FR, bb.Monitor_QS,  bb.Monitor_YJ, bb.Monitor_Time, bb.Monitor_JKBZ, bb.Monitor_CallID, bb.IP, bb.Port, bb.AudioPort, jqm.User_No, jqm.WebID, jqm.Write_Txt from  (select sl.Line_No, sl.JY, sl.Line_Type, sl.ZW, sl.HJState, sl.HJID, sl.AcdBH, sl.AcdFr, sl.Monitor_State, sl.Monitor_JQ, sl.Monitor_FR,  sl.Monitor_QS, sl.Monitor_YJ, sl.Monitor_Time, sl.Monitor_JKBZ, sl.Monitor_CallID, ss.IP, ss.Port, ss.AudioPort from  SYS_HJ_LINE sl,SYS_HJ_SERVER as ss where  sl.JY = ss.Server_Name) as bb left join JL_HJ_MON AS jqm ON bb.Monitor_CallID = jqm.Call_ID and jqm.User_No='"+user.getUserNo()+"'");
+				String sql6="select distinct JY from SYS_USER_JQ where Group_No='"+user.getGroupNo()+"'";
+				List list6=hms.searchAllBySql(sql6);
+				if(list6.size()>0){
+					StringBuffer hql=new StringBuffer("from SysHjServer ");
+					Iterator it=list6.iterator();
+					int i=0;
+					while(it.hasNext()){
+						if(i==0){
+							String jy=(String)it.next();
+							hql.append(" where serverName='"+jy+"' ");
+							str.append(" where bb.JY='"+jy+"' ");
+							i++;
+						}else{
+							String jy=(String)it.next();
+							hql.append("or serverName='"+jy+"' ");
+							str.append("or bb.JY='"+jy+"' ");
+							i++;
+						}
+					}
+					List<SysHjServer> sysHjServerList=hms.searchAll(hql.toString());
+					request.setAttribute("sysQqServerList", sysHjServerList);
+					for(int k=0;k<sysHjServerList.size();k++){
+						SysHjServer sysServer=(SysHjServer)sysHjServerList.get(k);
+						if(k==0){
+							str5.append(sysServer.getServerName());
+							str5.append(","+sysServer.getIp());
+							str5.append(","+sysServer.getPort());
+						}else{
+							str5.append("|");
+							str5.append(sysServer.getServerName());
+							str5.append(","+sysServer.getIp());
+							str5.append(","+sysServer.getPort());
+						}
+					}
+				}
+		    }
+			request.setAttribute("sysQqServerList1", str5.toString());
+			List list=hms.searchAllBySql(str.toString());
+			List<HjMonitor> list1=new ArrayList();
+			Iterator it=list.iterator();
+			while(it.hasNext()){
+				Object[] obj=( Object[])it.next();
+				HjMonitor rm=new HjMonitor();
+				rm.setLineNo(obj[0].toString());
+				rm.setJy(obj[1].toString());
+				rm.setLineType(obj[2].toString());
+				if(obj[3]!=null && !obj[3].toString().equals("")){
+					rm.setZw(obj[3].toString());
+				}
+				rm.setHJState(obj[4].toString());
+				if(obj[5]!=null && !obj[5].toString().equals("")){
+					rm.setHJId(obj[5].toString());
+				}
+				if(obj[6]!=null && !obj[6].toString().equals("")){
+					rm.setAcdBh(obj[6].toString());
+				}
+				if(obj[7]!=null && !obj[7].toString().equals("")){
+					rm.setAcdFr(obj[7].toString());
+				}
+				if(obj[8]!=null && !obj[8].toString().equals("")){
+					rm.setMonitorState(obj[8].toString());
+				}
+				if(obj[9]!=null && !obj[9].toString().equals("")){
+					rm.setMonitorJq(obj[9].toString());
+				}
+				if(obj[10]!=null && !obj[10].toString().equals("")){
+					rm.setMonitorFr(obj[10].toString());
+				}
+				if(obj[11]!=null && !obj[11].toString().equals("")){
+					rm.setMonitorQs(obj[11].toString());
+				}
+				if(obj[12]!=null && !obj[12].toString().equals("")){
+					rm.setMonitorYj(obj[12].toString());
+				}
+				if(obj[13]!=null && !obj[13].toString().equals("")){
+					rm.setMonitorTime(obj[13].toString());
+				}
+				if(obj[14]!=null && !obj[14].toString().equals("")){
+					rm.setMonitorJKBZ(obj[14].toString());
+				}
+				if(obj[15]!=null && !obj[15].toString().equals("")){
+					rm.setMonitorCallID(obj[15].toString());
+				}
+				if(obj[16]!=null && !obj[16].toString().equals("")){
+					 rm.setIp(obj[16].toString());
+				}
+				if(obj[17]!=null && !obj[17].toString().equals("")){
+					rm.setPort(obj[17].toString());
+				}
+				if(obj[18]!=null && !obj[18].toString().equals("")){
+					rm.setAudioPort(obj[18].toString());
+				}
+				if(obj[19]!=null && !obj[19].toString().equals("")){
+					rm.setUserNo(obj[19].toString());
+				}
+				if(obj[20]!=null && !obj[20].toString().equals("")){
+					rm.setMonitorFlagId(obj[20].toString());
+				}
+				if(obj[21]!=null && !obj[21].toString().equals("")){
+					rm.setWriteTxt(obj[21].toString());
+				}
+				list1.add(rm);
+			}
+			String sqlString="from JlMonitorVoc";
+			List<JlMonitorVoc> list2=hms.searchAll(sqlString);
+			request.setAttribute("sysQqLineList", list1);
+			request.setAttribute("jlMonitorVocList", list2);
+			return mapping.findForward("hjMonitorMain");
+	}
+	public ActionForward jquerSearch(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		    SysUser user=(SysUser)request.getSession().getAttribute("users");
+		    if(user==null){
+		    	return mapping.findForward("sessionFailure");
+		    }
+		    StringBuffer str=null;
+			StringBuffer str5=new StringBuffer();
+		    if(user.getIsSuper()==1 || user.getIsSuper()==0 && user.getGroupNo().equals("Admin")){
+		    	str=new StringBuffer("select bb.Line_No, bb.JY, bb.Line_Type, bb.ZW, bb.HJState, bb.HJID, bb.AcdBH, bb.AcdFr, bb.Monitor_State, bb.Monitor_JQ, bb.Monitor_FR, bb.Monitor_QS,  bb.Monitor_YJ, bb.Monitor_Time, bb.Monitor_JKBZ, bb.Monitor_CallID, bb.IP, bb.Port, bb.AudioPort, jqm.User_No, jqm.WebID, jqm.Write_Txt from  (select sl.Line_No, sl.JY, sl.Line_Type, sl.ZW, sl.HJState, sl.HJID, sl.AcdBH, sl.AcdFr, sl.Monitor_State, sl.Monitor_JQ, sl.Monitor_FR,  sl.Monitor_QS, sl.Monitor_YJ, sl.Monitor_Time, sl.Monitor_JKBZ, sl.Monitor_CallID, ss.IP, ss.Port, ss.AudioPort from   SYS_HJ_LINE sl, SYS_HJ_SERVER as ss where  sl.JY = ss.Server_Name) as bb left join JL_HJ_MON AS jqm ON bb.Monitor_CallID = jqm.Call_ID AND jqm.User_No='"+user.getUserNo()+"'");
+		    	String hql="from SysHjServer";
+		    	List<SysHjServer> sysHjServer=hms.searchAll(hql.toString());
+				request.setAttribute("sysQqServerList", sysHjServer);
+			
+				for(int i=0;i<sysHjServer.size();i++){
+					SysHjServer sysServer=(SysHjServer)sysHjServer.get(i);
+					if(i==0){
+						str5.append(sysServer.getServerName());
+						str5.append(","+sysServer.getIp());
+						str5.append(","+sysServer.getPort());
+					}else{
+						str5.append("|");
+						str5.append(sysServer.getServerName());
+						str5.append(","+sysServer.getIp());
+						str5.append(","+sysServer.getPort());
+					}
+				}
+		    }else{
+		    	str=new StringBuffer("select bb.Line_No, bb.JY, bb.Line_Type, bb.ZW, bb.HJState, bb.HJID, bb.AcdBH, bb.AcdFr, bb.Monitor_State, bb.Monitor_JQ, bb.Monitor_FR, bb.Monitor_QS,  bb.Monitor_YJ, bb.Monitor_Time, bb.Monitor_JKBZ, bb.Monitor_CallID, bb.IP, bb.Port, bb.AudioPort, jqm.User_No, jqm.WebID, jqm.Write_Txt from  (select sl.Line_No, sl.JY, sl.Line_Type, sl.ZW, sl.HJState, sl.HJID, sl.AcdBH, sl.AcdFr, sl.Monitor_State, sl.Monitor_JQ, sl.Monitor_FR,  sl.Monitor_QS, sl.Monitor_YJ, sl.Monitor_Time, sl.Monitor_JKBZ, sl.Monitor_CallID, ss.IP, ss.Port, ss.AudioPort from  SYS_HJ_LINE sl,SYS_HJ_SERVER as ss where  sl.JY = ss.Server_Name) as bb left join JL_HJ_MON AS jqm ON bb.Monitor_CallID = jqm.Call_ID and jqm.User_No='"+user.getUserNo()+"'");
+				String sql6="select distinct JY from SYS_USER_JQ where Group_No='"+user.getGroupNo()+"'";
+				List list6=hms.searchAllBySql(sql6);
+				if(list6.size()>0){
+					StringBuffer hql=new StringBuffer("from SysHjServer ");
+					Iterator it=list6.iterator();
+					int i=0;
+					while(it.hasNext()){
+						if(i==0){
+							String jy=(String)it.next();
+							hql.append(" where serverName='"+jy+"' ");
+							str.append(" where bb.JY='"+jy+"' ");
+							i++;
+						}else{
+							String jy=(String)it.next();
+							hql.append("or serverName='"+jy+"' ");
+							str.append("or bb.JY='"+jy+"' ");
+							i++;
+						}
+					}
+					List<SysHjServer> sysHjServerList=hms.searchAll(hql.toString());
+					request.setAttribute("sysQqServerList", sysHjServerList);
+					for(int k=0;k<sysHjServerList.size();k++){
+						SysHjServer sysServer=(SysHjServer)sysHjServerList.get(k);
+						if(k==0){
+							str5.append(sysServer.getServerName());
+							str5.append(","+sysServer.getIp());
+							str5.append(","+sysServer.getPort());
+						}else{
+							str5.append("|");
+							str5.append(sysServer.getServerName());
+							str5.append(","+sysServer.getIp());
+							str5.append(","+sysServer.getPort());
+						}
+					}
+				}
+		    }
+			request.setAttribute("sysQqServerList1", str5.toString());
+			List list=hms.searchAllBySql(str.toString());
+			List<HjMonitor> list1=new ArrayList();
+			Iterator it=list.iterator();
+			while(it.hasNext()){
+				Object[] obj=( Object[])it.next();
+				HjMonitor rm=new HjMonitor();
+				rm.setLineNo(obj[0].toString());
+				rm.setJy(obj[1].toString());
+				rm.setLineType(obj[2].toString());
+				if(obj[3]!=null && !obj[3].toString().equals("")){
+					rm.setZw(obj[3].toString());
+				}
+				rm.setHJState(obj[4].toString());
+				if(obj[5]!=null && !obj[5].toString().equals("")){
+					rm.setHJId(obj[5].toString());
+				}
+				if(obj[6]!=null && !obj[6].toString().equals("")){
+					rm.setAcdBh(obj[6].toString());
+				}
+				if(obj[7]!=null && !obj[7].toString().equals("")){
+					rm.setAcdFr(obj[7].toString());
+				}
+				if(obj[8]!=null && !obj[8].toString().equals("")){
+					rm.setMonitorState(obj[8].toString());
+				}
+				if(obj[9]!=null && !obj[9].toString().equals("")){
+					rm.setMonitorJq(obj[9].toString());
+				}
+				if(obj[10]!=null && !obj[10].toString().equals("")){
+					rm.setMonitorFr(obj[10].toString());
+				}
+				if(obj[11]!=null && !obj[11].toString().equals("")){
+					rm.setMonitorQs(obj[11].toString());
+				}
+				if(obj[12]!=null && !obj[12].toString().equals("")){
+					rm.setMonitorYj(obj[12].toString());
+				}
+				if(obj[13]!=null && !obj[13].toString().equals("")){
+					rm.setMonitorTime(obj[13].toString());
+				}
+				if(obj[14]!=null && !obj[14].toString().equals("")){
+					rm.setMonitorJKBZ(obj[14].toString());
+				}
+				if(obj[15]!=null && !obj[15].toString().equals("")){
+					rm.setMonitorCallID(obj[15].toString());
+				}
+				if(obj[16]!=null && !obj[16].toString().equals("")){
+					 rm.setIp(obj[16].toString());
+				}
+				if(obj[17]!=null && !obj[17].toString().equals("")){
+					rm.setPort(obj[17].toString());
+				}
+				if(obj[18]!=null && !obj[18].toString().equals("")){
+					rm.setAudioPort(obj[18].toString());
+				}
+				if(obj[19]!=null && !obj[19].toString().equals("")){
+					rm.setUserNo(obj[19].toString());
+				}
+				if(obj[20]!=null && !obj[20].toString().equals("")){
+					rm.setMonitorFlagId(obj[20].toString());
+				}
+				if(obj[21]!=null && !obj[21].toString().equals("")){
+					rm.setWriteTxt(obj[21].toString());
+				}
+				list1.add(rm);
+			}
+			response.setContentType("text/json; charset=utf-8");   
+			JSONArray json=JSONArray.fromObject(list1);
+			response.getWriter().println(json.toString());
+			return null;
+	}
+	//添加保存监听注释
+	public ActionForward addSaveMonitorFlag(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+			SysUser user=(SysUser)request.getSession().getAttribute("users");
+			if(user==null){
+				return mapping.findForward("sessionFailure");
+			}
+			String ingmonitorCallID=request.getParameter("ingmonitorCallID");
+			String writeTxt=java.net.URLDecoder.decode((String)request.getParameter("writeTxt"),"UTF-8");
+			StringBuffer str=new StringBuffer("from JlHjMon jm where jm.userNo='"+user.getUserNo());
+			str.append("' and jm.callId='"+ingmonitorCallID+"'");
+			List<JlHjMon> list=hms.searchAll(str.toString());
+			if(list.size()>0){
+				JSONArray json=JSONArray.fromObject(null);
+				response.setContentType("text/json; charset=UTF-8");   
+				response.setCharacterEncoding("UTF-8");   
+				response.getWriter().println(json.toString());
+			}else{
+				List<JlHjMon> list1=new ArrayList<JlHjMon>();
+				JlHjMon jlQqMon=new JlHjMon();
+				jlQqMon.setWriteTxt(writeTxt);
+				jlQqMon.setCallId(ingmonitorCallID);
+				jlQqMon.setUserNo(user.getUserNo());
+				hms.save(jlQqMon);
+				list1.add(jlQqMon);
+				JSONArray json=JSONArray.fromObject(list1);
+				response.setContentType("text/json; charset=UTF-8");   
+				response.setCharacterEncoding("UTF-8");   
+				response.getWriter().println(json.toString());
+			}
+			return null;
+	}
+	//修改保存监听注释
+	public ActionForward updateSaveMonitorFlag(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+			SysUser user=(SysUser)request.getSession().getAttribute("users");
+			if(user==null){
+				return mapping.findForward("sessionFailure");
+			}
+			String ingmonitorFlagId=request.getParameter("ingmonitorFlagId");
+			String writeTxt=java.net.URLDecoder.decode((String)request.getParameter("writeTxt"),"UTF-8");
+			JlHjMon jlQqMon=(JlHjMon)hms.findByIdLong(JlHjMon.class, Long.parseLong(ingmonitorFlagId));
+			StringBuffer str=new StringBuffer(" update JlHjMon jqm set jqm.writeTxt='");
+			if(writeTxt!=""){
+				str.append(writeTxt+"'");
+			}else{
+				str.append("'");
+			}
+			str.append(" where jqm.webId=?");
+			Object[] obj={Long.parseLong(ingmonitorFlagId)};
+			hms.updates(str.toString(), obj);
+			JSONArray json=JSONArray.fromObject(null);
+			response.getWriter().println(json.toString());
+			return null;
+	}
+}

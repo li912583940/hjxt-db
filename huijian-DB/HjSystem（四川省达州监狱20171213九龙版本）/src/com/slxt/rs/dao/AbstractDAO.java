@@ -1,0 +1,596 @@
+package com.slxt.rs.dao;
+
+import java.io.Serializable;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Types;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.SQLQuery;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.springframework.asm.Type;
+import org.springframework.orm.hibernate3.HibernateCallback;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+
+
+import com.slxt.rs.util.Acd;
+import com.slxt.rs.util.Constant;
+
+
+/**
+ * @author �����Ÿ���
+ * @param <T>
+ * @param <ID>
+ */
+public abstract class AbstractDAO<T,ID extends Serializable> extends HibernateDaoSupport{
+	/**
+	 * ����ʵ�������Ϣ
+	 * @param empty ʵ��bean
+	 * @return  ������ʵ��bean��id��Ϣ
+	 */
+	public void save(T empty){
+		Session s = this.getSession();
+		Transaction t = s.beginTransaction();
+		s.save(empty);
+		t.commit();
+		s.close();
+	}
+	public void update(T empty){
+		
+		Session s = this.getSession();
+		Transaction t = s.beginTransaction();
+		s.update(empty) ;
+		t.commit();
+		s.close();
+	}
+	public void updates(String hql, Object... param){
+		Session s = this.getSession();
+		Transaction t = s.beginTransaction();
+		Query q = s.createQuery(hql) ;
+			for(int i=0;i<param.length;i++){
+				q.setParameter(i, param[i]) ;
+			}
+		q.executeUpdate();
+		t.commit();
+		s.close();
+	}
+   
+	public void delete(Class cla,ID id){
+		T claz = (T)this.getHibernateTemplate().get(cla, id);
+		this.getHibernateTemplate().delete(claz) ;
+		Session s = this.getSession();
+		Transaction t = s.beginTransaction();
+		t.commit();
+		s.close();
+	}
+    @SuppressWarnings("unchecked")
+	public void delete(T t){
+		this.getHibernateTemplate().delete(t) ;
+	}
+	public void deleteByHql(String hql,Object... param){
+		Session s = this.getSession();
+		Transaction t = s.beginTransaction();
+		Query q = s.createQuery(hql) ;
+		if(param!=null && param.length>0){
+			for(int i=0;i<param.length;i++){
+				q.setParameter(i, param[i]) ;
+			}
+		}else{
+			q.setProperties(param) ;
+		}
+		q.executeUpdate();
+		t.commit();
+		s.close();
+	}
+	public T findById(Class cla,ID id){
+		return (T) this.getHibernateTemplate().get(cla, id);
+	}
+	public List<T> searchAll(String sql,Object[] param) {
+		return this.getHibernateTemplate().find(sql,param) ;
+	}
+    @SuppressWarnings("unchecked")
+	public List<T> searchAll(String hql) {
+    	Session s = this.getSession();
+    	
+		Transaction tc = s.beginTransaction();
+		List list =  s.createQuery(hql).list() ;
+		tc.commit();
+		s.close() ;
+		return  list;
+	}
+	public List<T> searchAllBySql(String sql) {
+		Session s = this.getSession();
+		Transaction tc = s.beginTransaction();
+		List list =  s.createSQLQuery(sql).list() ;
+		tc.commit();
+		s.close() ;
+		return list;
+	}
+	//��ҳ��sql��ѯ
+	public Map searchToPageBySql(final String sql, Integer pageIndex, Integer pageSize,final Object... param ){
+		Session s = this.getSession();
+		Transaction tc = s.beginTransaction();
+		SQLQuery sqQ;
+		if(sql.indexOf(" order")<0){
+			sqQ= s.createSQLQuery(Constant.SQLTOP+sql+Constant.SQLDOWN) ;
+		}else{
+			String sql1=sql.substring(sql.indexOf("select"), sql.indexOf(" order"));
+			sqQ= s.createSQLQuery(Constant.SQLTOP+sql1+Constant.SQLDOWN);
+		}
+		for(int i=0;i<param.length;i++){
+			sqQ.setParameter(i, param[i]);
+		}
+		List row = sqQ.list();
+		tc.commit();
+		s.close();
+		int count = Integer.valueOf(row.get(0).toString()) ;//�ܼ�¼��
+		
+		if(pageIndex==null||pageIndex.intValue()==0){
+			pageIndex=1;
+		}
+		final int ini=(pageIndex-1)*pageSize;
+		final int pageSizes=pageSize;
+		List reseultList = this.getHibernateTemplate().executeFind(
+			new HibernateCallback() {
+				public Object doInHibernate(Session session)
+						throws HibernateException, SQLException {
+					Transaction tc = session.beginTransaction();
+					SQLQuery q = session.createSQLQuery(sql);
+					
+					for(int i=0;i<param.length;i++){
+						q.setParameter(i, param[i]) ;
+					}
+					q.setFirstResult(ini) ;
+					q.setMaxResults(pageSizes) ;
+					List result = q.list();
+					tc.commit();
+					session.clear();
+					session.close();
+					return result;
+			}
+		});
+		Map map = new HashMap();
+		map.put(Constant.RESULTLIST,reseultList) ;
+		map.put(Constant.ALLFILEDCOUNT, count) ;
+		return map;
+	}
+	public Map searchToPage(final String sql, Integer pageIndex, Integer pageSize,final Object[] param ){
+		List<Long> row=null;
+		if(sql.indexOf(" order")<0){
+			 row= this.getHibernateTemplate().find(Constant.PAGETOP+sql,param) ;
+		}else{
+			String sql1=sql.substring(sql.indexOf("from"), sql.indexOf(" order"));
+			row= this.getHibernateTemplate().find(Constant.PAGETOP+sql1,param) ;
+		}
+		//Constant.PAGETOP=select count(*) 
+		int count = row.get(0).intValue() ;//�ܼ�¼��
+		
+		if(pageIndex==null||pageIndex.intValue()==0){
+			pageIndex=1;
+		}
+		final int ini=(pageIndex-1)*pageSize;
+		final int pageSizes=pageSize;
+//		List reseultList = this.getHibernateTemplate().executeFind(
+//			new HibernateCallback() {
+//				public Object doInHibernate(Session session)
+//						throws HibernateException, SQLException {
+//					Transaction tc = session.beginTransaction();
+//					Query q = session.createQuery(sql);
+//					
+//					for(int i=0;i<param.length;i++){
+//						q.setParameter(i, param[i]) ;
+//					}
+//					q.setFirstResult(ini) ;
+//					q.setMaxResults(Constant.PAGESIZE) ;
+//					List result = q.list();
+//					tc.commit();
+//					session.close();
+//					return result;
+//			}
+//		});
+		Session session=this.getSessionFactory().openSession();
+		Transaction tc=session.beginTransaction();
+		Query query=session.createQuery(sql);
+		query.setFirstResult(ini);
+		query.setMaxResults(pageSizes);
+		List reseultList=query.list();
+		Map map = new HashMap();
+		map.put(Constant.RESULTLIST,reseultList) ;
+		//Constant.RESULTLIST=resultList
+		map.put(Constant.ALLFILEDCOUNT, count) ;
+		//Constant.ALLFILEDCOUNT=allcount
+		return map;
+	}
+	public Map searchToPage(final String sql, Integer pageIndex, Integer pageSize,String mark,final Object[] param ){
+		String tempHql = sql.substring(sql.indexOf("from")) ;
+		List<Long> row = this.getHibernateTemplate().find(Constant.PAGETOP.replace("*", " distinct "+mark)+tempHql,param) ;
+		int count = row.get(0).intValue() ;//�ܼ�¼��
+		
+		if(pageIndex==null||pageIndex.intValue()==0){
+			pageIndex=1;
+		}
+		final int ini=(pageIndex-1)*Constant.PAGESIZE;
+		List reseultList = this.getHibernateTemplate().executeFind(
+			new HibernateCallback() {
+				public Object doInHibernate(Session session)
+						throws HibernateException, SQLException {
+					Transaction tc = session.beginTransaction();
+					Query q = session.createQuery(sql);
+					
+					for(int i=0;i<param.length;i++){
+						q.setParameter(i, param[i]) ;
+					}
+					q.setFirstResult(ini) ;
+					q.setMaxResults(Constant.PAGESIZE) ;
+					List result = q.list();
+					tc.commit();
+					session.close();
+					return result;
+			}
+		});
+		Map map = new HashMap();
+		map.put(Constant.RESULTLIST,reseultList) ;
+		map.put(Constant.ALLFILEDCOUNT, count) ;
+		return map;
+	}
+	public List login(String username,String password){
+		StringBuffer str= new StringBuffer("from SysUser u where u.userNo ='");
+		str.append(username).append("'");
+		str.append(" and u.userPwd ='");
+		str.append(password).append("'");
+		List list=this.getHibernateTemplate().find(str.toString());
+		return list;
+		
+	}
+	//不带输入输出参数
+	public void saveProcess(String saveProcessName){
+		Session s = this.getSession();
+		Transaction tc = s.beginTransaction();
+		Connection con=s.connection();
+		String sql="{call "+saveProcessName+"}";
+		try {
+			CallableStatement cstmt =con.prepareCall(sql);
+			cstmt.executeUpdate();
+			tc.commit();
+			s.close();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block	
+			tc.rollback();
+			e.printStackTrace();
+		}
+
+	}
+	//带一个输入参数
+	public void saveProcess(String saveProcessName,String groupNo){
+		Session s = this.getSession();
+		Transaction tc = s.beginTransaction();
+		Connection con=s.connection();
+		String sql="{call "+saveProcessName+"(?)}";
+		try {
+			CallableStatement cstmt =con.prepareCall(sql);
+			cstmt.setString(1, groupNo);
+			cstmt.executeUpdate();
+			tc.commit();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			tc.rollback();
+			e.printStackTrace();
+		}
+	}
+	public int getOneOutPut(String saveProcessName){
+		Session s = this.getSession();
+		Transaction tc = s.beginTransaction();
+		Connection con=s.connection();
+		String sql="{call "+saveProcessName+"(?)}";
+		try {
+			CallableStatement cstmt =con.prepareCall(sql);
+			cstmt.registerOutParameter(1, Types.INTEGER);
+			cstmt.executeUpdate();
+			tc.commit();
+			return cstmt.getInt(1);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			tc.rollback();
+			e.printStackTrace();
+		    return 0;
+		}
+
+	}
+	//带一个输入参数和一个输出参数
+	public int getAcdNo(String saveProcessName,int windowsIndex){
+		Session s = this.getSession();
+		Transaction tc = s.beginTransaction();
+		Connection con=s.connection();
+		String sql="{call "+saveProcessName+"(?,?)}";
+		try {
+			CallableStatement cstmt =con.prepareCall(sql);
+			cstmt.setInt(1, windowsIndex);
+			cstmt.registerOutParameter(2,  Types.INTEGER);
+			cstmt.executeUpdate();
+			tc.commit();
+			return cstmt.getInt(2);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			tc.rollback();
+			e.printStackTrace();
+			return 0;
+		}
+
+	}
+	public int getAcdNo1(String saveProcessName,int windowsIndex,String serverName){
+		Session s = this.getSession();
+		Transaction tc = s.beginTransaction();
+		Connection con=s.connection();
+		String sql="{call "+saveProcessName+"(?,?,?,?)}";
+		try {
+			CallableStatement cstmt =con.prepareCall(sql);
+			cstmt.setString(1, serverName);
+			cstmt.setInt(2, windowsIndex);
+			cstmt.registerOutParameter(3,Types.INTEGER);
+			cstmt.registerOutParameter(4,Types.VARCHAR);
+			cstmt.executeUpdate();
+			tc.commit();
+			return cstmt.getInt(3);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			tc.rollback();
+			e.printStackTrace();
+			return 0;
+		}
+
+	}
+	public Acd getAcdNo2(String saveProcessName,int windowsIndex,String serverName){
+		Session s = this.getSession();
+		Transaction tc = s.beginTransaction();
+		Connection con=s.connection();
+		String sql="{call "+saveProcessName+"(?,?,?,?,?)}";
+		try {
+			CallableStatement cstmt =con.prepareCall(sql);
+			cstmt.setString(1, serverName);
+			cstmt.setInt(2, windowsIndex);
+			cstmt.registerOutParameter(3,Types.INTEGER);
+			cstmt.registerOutParameter(4,Types.VARCHAR);
+			cstmt.registerOutParameter(5,Types.BIGINT);
+			cstmt.execute();
+			tc.commit();
+			Acd acd=new Acd();
+			acd.setAcdNo(cstmt.getInt(3));
+			acd.setAcdVoc(cstmt.getString(4));
+			acd.setShowID(cstmt.getLong(5));
+			return acd;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			tc.rollback();
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+	//带一个输入参数和一个输出参数
+	public int getLineNo(String saveProcessName,String frNo){
+		Session s = this.getSession();
+		Transaction tc = s.beginTransaction();
+		Connection con=s.connection();
+		String sql="{call "+saveProcessName+"(?,?)}";
+		try {
+			CallableStatement cstmt =con.prepareCall(sql);
+			cstmt.setString(1, frNo);
+			cstmt.registerOutParameter(2,  Types.INTEGER);
+			cstmt.executeUpdate();
+			tc.commit();
+			return cstmt.getInt(2);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			tc.rollback();
+			return -1;
+		}
+
+	}
+	//得到批次好
+	public Long getIndex(String saveProcessName,String frNo){
+		Session s = this.getSession();
+		Transaction tc = s.beginTransaction();
+		Connection con=s.connection();
+		String sql="{call "+saveProcessName+"(?,?)}";
+		try {
+			CallableStatement cstmt =con.prepareCall(sql);
+			cstmt.setString(1, frNo);
+			cstmt.registerOutParameter(2,Types.BIGINT);
+			cstmt.executeUpdate();
+			tc.commit();
+			return cstmt.getLong(2);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			tc.rollback();
+			e.printStackTrace();
+			return -1L;
+		}
+
+	}
+	public String getString(String saveProcessName,int id){
+		Session s = this.getSession();
+		Transaction tc = s.beginTransaction();
+		Connection con=s.connection();
+		String sql="{call "+saveProcessName+"(?,?)}";
+		try {
+			CallableStatement cstmt =con.prepareCall(sql);
+			cstmt.setInt(1, id);
+			cstmt.registerOutParameter(2,  Types.VARCHAR);
+			cstmt.executeUpdate();
+			tc.commit();
+			return cstmt.getString(2);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			tc.rollback();
+			e.printStackTrace();
+			return "为分配";
+		}
+
+	}
+	public String getString(String saveProcessName,int id,String jy){
+		Session s = this.getSession();
+		Transaction tc = s.beginTransaction();
+		Connection con=s.connection();
+		String sql="{call "+saveProcessName+"(?,?)}";
+		try {
+			CallableStatement cstmt =con.prepareCall(sql);
+			cstmt.setInt(1, id);
+			cstmt.registerOutParameter(2,  Types.VARCHAR);
+			cstmt.executeUpdate();
+			tc.commit();
+			return cstmt.getString(2);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			tc.rollback();
+			e.printStackTrace();
+			return "为分配";
+		}
+
+	}
+	public int fw(String saveProcessName){
+		Session s = this.getSession();
+		Transaction tc = s.beginTransaction();
+		Connection con=s.connection();
+		String sql="{call "+saveProcessName+"(?)}";
+		try {
+			CallableStatement cstmt =con.prepareCall(sql);
+			cstmt.registerOutParameter(1, Type.INT);
+			cstmt.executeUpdate();
+			tc.commit();
+			return cstmt.getInt(1);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			tc.rollback();
+			e.printStackTrace();
+		    return 0;
+		}
+
+	}
+	//带三个个输入参数一个输出
+	public int rgfpZw(String saveProcessName,String frNo,String jy,int lineNo){
+		Session s = this.getSession();
+		Transaction tc = s.beginTransaction();
+		Connection con=s.connection();
+		String sql="{call "+saveProcessName+"(?,?,?,?)}";
+		try {
+			CallableStatement cstmt =con.prepareCall(sql);
+			cstmt.setString(1, frNo);
+			cstmt.setString(2, jy);
+			cstmt.setInt(3, lineNo);
+			cstmt.registerOutParameter(4,  Types.INTEGER);
+			cstmt.executeUpdate();
+			tc.commit();
+			return cstmt.getInt(4);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			tc.rollback();
+			return -1;
+		}
+
+	}
+	//带三个个输入参数一个输出
+	public String getZw(String saveProcessName,String jy,int lineNo){
+		Session s = this.getSession();
+		Transaction tc = s.beginTransaction();
+		Connection con=s.connection();
+		String sql="{call "+saveProcessName+"(?,?,?)}";
+		try {
+			CallableStatement cstmt =con.prepareCall(sql);
+			cstmt.setInt(1, lineNo);
+			cstmt.setString(2, jy);
+			cstmt.registerOutParameter(3,  Types.VARCHAR);
+			cstmt.executeUpdate();
+			tc.commit();
+			return cstmt.getString(3);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			tc.rollback();
+			return "";
+		}
+
+	}
+	public String getZw1(String saveProcessName,long hjId){
+		Session s = this.getSession();
+		Transaction tc = s.beginTransaction();
+		Connection con=s.connection();
+		String sql="{call "+saveProcessName+"(?,?)}";
+		try {
+			CallableStatement cstmt =con.prepareCall(sql);
+			cstmt.setLong(1, hjId);
+			cstmt.registerOutParameter(2,  Types.VARCHAR);
+			cstmt.executeUpdate();
+			tc.commit();
+			return cstmt.getString(2);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			tc.rollback();
+			return "";
+		}
+
+	}
+	public int getTypeZw(String saveProcessName,String frNo,int lineType){
+		Session s = this.getSession();
+		Transaction tc = s.beginTransaction();
+		Connection con=s.connection();
+		String sql="{call "+saveProcessName+"(?,?,?)}";
+		try {
+			CallableStatement cstmt =con.prepareCall(sql);
+			cstmt.setInt(1, lineType);
+			cstmt.setString(2, frNo);
+			cstmt.registerOutParameter(3,  Types.INTEGER);
+			cstmt.executeUpdate();
+			tc.commit();
+			return cstmt.getInt(3);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			tc.rollback();
+			return -1;
+		}
+
+	}
+	//不带输入输出参数
+	public void executeUpdate(String sql){
+		Session s = this.getSession();
+		Transaction tc = s.beginTransaction();
+		Connection con=s.connection();
+		
+		try {
+			PreparedStatement ps=con.prepareStatement(sql);
+			ps.executeUpdate();
+			tc.commit();
+			s.close();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block	
+			tc.rollback();
+			e.printStackTrace();
+		}
+
+	}
+	
+	public int getsptj(String saveProcessName,long hjid){
+		Session s = this.getSession();
+		Transaction tc = s.beginTransaction();
+		Connection con=s.connection();
+		String sql="{call "+saveProcessName+"(?,?)}";
+		try {
+			CallableStatement cstmt =con.prepareCall(sql);
+			cstmt.setLong(1, hjid);
+			cstmt.registerOutParameter(2,  Types.INTEGER);
+			cstmt.executeUpdate();
+			tc.commit();
+			return cstmt.getInt(2);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			tc.rollback();
+			return -1;
+		}
+
+	}
+}

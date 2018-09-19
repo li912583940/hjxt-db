@@ -1,0 +1,225 @@
+package com.slxt.rs.action;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONArray;
+
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.actions.DispatchAction;
+
+import com.slxt.rs.model.JlHjDj;
+import com.slxt.rs.model.SysParam;
+import com.slxt.rs.model.SysUser;
+import com.slxt.rs.svc.HjNoticeService;
+import com.slxt.rs.vo.HjDjVO;
+
+public class HjNoticeAction extends DispatchAction{
+	private HjNoticeService hns;
+	public void setHns(HjNoticeService hns) {
+		this.hns = hns;
+	}
+
+	public ActionForward search(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+			SysUser user=(SysUser)request.getSession().getAttribute("users");
+			if(user==null){
+				return mapping.findForward("sessionFailure");
+			}
+			String hql="";
+			if(user.getIsSuper()==1){
+				hql="select HJID,JY,JQ_Name,FR_No,FR_Name,QS_Info1,QS_Info2,QS_Info3,QS_Info4,QS_Info5,QS_Info6,QS_Info7,QS_Info8,QS_Info9,HJ_Time,HJ_Info,HJ_Type,Monitor_Flag,FP_Flag,dbo.get_ck(FP_Line_No,JY) as zw,DJ_User,DJ_Time,HJ_Index,FP_TZFR_Flag from JL_HJ_DJ where State=0 order by JY,FP_TZFR_Flag,HJ_Index desc";
+			}else if(user.getIsSuper()==0 && user.getGroupNo().equals("Admin")){
+				hql="select dj.HJID,dj.JY,dj.JQ_Name,dj.FR_No,dj.FR_Name,dj.QS_Info1,dj.QS_Info2,dj.QS_Info3,dj.QS_Info4,dj.QS_Info5,dj.QS_Info6,dj.QS_Info7,dj.QS_Info8,dj.QS_Info9,dj.HJ_Time,dj.HJ_Info,dj.HJ_Type,dj.Monitor_Flag,dj.FP_Flag,dbo.get_ck(dj.FP_Line_No,dj.JY) as zw,dj.DJ_User,dj.DJ_Time,dj.HJ_Index,dj.FP_TZFR_Flag from JL_HJ_DJ dj,JL_JQ jq where dj.State=0 and dj.JQ_Name=jq.JQ_Name and jq.Is_Ts=0 order by dj.JY,dj.FP_TZFR_Flag,dj.HJ_Index desc";
+			}else{
+				hql="select dj.HJID,dj.JY,dj.JQ_Name,dj.FR_No,dj.FR_Name,dj.QS_Info1,dj.QS_Info2,dj.QS_Info3,dj.QS_Info4,dj.QS_Info5,dj.QS_Info6,dj.QS_Info7,dj.QS_Info8,dj.QS_Info9,dj.HJ_Time,dj.HJ_Info,dj.HJ_Type,dj.Monitor_Flag,dj.FP_Flag,dbo.get_ck(dj.FP_Line_No,dj.JY) as zw,dj.DJ_User,dj.DJ_Time,dj.HJ_Index,dj.FP_TZFR_Flag from JL_HJ_DJ dj,JL_JQ jq,SYS_USER_JQ suj where dj.State=0 and dj.JQ_Name=jq.JQ_Name and jq.JQ_No=suj.JQ_No and suj.Group_No='"+user.getGroupNo()+"' order by dj.JY,dj.FP_TZFR_Flag,dj.HJ_Index desc";
+			}
+			List list=hns.searchAllBySql(hql);
+			List<HjDjVO> list1=new ArrayList<HjDjVO>();
+			for(int i=0;i<list.size();i++){
+		    	Object[] obj1=(Object[])list.get(i);
+		    	HjDjVO hjDjVO=new HjDjVO();
+		    	hjDjVO.setHjid(obj1[0].toString());
+		    	hjDjVO.setJy(obj1[1].toString());
+		    	if(obj1[2]!=null && !obj1[2].toString().equals("")){
+		    		hjDjVO.setJqName(obj1[2].toString());
+		    	}
+		    	hjDjVO.setFrNo(obj1[3].toString());
+		    	if(obj1[4]!=null && !obj1[4].toString().equals("")){
+		    		hjDjVO.setFrName(obj1[4].toString());
+		    	}
+		    	String qsName="";
+		    	if(obj1[5]!=null && !obj1[5].toString().equals("")){
+		    		qsName+=obj1[5].toString();
+		    	}
+		    	if(obj1[6]!=null && !obj1[6].toString().equals("")){
+		    		qsName+=obj1[6].toString();
+		    	}
+		    	if(obj1[7]!=null && !obj1[7].toString().equals("")){
+		    		qsName+=obj1[7].toString();
+		    	}
+		    	if(obj1[8]!=null && !obj1[8].toString().equals("")){
+		    		qsName+=obj1[8].toString();
+		    	}
+		    	if(obj1[9]!=null && !obj1[9].toString().equals("")){
+		    		qsName+=obj1[9].toString();
+		    	}
+		    	if(obj1[10]!=null && !obj1[10].toString().equals("")){
+		    		qsName+=obj1[10].toString();
+		    	}
+		    	if(obj1[11]!=null && !obj1[11].toString().equals("")){
+		    		qsName+=obj1[11].toString();
+		    	}
+		    	if(obj1[12]!=null && !obj1[12].toString().equals("")){
+		    		qsName+=obj1[12].toString();
+		    	}
+		    	if(obj1[13]!=null && !obj1[13].toString().equals("")){
+		    		qsName+=obj1[13].toString();
+		    	}
+		    	hjDjVO.setQsInfo1(qsName);
+		    	hjDjVO.setHjTime(Integer.parseInt(obj1[14].toString())/60+"");
+		    	if(obj1[15]!=null && !obj1[15].toString().equals("")){
+		    		hjDjVO.setHjInfo(obj1[15].toString());	
+		    	}
+		    	hjDjVO.setHjType(obj1[16].toString());
+		    	if(obj1[17]!=null && !obj1[17].toString().equals("")){
+		    		hjDjVO.setMonitorFlag(obj1[17].toString());
+		    	}
+		    	hjDjVO.setFpFlag(obj1[18].toString());
+		    	if(obj1[19]!=null && !obj1[19].toString().equals("")){
+		    		hjDjVO.setZw(obj1[19].toString());
+		    	}
+		    	if(obj1[20]!=null && !obj1[20].toString().equals("")){
+		    		hjDjVO.setDjUser(obj1[20].toString());
+		    	}
+		    	if(obj1[21]!=null && !obj1[21].toString().equals("")){
+		    		hjDjVO.setDjTime(obj1[21].toString().substring(0, 19));
+		    	}
+		    	if(obj1[22]!=null && !obj1[22].toString().equals("")){
+		    		hjDjVO.setHjIndex(obj1[22].toString());
+		    	}
+		    	if(obj1[23]!=null){
+		    		hjDjVO.setFpTzfrFlag(obj1[23].toString());
+		    	}
+		    	list1.add(hjDjVO);
+		    }
+			request.setAttribute("list1",list1);
+			String hql4="from SysParam where paramName='HJ_Client'";
+			List<SysParam> list4=hns.searchAll(hql4);
+			if(list4.size()>0){
+				SysParam sysParam1=(SysParam)list4.get(0);
+				request.setAttribute("hJClient1", sysParam1);
+			}
+			return mapping.findForward("hjNoticeMain");
+	}
+	public ActionForward jquerSearch(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+			SysUser user=(SysUser)request.getSession().getAttribute("users");
+			if(user==null){
+				return mapping.findForward("sessionFailure");
+			}
+			String hql="";
+			if(user.getIsSuper()==1){
+				hql="select HJID,JY,JQ_Name,FR_No,FR_Name,QS_Info1,QS_Info2,QS_Info3,QS_Info4,QS_Info5,QS_Info6,QS_Info7,QS_Info8,QS_Info9,HJ_Time,HJ_Info,HJ_Type,Monitor_Flag,FP_Flag,dbo.get_ck(FP_Line_No,JY) as zw,DJ_User,DJ_Time,HJ_Index,FP_TZFR_Flag from JL_HJ_DJ where State=0 order by JY,FP_TZFR_Flag,HJ_Index desc";
+			}else if(user.getIsSuper()==0 && user.getGroupNo().equals("Admin")){
+				hql="select dj.HJID,dj.JY,dj.JQ_Name,dj.FR_No,dj.FR_Name,dj.QS_Info1,dj.QS_Info2,dj.QS_Info3,dj.QS_Info4,dj.QS_Info5,dj.QS_Info6,dj.QS_Info7,dj.QS_Info8,dj.QS_Info9,dj.HJ_Time,dj.HJ_Info,dj.HJ_Type,dj.Monitor_Flag,dj.FP_Flag,dbo.get_ck(dj.FP_Line_No,dj.JY) as zw,dj.DJ_User,dj.DJ_Time,dj.HJ_Index,dj.FP_TZFR_Flag from JL_HJ_DJ dj,JL_JQ jq where dj.State=0 and dj.JQ_Name=jq.JQ_Name and jq.Is_Ts=0 order by dj.JY,dj.FP_TZFR_Flag,dj.HJ_Index desc";
+			}else{
+				hql="select dj.HJID,dj.JY,dj.JQ_Name,dj.FR_No,dj.FR_Name,dj.QS_Info1,dj.QS_Info2,dj.QS_Info3,dj.QS_Info4,dj.QS_Info5,dj.QS_Info6,dj.QS_Info7,dj.QS_Info8,dj.QS_Info9,dj.HJ_Time,dj.HJ_Info,dj.HJ_Type,dj.Monitor_Flag,dj.FP_Flag,dbo.get_ck(dj.FP_Line_No,dj.JY) as zw,dj.DJ_User,dj.DJ_Time,dj.HJ_Index,dj.FP_TZFR_Flag from JL_HJ_DJ dj,JL_JQ jq,SYS_USER_JQ suj where dj.State=0 and dj.JQ_Name=jq.JQ_Name and jq.JQ_No=suj.JQ_No and suj.Group_No='"+user.getGroupNo()+"' order by dj.JY,dj.FP_TZFR_Flag,dj.HJ_Index desc";
+			}
+			List list=hns.searchAllBySql(hql);
+			List<HjDjVO> list1=new ArrayList<HjDjVO>();
+			for(int i=0;i<list.size();i++){
+		    	Object[] obj1=(Object[])list.get(i);
+		    	HjDjVO hjDjVO=new HjDjVO();
+		    	hjDjVO.setHjid(obj1[0].toString());
+		    	hjDjVO.setJy(obj1[1].toString());
+		    	if(obj1[2]!=null && !obj1[2].toString().equals("")){
+		    		hjDjVO.setJqName(obj1[2].toString());
+		    	}
+		    	hjDjVO.setFrNo(obj1[3].toString());
+		    	if(obj1[4]!=null && !obj1[4].toString().equals("")){
+		    		hjDjVO.setFrName(obj1[4].toString());
+		    	}
+		    	String qsName="";
+		    	if(obj1[5]!=null && !obj1[5].toString().equals("")){
+		    		qsName+=obj1[5].toString();
+		    	}
+		    	if(obj1[6]!=null && !obj1[6].toString().equals("")){
+		    		qsName+=obj1[6].toString();
+		    	}
+		    	if(obj1[7]!=null && !obj1[7].toString().equals("")){
+		    		qsName+=obj1[7].toString();
+		    	}
+		    	if(obj1[8]!=null && !obj1[8].toString().equals("")){
+		    		qsName+=obj1[8].toString();
+		    	}
+		    	if(obj1[9]!=null && !obj1[9].toString().equals("")){
+		    		qsName+=obj1[9].toString();
+		    	}
+		    	if(obj1[10]!=null && !obj1[10].toString().equals("")){
+		    		qsName+=obj1[10].toString();
+		    	}
+		    	if(obj1[11]!=null && !obj1[11].toString().equals("")){
+		    		qsName+=obj1[11].toString();
+		    	}
+		    	if(obj1[12]!=null && !obj1[12].toString().equals("")){
+		    		qsName+=obj1[12].toString();
+		    	}
+		    	if(obj1[13]!=null && !obj1[13].toString().equals("")){
+		    		qsName+=obj1[13].toString();
+		    	}
+		    	hjDjVO.setQsInfo1(qsName);
+		    	hjDjVO.setHjTime(Integer.parseInt(obj1[14].toString())/60+"");
+		    	if(obj1[15]!=null && !obj1[15].toString().equals("")){
+		    		hjDjVO.setHjInfo(obj1[15].toString());	
+		    	}
+		    	hjDjVO.setHjType(obj1[16].toString());
+		    	if(obj1[17]!=null && !obj1[17].toString().equals("")){
+		    		hjDjVO.setMonitorFlag(obj1[17].toString());
+		    	}
+		    	hjDjVO.setFpFlag(obj1[18].toString());
+		    	if(obj1[19]!=null && !obj1[19].toString().equals("")){
+		    		hjDjVO.setZw(obj1[19].toString());
+		    	}
+		    	if(obj1[20]!=null && !obj1[20].toString().equals("")){
+		    		hjDjVO.setDjUser(obj1[20].toString());
+		    	}
+		    	if(obj1[21]!=null && !obj1[21].toString().equals("")){
+		    		hjDjVO.setDjTime(obj1[21].toString().substring(0, 19));
+		    	}
+		    	if(obj1[22]!=null && !obj1[22].toString().equals("")){
+		    		hjDjVO.setHjIndex(obj1[22].toString());
+		    	}
+		    	if(obj1[23]!=null){
+		    		hjDjVO.setFpTzfrFlag(obj1[23].toString());
+		    	}
+		    	list1.add(hjDjVO);
+		    }
+			response.setContentType("text/json; charset=utf-8"); 
+			JSONArray json=JSONArray.fromObject(list1);
+			response.getWriter().println(json.toString());
+			return null;
+	}
+	public ActionForward sdNotice(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+			SysUser user=(SysUser)request.getSession().getAttribute("users");
+			if(user==null){
+				return mapping.findForward("sessionFailure");
+			}
+			String hjid=request.getParameter("hjid");
+			JlHjDj jlHjDj=(JlHjDj)hns.findByIdLong(JlHjDj.class, Long.parseLong(hjid));
+			jlHjDj.setFpTzfrFlag(1);
+			hns.update(jlHjDj);
+			JSONArray json=JSONArray.fromObject(0);
+			response.getWriter().println(json.toString());
+			return null;
+	}
+}

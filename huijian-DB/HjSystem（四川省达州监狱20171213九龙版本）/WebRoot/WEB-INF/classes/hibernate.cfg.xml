@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+		
+<hibernate-configuration>
+	<session-factory>
+		<property name="hibernate.show_sql">true</property>
+		<property name="connection.url">
+			jdbc:sqlserver://127.0.0.1:1433;databaseName=TeleJY_sichuandazhou_hj_20171226;
+		</property>
+		<property name="dialect">
+			org.hibernate.dialect.SQLServerDialect
+		</property>
+		<property name="connection.username">sa</property>
+		<property name="connection.password">sa</property>
+		<property name="connection.driver_class">
+			com.microsoft.sqlserver.jdbc.SQLServerDriver
+		</property>
+		<property name="myeclipse.connection.profile">
+			com.microsoft.sqlserver.jdbc.SQLServerDriver
+		</property>
+		<property name="hibernate.dialect">
+			com.slxt.rs.util.ImageSQLServerDialect
+		</property>
+		<mapping resource="com/slxt/rs/model/JlQs.hbm.xml" />
+		<mapping resource="com/slxt/rs/model/SysHjLine.hbm.xml" />
+		<mapping resource="com/slxt/rs/model/SysHjServer.hbm.xml" />
+		<mapping resource="com/slxt/rs/model/SysMenu.hbm.xml" />
+		<mapping resource="com/slxt/rs/model/SysLog.hbm.xml" />
+		<mapping resource="com/slxt/rs/model/JlJb.hbm.xml" />
+		<mapping resource="com/slxt/rs/model/JlJq.hbm.xml" />
+		<mapping resource="com/slxt/rs/model/SysUser.hbm.xml" />
+		<mapping resource="com/slxt/rs/model/JlYj.hbm.xml" />
+		<mapping resource="com/slxt/rs/model/JlFr.hbm.xml" />
+		<mapping resource="com/slxt/rs/model/SysUserGroup.hbm.xml" />
+		<mapping resource="com/slxt/rs/model/JlHjJqWeek.hbm.xml" />
+		<mapping resource="com/slxt/rs/model/SysParam.hbm.xml" />
+		<mapping resource="com/slxt/rs/model/JlHjRec.hbm.xml" />
+		<mapping resource="com/slxt/rs/model/SysUserMenu.hbm.xml" />
+		<mapping resource="com/slxt/rs/model/SysUserJq.hbm.xml" />
+		<mapping resource="com/slxt/rs/model/JlFbQs.hbm.xml" />
+		<mapping resource="com/slxt/rs/model/JlFbFr.hbm.xml" />
+		<mapping resource="com/slxt/rs/model/JlBakQs.hbm.xml" />
+		<mapping resource="com/slxt/rs/model/JlBakFr.hbm.xml" />
+		<mapping resource="com/slxt/rs/model/JlHjDj.hbm.xml" />
+		<mapping resource="com/slxt/rs/model/JlMonitorVoc.hbm.xml" />
+		<mapping resource="com/slxt/rs/model/JlHjInfo.hbm.xml" />
+		<mapping resource="com/slxt/rs/model/JlHjMon.hbm.xml" />
+		<mapping resource="com/slxt/rs/model/HjdjAcdWindowsInfo.hbm.xml" />
+		<mapping resource="com/slxt/rs/model/HjdjAcdInfo.hbm.xml" />
+		<mapping resource="com/slxt/rs/model/HjdjAcdLog.hbm.xml" />
+		<mapping resource="com/slxt/rs/model/SysHjVideo.hbm.xml" />
+		<mapping resource="com/slxt/rs/model/JlTradeCardInfo.hbm.xml" />
+		<mapping resource="com/slxt/rs/model/HjdjAcdShow.hbm.xml" />
+		<mapping resource="com/slxt/rs/model/JlQsTemp.hbm.xml" />
+		<mapping resource="com/slxt/rs/model/JlFrTemp.hbm.xml" />
+		<mapping resource="com/slxt/rs/model/JlFrWpPk.hbm.xml" />
+		<mapping resource="com/slxt/rs/model/JlHjSpQs.hbm.xml" />
+		<mapping resource="com/slxt/rs/model/HjdjFaceInfo.hbm.xml" />
+		<mapping resource="com/slxt/rs/model/JlHjRecRatingInfo.hbm.xml" />
+		<mapping resource="com/slxt/rs/model/JlHjRecAssessmentInfo.hbm.xml" />
+		<mapping resource="com/slxt/rs/model/ErrorInfoWebService.hbm.xml" />
+		<mapping resource="com/slxt/rs/model/JlYjABDoor.hbm.xml" />
+		<mapping resource="com/slxt/rs/model/JlHjDjQs.hbm.xml" />
+		<mapping resource="com/slxt/rs/model/JlHjMonitorTimeAdd.hbm.xml" />
+	</session-factory>
+	
+</hibernate-configuration>

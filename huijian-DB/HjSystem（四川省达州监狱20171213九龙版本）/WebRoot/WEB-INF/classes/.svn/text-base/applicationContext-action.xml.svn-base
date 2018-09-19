@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+
+	<bean name="/login" class="com.slxt.rs.action.LoginAction">
+		<property name="rs" ref="loginService"></property>
+	</bean>
+	<bean name="/materialMessage"  class="com.slxt.rs.action.MaterialMessageAction">
+		<property name="mm"  ref="mmService"></property>
+	</bean>
+	<bean name="/yjMessage"  class="com.slxt.rs.action.YjMessageAction">
+		<property name="yms"  ref="yms"></property>
+	</bean> 
+	<bean name="/jqSet" class="com.slxt.rs.action.JqSetAction">
+		<property name="js" ref="jqSetService"></property>
+	</bean>
+	<bean name="/hjdj" class="com.slxt.rs.action.HjDjAction">
+		<property name="hds" ref="hdsService"></property>
+	</bean>
+	<bean name="/hjMonitor" class="com.slxt.rs.action.HjMonitorAction">
+		<property name="hms" ref="hmsService"></property>
+	</bean>
+	<bean name="/hjRecord" class="com.slxt.rs.action.HjRecordAction">
+		<property name="hrs" ref="hrsService"></property>
+	</bean>
+	<bean name="/hjNotice" class="com.slxt.rs.action.HjNoticeAction">
+		<property name="hns" ref="hnsService"></property>
+	</bean>
+	<bean name="/cancelDj" class="com.slxt.rs.action.CancelDjAction">
+		<property name="cds" ref="cdsService"></property>
+	</bean>
+	<bean name="/yjCome" class="com.slxt.rs.action.YjComeAction">
+		<property name="ycs" ref="ycsService"></property>
+	</bean>
+	<bean name="/hjReport" class="com.slxt.rs.action.HjReportAction">
+		<property name="hrps" ref="hrpsService"></property>
+	</bean>
+	<bean name="/gradeMessage"  class="com.slxt.rs.action.GradeMessageAction">
+		<property name="gm"  ref="gmService"></property>
+	</bean>
+	<bean name="/user"  class="com.slxt.rs.action.UserAction">
+		<property name="us"  ref="us"></property>
+	</bean>
+	<bean name="/userTeam" class="com.slxt.rs.action.UserTeamAction">
+		<property name="ut" ref="utService"></property>
+	</bean>
+	<bean name="/lineSet" class="com.slxt.rs.action.LineSetAction">
+		<property name="ls" ref="lineSetService"></property>
+	</bean>
+	<bean name="/jySet" class="com.slxt.rs.action.JySetAction">
+		<property name="jss" ref="jySetService"></property>
+	</bean>
+	<bean name="/diaryMessage"  class="com.slxt.rs.action.DiaryMessageAction">
+		<property name="dms"  ref="dmsService"></property>
+	</bean>
+	<bean name="/updateLoginUser" class="com.slxt.rs.action.UpdateLoginUserAction">
+		<property name="ulus" ref="ulus"></property>
+	</bean>
+	</beans>

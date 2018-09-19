@@ -1,0 +1,599 @@
+package com.slxt.rs.model;
+
+import java.sql.Timestamp;
+
+/**
+ * JlHjRec entity. @author MyEclipse Persistence Tools
+ */
+
+public class JlHjRec implements java.io.Serializable {
+
+	// Fields
+
+	private Long webId;
+	private String callId;
+	private Integer lineNo;
+	private String zw;
+	private String board;
+	private Integer line;
+	private String boardJs;
+	private Integer lineJs;
+	private String jy;
+	private String jqNo;
+	private String jqName;
+	private String frNo;
+	private String frName;
+	private String qsInfo1;
+	private String qsInfo2;
+	private String qsInfo3;
+	private String qsInfo4;
+	private String qsInfo5;
+	private String qsInfo6;
+	private String qsInfo7;
+	private String qsInfo8;
+	private String qsInfo9;
+	private String yjNo;
+	private String yjName;
+	private String monitorFlag;
+	private String hjInfo;
+	private Integer hjType;
+	private Integer djType;
+	private String callTimeStart;
+	private String callTimeEnd;
+	private Integer callTimeLen;
+	private String callRecFile;
+	private String callVideoFile1;
+	private String callVideoFile2;
+	private Integer downVideoCount;
+	private Integer deleteFlag;
+	private String djUser;
+	private Timestamp djTime;
+	private String frInUser;
+	private Timestamp frInTime;
+	private String frOutUser;
+	private Timestamp frOutTime;
+	private String qsInUser;
+	private Timestamp qsInTime;
+	private String qsOutUser;
+	private Timestamp qsOutTime;
+	private String tpInfo;
+	private String spInfo;
+	private Timestamp spTime;
+	private String spUser;
+	private Long hjid;
+	private Integer importFlag;
+	private Integer recRatingState;
+	private Integer recAssessmentState;
+	// Constructors
+
+	/** default constructor */
+	public JlHjRec() {
+	}
+
+	/** minimal constructor */
+	public JlHjRec(String callId, Integer lineNo, String zw, String board,
+			Integer line, Integer lineJs, String jy, String jqNo, String frNo,
+			Integer hjType, Integer djType, Integer downVideoCount,
+			Integer deleteFlag,Integer recRatingState,Integer recAssessmentState) {
+		this.callId = callId;
+		this.lineNo = lineNo;
+		this.zw = zw;
+		this.board = board;
+		this.line = line;
+		this.lineJs = lineJs;
+		this.jy = jy;
+		this.jqNo = jqNo;
+		this.frNo = frNo;
+		this.hjType = hjType;
+		this.djType = djType;
+		this.downVideoCount = downVideoCount;
+		this.deleteFlag = deleteFlag;
+		this.recRatingState = recRatingState;
+		this.recAssessmentState = recAssessmentState;
+	}
+
+	/** full constructor */
+	public JlHjRec(String callId, Integer lineNo, String zw, String board,
+			Integer line, String boardJs, Integer lineJs, String jy,
+			String jqNo, String jqName, String frNo, String frName,
+			String qsInfo1, String qsInfo2, String qsInfo3, String qsInfo4,
+			String qsInfo5, String qsInfo6, String qsInfo7, String qsInfo8,
+			String qsInfo9, String yjNo, String yjName, String monitorFlag,
+			String hjInfo, Integer hjType, Integer djType,
+			String callTimeStart, String callTimeEnd, Integer callTimeLen,
+			String callRecFile, String callVideoFile1, String callVideoFile2,
+			Integer downVideoCount, Integer deleteFlag, String djUser,
+			Timestamp djTime, String frInUser, Timestamp frInTime,
+			String frOutUser, Timestamp frOutTime, String qsInUser,
+			Timestamp qsInTime, String qsOutUser, Timestamp qsOutTime,
+			String tpInfo, String spInfo, Timestamp spTime, String spUser,
+			Long hjid,Integer recRatingState,Integer recAssessmentState) {
+		this.callId = callId;
+		this.lineNo = lineNo;
+		this.zw = zw;
+		this.board = board;
+		this.line = line;
+		this.boardJs = boardJs;
+		this.lineJs = lineJs;
+		this.jy = jy;
+		this.jqNo = jqNo;
+		this.jqName = jqName;
+		this.frNo = frNo;
+		this.frName = frName;
+		this.qsInfo1 = qsInfo1;
+		this.qsInfo2 = qsInfo2;
+		this.qsInfo3 = qsInfo3;
+		this.qsInfo4 = qsInfo4;
+		this.qsInfo5 = qsInfo5;
+		this.qsInfo6 = qsInfo6;
+		this.qsInfo7 = qsInfo7;
+		this.qsInfo8 = qsInfo8;
+		this.qsInfo9 = qsInfo9;
+		this.yjNo = yjNo;
+		this.yjName = yjName;
+		this.monitorFlag = monitorFlag;
+		this.hjInfo = hjInfo;
+		this.hjType = hjType;
+		this.djType = djType;
+		this.callTimeStart = callTimeStart;
+		this.callTimeEnd = callTimeEnd;
+		this.callTimeLen = callTimeLen;
+		this.callRecFile = callRecFile;
+		this.callVideoFile1 = callVideoFile1;
+		this.callVideoFile2 = callVideoFile2;
+		this.downVideoCount = downVideoCount;
+		this.deleteFlag = deleteFlag;
+		this.djUser = djUser;
+		this.djTime = djTime;
+		this.frInUser = frInUser;
+		this.frInTime = frInTime;
+		this.frOutUser = frOutUser;
+		this.frOutTime = frOutTime;
+		this.qsInUser = qsInUser;
+		this.qsInTime = qsInTime;
+		this.qsOutUser = qsOutUser;
+		this.qsOutTime = qsOutTime;
+		this.tpInfo = tpInfo;
+		this.spInfo = spInfo;
+		this.spTime = spTime;
+		this.spUser = spUser;
+		this.hjid = hjid;
+		this.recRatingState = recRatingState;
+		this.recAssessmentState = recAssessmentState;
+	}
+
+	// Property accessors
+	
+	public Long getWebId() {
+		return this.webId;
+	}
+
+	public Integer getImportFlag() {
+		return importFlag;
+	}
+
+	public void setImportFlag(Integer importFlag) {
+		this.importFlag = importFlag;
+	}
+
+	public void setWebId(Long webId) {
+		this.webId = webId;
+	}
+
+	public String getCallId() {
+		return this.callId;
+	}
+
+	public void setCallId(String callId) {
+		this.callId = callId;
+	}
+
+	public Integer getLineNo() {
+		return this.lineNo;
+	}
+
+	public void setLineNo(Integer lineNo) {
+		this.lineNo = lineNo;
+	}
+
+	public String getZw() {
+		return this.zw;
+	}
+
+	public void setZw(String zw) {
+		this.zw = zw;
+	}
+
+	public String getBoard() {
+		return this.board;
+	}
+
+	public void setBoard(String board) {
+		this.board = board;
+	}
+
+	public Integer getLine() {
+		return this.line;
+	}
+
+	public void setLine(Integer line) {
+		this.line = line;
+	}
+
+	public String getBoardJs() {
+		return this.boardJs;
+	}
+
+	public void setBoardJs(String boardJs) {
+		this.boardJs = boardJs;
+	}
+
+	public Integer getLineJs() {
+		return this.lineJs;
+	}
+
+	public void setLineJs(Integer lineJs) {
+		this.lineJs = lineJs;
+	}
+
+	public String getJy() {
+		return this.jy;
+	}
+
+	public void setJy(String jy) {
+		this.jy = jy;
+	}
+
+	public String getJqNo() {
+		return this.jqNo;
+	}
+
+	public void setJqNo(String jqNo) {
+		this.jqNo = jqNo;
+	}
+
+	public String getJqName() {
+		return this.jqName;
+	}
+
+	public void setJqName(String jqName) {
+		this.jqName = jqName;
+	}
+
+	public String getFrNo() {
+		return this.frNo;
+	}
+
+	public void setFrNo(String frNo) {
+		this.frNo = frNo;
+	}
+
+	public String getFrName() {
+		return this.frName;
+	}
+
+	public void setFrName(String frName) {
+		this.frName = frName;
+	}
+
+	public String getQsInfo1() {
+		return this.qsInfo1;
+	}
+
+	public void setQsInfo1(String qsInfo1) {
+		this.qsInfo1 = qsInfo1;
+	}
+
+	public String getQsInfo2() {
+		return this.qsInfo2;
+	}
+
+	public void setQsInfo2(String qsInfo2) {
+		this.qsInfo2 = qsInfo2;
+	}
+
+	public String getQsInfo3() {
+		return this.qsInfo3;
+	}
+
+	public void setQsInfo3(String qsInfo3) {
+		this.qsInfo3 = qsInfo3;
+	}
+
+	public String getQsInfo4() {
+		return this.qsInfo4;
+	}
+
+	public void setQsInfo4(String qsInfo4) {
+		this.qsInfo4 = qsInfo4;
+	}
+
+	public String getQsInfo5() {
+		return this.qsInfo5;
+	}
+
+	public void setQsInfo5(String qsInfo5) {
+		this.qsInfo5 = qsInfo5;
+	}
+
+	public String getQsInfo6() {
+		return this.qsInfo6;
+	}
+
+	public void setQsInfo6(String qsInfo6) {
+		this.qsInfo6 = qsInfo6;
+	}
+
+	public String getQsInfo7() {
+		return this.qsInfo7;
+	}
+
+	public void setQsInfo7(String qsInfo7) {
+		this.qsInfo7 = qsInfo7;
+	}
+
+	public String getQsInfo8() {
+		return this.qsInfo8;
+	}
+
+	public void setQsInfo8(String qsInfo8) {
+		this.qsInfo8 = qsInfo8;
+	}
+
+	public String getQsInfo9() {
+		return this.qsInfo9;
+	}
+
+	public void setQsInfo9(String qsInfo9) {
+		this.qsInfo9 = qsInfo9;
+	}
+
+	public String getYjNo() {
+		return this.yjNo;
+	}
+
+	public void setYjNo(String yjNo) {
+		this.yjNo = yjNo;
+	}
+
+	public String getYjName() {
+		return this.yjName;
+	}
+
+	public void setYjName(String yjName) {
+		this.yjName = yjName;
+	}
+
+	public String getMonitorFlag() {
+		return this.monitorFlag;
+	}
+
+	public void setMonitorFlag(String monitorFlag) {
+		this.monitorFlag = monitorFlag;
+	}
+
+	public String getHjInfo() {
+		return this.hjInfo;
+	}
+
+	public void setHjInfo(String hjInfo) {
+		this.hjInfo = hjInfo;
+	}
+
+	public Integer getHjType() {
+		return this.hjType;
+	}
+
+	public void setHjType(Integer hjType) {
+		this.hjType = hjType;
+	}
+
+	public Integer getDjType() {
+		return this.djType;
+	}
+
+	public void setDjType(Integer djType) {
+		this.djType = djType;
+	}
+
+	public String getCallTimeStart() {
+		return this.callTimeStart;
+	}
+
+	public void setCallTimeStart(String callTimeStart) {
+		this.callTimeStart = callTimeStart;
+	}
+
+	public String getCallTimeEnd() {
+		return this.callTimeEnd;
+	}
+
+	public void setCallTimeEnd(String callTimeEnd) {
+		this.callTimeEnd = callTimeEnd;
+	}
+
+	public Integer getCallTimeLen() {
+		return this.callTimeLen;
+	}
+
+	public void setCallTimeLen(Integer callTimeLen) {
+		this.callTimeLen = callTimeLen;
+	}
+
+	public String getCallRecFile() {
+		return this.callRecFile;
+	}
+
+	public void setCallRecFile(String callRecFile) {
+		this.callRecFile = callRecFile;
+	}
+
+	public String getCallVideoFile1() {
+		return this.callVideoFile1;
+	}
+
+	public void setCallVideoFile1(String callVideoFile1) {
+		this.callVideoFile1 = callVideoFile1;
+	}
+
+	public String getCallVideoFile2() {
+		return this.callVideoFile2;
+	}
+
+	public void setCallVideoFile2(String callVideoFile2) {
+		this.callVideoFile2 = callVideoFile2;
+	}
+
+	public Integer getDownVideoCount() {
+		return this.downVideoCount;
+	}
+
+	public void setDownVideoCount(Integer downVideoCount) {
+		this.downVideoCount = downVideoCount;
+	}
+
+	public Integer getDeleteFlag() {
+		return this.deleteFlag;
+	}
+
+	public void setDeleteFlag(Integer deleteFlag) {
+		this.deleteFlag = deleteFlag;
+	}
+
+	public String getDjUser() {
+		return this.djUser;
+	}
+
+	public void setDjUser(String djUser) {
+		this.djUser = djUser;
+	}
+
+	public Timestamp getDjTime() {
+		return this.djTime;
+	}
+
+	public void setDjTime(Timestamp djTime) {
+		this.djTime = djTime;
+	}
+
+	public String getFrInUser() {
+		return this.frInUser;
+	}
+
+	public void setFrInUser(String frInUser) {
+		this.frInUser = frInUser;
+	}
+
+	public Timestamp getFrInTime() {
+		return this.frInTime;
+	}
+
+	public void setFrInTime(Timestamp frInTime) {
+		this.frInTime = frInTime;
+	}
+
+	public String getFrOutUser() {
+		return this.frOutUser;
+	}
+
+	public void setFrOutUser(String frOutUser) {
+		this.frOutUser = frOutUser;
+	}
+
+	public Timestamp getFrOutTime() {
+		return this.frOutTime;
+	}
+
+	public void setFrOutTime(Timestamp frOutTime) {
+		this.frOutTime = frOutTime;
+	}
+
+	public String getQsInUser() {
+		return this.qsInUser;
+	}
+
+	public void setQsInUser(String qsInUser) {
+		this.qsInUser = qsInUser;
+	}
+
+	public Timestamp getQsInTime() {
+		return this.qsInTime;
+	}
+
+	public void setQsInTime(Timestamp qsInTime) {
+		this.qsInTime = qsInTime;
+	}
+
+	public String getQsOutUser() {
+		return this.qsOutUser;
+	}
+
+	public void setQsOutUser(String qsOutUser) {
+		this.qsOutUser = qsOutUser;
+	}
+
+	public Timestamp getQsOutTime() {
+		return this.qsOutTime;
+	}
+
+	public void setQsOutTime(Timestamp qsOutTime) {
+		this.qsOutTime = qsOutTime;
+	}
+
+	public String getTpInfo() {
+		return this.tpInfo;
+	}
+
+	public void setTpInfo(String tpInfo) {
+		this.tpInfo = tpInfo;
+	}
+
+	public String getSpInfo() {
+		return this.spInfo;
+	}
+
+	public void setSpInfo(String spInfo) {
+		this.spInfo = spInfo;
+	}
+
+	public Timestamp getSpTime() {
+		return this.spTime;
+	}
+
+	public void setSpTime(Timestamp spTime) {
+		this.spTime = spTime;
+	}
+
+	public String getSpUser() {
+		return this.spUser;
+	}
+
+	public void setSpUser(String spUser) {
+		this.spUser = spUser;
+	}
+
+	public Long getHjid() {
+		return this.hjid;
+	}
+
+	public void setHjid(Long hjid) {
+		this.hjid = hjid;
+	}
+
+	public Integer getRecRatingState() {
+		return recRatingState;
+	}
+
+	public void setRecRatingState(Integer recRatingState) {
+		this.recRatingState = recRatingState;
+	}
+
+	public Integer getRecAssessmentState() {
+		return recAssessmentState;
+	}
+
+	public void setRecAssessmentState(Integer recAssessmentState) {
+		this.recAssessmentState = recAssessmentState;
+	}
+
+}

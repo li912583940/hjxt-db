@@ -1,0 +1,1896 @@
+package com.slxt.rs.action;
+
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONArray;
+
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.actions.DispatchAction;
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.output.XMLOutputter;
+
+import com.slxt.rs.form.HjdjForm;
+import com.slxt.rs.model.HjdjAcdInfo;
+import com.slxt.rs.model.HjdjAcdWindowsInfo;
+import com.slxt.rs.model.JlFr;
+import com.slxt.rs.model.JlHjDj;
+import com.slxt.rs.model.JlJq;
+import com.slxt.rs.model.JlQs;
+import com.slxt.rs.model.SysLog;
+import com.slxt.rs.model.SysParam;
+import com.slxt.rs.model.SysUser;
+import com.slxt.rs.svc.HjDjService;
+import com.slxt.rs.util.Constant;
+import com.slxt.rs.vo.CallResult;
+import com.slxt.rs.vo.Fr;
+import com.slxt.rs.vo.FrQs;
+import com.slxt.rs.vo.HjDjVO;
+import com.slxt.rs.vo.Page;
+import com.slxt.rs.vo.QueryQs;
+
+public class HjDjAction extends DispatchAction{
+	private  HjDjService hds;
+	public void setHds(HjDjService hds) {
+		this.hds = hds;
+	}
+	//查询登记记录
+	public ActionForward search(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+			SysUser user=(SysUser)request.getSession().getAttribute("users");
+			if(user==null){
+				return mapping.findForward("sessionFailure");
+			}
+			Page page=new Page();
+			page.setPageNo(1);
+			String hql="";
+			if(user.getIsSuper()==1){
+				hql="select HJID,JY,JQ_Name,FR_No,FR_Name,QS_Info1,QS_Info2,QS_Info3,QS_Info4,QS_Info5,QS_Info6,QS_Info7,QS_Info8,QS_Info9,HJ_Time,HJ_Info,HJ_Type,Monitor_Flag,FP_Flag,dbo.get_ck(FP_Line_No,JY) as zw,DJ_User,DJ_Time,HJ_Index from JL_HJ_DJ where State=0 order by JY,FP_Flag,HJ_Index desc";
+			}else if(user.getIsSuper()==0 && user.getGroupNo().equals("Admin")){
+				hql="select dj.HJID,dj.JY,dj.JQ_Name,dj.FR_No,dj.FR_Name,dj.QS_Info1,dj.QS_Info2,dj.QS_Info3,dj.QS_Info4,dj.QS_Info5,dj.QS_Info6,dj.QS_Info7,dj.QS_Info8,dj.QS_Info9,dj.HJ_Time,dj.HJ_Info,dj.HJ_Type,dj.Monitor_Flag,dj.FP_Flag,dbo.get_ck(dj.FP_Line_No,dj.JY) as zw,dj.DJ_User,dj.DJ_Time,dj.HJ_Index from JL_HJ_DJ dj,JL_JQ jq where dj.State=0 and dj.JQ_Name=jq.JQ_Name and jq.Is_Ts=0 order by dj.JY,dj.FP_Flag,dj.HJ_Index desc";
+			}else{
+				hql="select dj.HJID,dj.JY,dj.JQ_Name,dj.FR_No,dj.FR_Name,dj.QS_Info1,dj.QS_Info2,dj.QS_Info3,dj.QS_Info4,dj.QS_Info5,dj.QS_Info6,dj.QS_Info7,dj.QS_Info8,dj.QS_Info9,dj.HJ_Time,dj.HJ_Info,dj.HJ_Type,dj.Monitor_Flag,dj.FP_Flag,dbo.get_ck(dj.FP_Line_No,dj.JY) as zw,dj.DJ_User,dj.DJ_Time,dj.HJ_Index from JL_HJ_DJ dj,JL_JQ jq,SYS_USER_JQ suj where dj.State=0 and dj.JQ_Name=jq.JQ_Name and jq.JQ_No=suj.JQ_No and suj.Group_No='"+user.getGroupNo()+"' order by dj.JY,dj.FP_Flag,dj.HJ_Index desc";
+			}
+		    Object[] obj={};
+		    Map map=hds.searchToPageBySql(hql,1,20,obj);
+		    page.setPageSize(20);
+		    page.setRecordCount((Integer)map.get(Constant.ALLFILEDCOUNT));
+		    List list=(List)map.get(Constant.RESULTLIST);
+		    for(int i=0;i<list.size();i++){
+		    	Object[] obj1=(Object[])list.get(i);
+		    	HjDjVO hjDjVO=new HjDjVO();
+		    	hjDjVO.setHjid(obj1[0].toString());
+		    	hjDjVO.setJy(obj1[1].toString());
+		    	if(obj1[2]!=null && !obj1[2].toString().equals("")){
+		    		hjDjVO.setJqName(obj1[2].toString());
+		    	}
+		    	hjDjVO.setFrNo(obj1[3].toString());
+		    	if(obj1[4]!=null && !obj1[4].toString().equals("")){
+		    		hjDjVO.setFrName(obj1[4].toString());
+		    	}
+		    	String qsName="";
+		    	if(obj1[5]!=null && !obj1[5].toString().equals("")){
+		    		qsName+=obj1[5].toString();
+		    	}
+		    	if(obj1[6]!=null && !obj1[6].toString().equals("")){
+		    		qsName+=obj1[6].toString();
+		    	}
+		    	if(obj1[7]!=null && !obj1[7].toString().equals("")){
+		    		qsName+=obj1[7].toString();
+		    	}
+		    	if(obj1[8]!=null && !obj1[8].toString().equals("")){
+		    		qsName+=obj1[8].toString();
+		    	}
+		    	if(obj1[9]!=null && !obj1[9].toString().equals("")){
+		    		qsName+=obj1[9].toString();
+		    	}
+		    	if(obj1[10]!=null && !obj1[10].toString().equals("")){
+		    		qsName+=obj1[10].toString();
+		    	}
+		    	if(obj1[11]!=null && !obj1[11].toString().equals("")){
+		    		qsName+=obj1[11].toString();
+		    	}
+		    	if(obj1[12]!=null && !obj1[12].toString().equals("")){
+		    		qsName+=obj1[12].toString();
+		    	}
+		    	if(obj1[13]!=null && !obj1[13].toString().equals("")){
+		    		qsName+=obj1[13].toString();
+		    	}
+		    	hjDjVO.setQsInfo1(qsName);
+		    	hjDjVO.setHjTime(Integer.parseInt(obj1[14].toString())/60+"");
+		    	if(obj1[15]!=null && !obj1[15].toString().equals("")){
+		    		hjDjVO.setHjInfo(obj1[15].toString());	
+		    	}
+		    	hjDjVO.setHjType(obj1[16].toString());
+		    	if(obj1[17]!=null && !obj1[17].toString().equals("")){
+		    		hjDjVO.setMonitorFlag(obj1[17].toString());
+		    	}
+		    	hjDjVO.setFpFlag(obj1[18].toString());
+		    	if(obj1[19]!=null && !obj1[19].toString().equals("")){
+		    		hjDjVO.setZw(obj1[19].toString());
+		    	}
+		    	if(obj1[20]!=null && !obj1[20].toString().equals("")){
+		    		hjDjVO.setDjUser(obj1[20].toString());
+		    	}
+		    	if(obj1[21]!=null && !obj1[21].toString().equals("")){
+		    		hjDjVO.setDjTime(obj1[21].toString().substring(0, 19));
+		    	}
+		    	if(obj1[22]!=null && !obj1[22].toString().equals("")){
+		    		hjDjVO.setHjIndex(obj1[22].toString());
+		    	}
+		    	page.getList().add(hjDjVO);
+		    }
+		    String hql4="from SysParam where paramName='HJ_Client'";
+			List<SysParam> list4=hds.searchAll(hql4);
+			if(list4.size()>0){
+				SysParam sysParam1=(SysParam)list4.get(0);
+				request.getSession().setAttribute("hJClient", sysParam1);
+			}
+		    request.setAttribute("page", page);
+			return mapping.findForward("hjDjMain");
+	}
+	//查询登记记录
+	public ActionForward search1(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+			SysUser user=(SysUser)request.getSession().getAttribute("users");
+			if(user==null){
+				return mapping.findForward("sessionFailure");
+			}
+			Page page=new Page();
+			page.setPageNo(Integer.parseInt(request.getParameter("pageNo")));
+			String hql="";
+			if(user.getIsSuper()==1){
+				hql="select HJID,JY,JQ_Name,FR_No,FR_Name,QS_Info1,QS_Info2,QS_Info3,QS_Info4,QS_Info5,QS_Info6,QS_Info7,QS_Info8,QS_Info9,HJ_Time,HJ_Info,HJ_Type,Monitor_Flag,FP_Flag,dbo.get_ck(FP_Line_No,JY) as zw,DJ_User,DJ_Time,HJ_Index from JL_HJ_DJ where State=0 order by JY,FP_Flag,HJ_Index desc";
+			}else if(user.getIsSuper()==0 && user.getGroupNo().equals("Admin")){
+				hql="select dj.HJID,dj.JY,dj.JQ_Name,dj.FR_No,dj.FR_Name,dj.QS_Info1,dj.QS_Info2,dj.QS_Info3,dj.QS_Info4,dj.QS_Info5,dj.QS_Info6,dj.QS_Info7,dj.QS_Info8,dj.QS_Info9,dj.HJ_Time,dj.HJ_Info,dj.HJ_Type,dj.Monitor_Flag,dj.FP_Flag,dbo.get_ck(dj.FP_Line_No,dj.JY) as zw,dj.DJ_User,dj.DJ_Time,dj.HJ_Index from JL_HJ_DJ dj,JL_JQ jq where dj.State=0 and dj.JQ_Name=jq.JQ_Name and jq.Is_Ts=0 order by dj.JY,dj.FP_Flag,dj.HJ_Index desc";
+			}else{
+				hql="select dj.HJID,dj.JY,dj.JQ_Name,dj.FR_No,dj.FR_Name,dj.QS_Info1,dj.QS_Info2,dj.QS_Info3,dj.QS_Info4,dj.QS_Info5,dj.QS_Info6,dj.QS_Info7,dj.QS_Info8,dj.QS_Info9,dj.HJ_Time,dj.HJ_Info,dj.HJ_Type,dj.Monitor_Flag,dj.FP_Flag,dbo.get_ck(dj.FP_Line_No,dj.JY) as zw,dj.DJ_User,dj.DJ_Time,dj.HJ_Index from JL_HJ_DJ dj,JL_JQ jq,SYS_USER_JQ suj where dj.State=0 and dj.JQ_Name=jq.JQ_Name and jq.JQ_No=suj.JQ_No and suj.Group_No='"+user.getGroupNo()+"' order by dj.JY,dj.FP_Flag,dj.HJ_Index desc";
+			}
+		    Object[] obj={};
+		    Map map=hds.searchToPageBySql(hql,page.getPageNo(),20,obj);
+		    page.setPageSize(20);
+		    page.setRecordCount((Integer)map.get(Constant.ALLFILEDCOUNT));
+		    List list=(List)map.get(Constant.RESULTLIST);
+		    for(int i=0;i<list.size();i++){
+		    	Object[] obj1=(Object[])list.get(i);
+		    	HjDjVO hjDjVO=new HjDjVO();
+		    	hjDjVO.setHjid(obj1[0].toString());
+		    	hjDjVO.setJy(obj1[1].toString());
+		    	if(obj1[2]!=null && !obj1[2].toString().equals("")){
+		    		hjDjVO.setJqName(obj1[2].toString());
+		    	}
+		    	hjDjVO.setFrNo(obj1[3].toString());
+		    	if(obj1[4]!=null && !obj1[4].toString().equals("")){
+		    		hjDjVO.setFrName(obj1[4].toString());
+		    	}
+		    	String qsName="";
+		    	if(obj1[5]!=null && !obj1[5].toString().equals("")){
+		    		qsName+=obj1[5].toString();
+		    	}
+		    	if(obj1[6]!=null && !obj1[6].toString().equals("")){
+		    		qsName+=obj1[6].toString();
+		    	}
+		    	if(obj1[7]!=null && !obj1[7].toString().equals("")){
+		    		qsName+=obj1[7].toString();
+		    	}
+		    	if(obj1[8]!=null && !obj1[8].toString().equals("")){
+		    		qsName+=obj1[8].toString();
+		    	}
+		    	if(obj1[9]!=null && !obj1[9].toString().equals("")){
+		    		qsName+=obj1[9].toString();
+		    	}
+		    	if(obj1[10]!=null && !obj1[10].toString().equals("")){
+		    		qsName+=obj1[10].toString();
+		    	}
+		    	if(obj1[11]!=null && !obj1[11].toString().equals("")){
+		    		qsName+=obj1[11].toString();
+		    	}
+		    	if(obj1[12]!=null && !obj1[12].toString().equals("")){
+		    		qsName+=obj1[12].toString();
+		    	}
+		    	if(obj1[13]!=null && !obj1[13].toString().equals("")){
+		    		qsName+=obj1[13].toString();
+		    	}
+		    	hjDjVO.setQsInfo1(qsName);
+		    	hjDjVO.setHjTime(Integer.parseInt(obj1[14].toString())/60+"");
+		    	if(obj1[15]!=null && !obj1[15].toString().equals("")){
+		    		hjDjVO.setHjInfo(obj1[15].toString());	
+		    	}
+		    	hjDjVO.setHjType(obj1[16].toString());
+		    	if(obj1[17]!=null && !obj1[17].toString().equals("")){
+		    		hjDjVO.setMonitorFlag(obj1[17].toString());
+		    	}
+		    	hjDjVO.setFpFlag(obj1[18].toString());
+		    	if(obj1[19]!=null && !obj1[19].toString().equals("")){
+		    		hjDjVO.setZw(obj1[19].toString());
+		    	}
+		    	if(obj1[20]!=null && !obj1[20].toString().equals("")){
+		    		hjDjVO.setDjUser(obj1[20].toString());
+		    	}
+		    	if(obj1[21]!=null && !obj1[21].toString().equals("")){
+		    		hjDjVO.setDjTime(obj1[21].toString().substring(0, 19));
+		    	}
+		    	if(obj1[22]!=null && !obj1[22].toString().equals("")){
+		    		hjDjVO.setHjIndex(obj1[22].toString());
+		    	}
+		    	page.getList().add(hjDjVO);
+		    }
+		    String hql4="from SysParam where paramName='HJ_Client'";
+			List<SysParam> list4=hds.searchAll(hql4);
+			if(list4.size()>0){
+				SysParam sysParam1=(SysParam)list4.get(0);
+				request.getSession().setAttribute("hJClient", sysParam1);
+			}
+		    request.setAttribute("page", page);
+			return mapping.findForward("hjDjMain");
+	}
+	//查询犯人
+	public ActionForward checkFr(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		 	SysUser user=(SysUser)request.getSession().getAttribute("users");
+		 	if(user==null){
+		 		return mapping.findForward("sessionFailure");
+		 	}
+		 	String frNo=request.getParameter("frNo");
+		 	List<Fr> jlFrList=new ArrayList<Fr>();
+			List<Fr> unjlFrList=new ArrayList<Fr>();
+			Calendar c = Calendar.getInstance();
+		 	SimpleDateFormat simpleDateTimeFormat  =   new  SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );   
+		 	c  =  Calendar.getInstance(Locale.CHINESE);   
+		 	String loginTime = simpleDateTimeFormat.format(c.getTime());
+		 	HjdjForm ff=(HjdjForm)form;
+			if(ff.getJq()!=null  || ff.getQssfz()!=null || ff.getQsName()!=null || ff.getFrName()!=null || frNo!=null){
+				StringBuffer str=new StringBuffer("");
+				if(user.getIsSuper()==1){
+					str.append("select aa.webId,aa.FR_No,aa.FR_Name,aa.jy,aa.jq,aa.JB_Name,aa.jq_Name,dbo.get_hj_UseCount(aa.FR_No) as use1,aa.HJ_JB,aa.Monitor_Flag,aa.HJ_Count,aa.HJ_Last_Time,aa.HJ_Use from (select jl.webId,jl.FR_No,jl.FR_Name,jl.jy,jl.jq,jb.JB_Name,jq.jq_Name,jl.HJ_JB,jl.Monitor_Flag,jb.HJ_Count,jl.HJ_Last_Time,jl.HJ_Use from JL_FR jl,JL_JB jb,JL_Jq jq where jb.JB_No=jl.JB_No and jq.jq_No=jl.jq ) as aa left join (select * from JL_QS qs where 1=1 ) as qs on aa.FR_No=qs.FR_No where 1=1 ");
+				}else if(user.getIsSuper()==0 && user.getGroupNo().equals("Admin")){
+					str.append("select aa.webId,aa.FR_No,aa.FR_Name,aa.jy,aa.jq,aa.JB_Name,aa.jq_Name,dbo.get_hj_UseCount(aa.FR_No) as use1,aa.HJ_JB,aa.Monitor_Flag,aa.HJ_Count,aa.HJ_Last_Time,aa.HJ_Use from (select jl.webId,jl.FR_No,jl.FR_Name,jl.jy,jl.jq,jb.JB_Name,jq.jq_Name,jl.HJ_JB,jl.Monitor_Flag,jb.HJ_Count,jl.HJ_Last_Time,jl.HJ_Use from JL_FR jl,JL_JB jb,JL_Jq jq where jb.JB_No=jl.JB_No and jq.jq_No=jl.jq and jq.Is_Ts=0) as aa left join (select * from JL_QS qs where 1=1 ) as qs on aa.FR_No=qs.FR_No where 1=1 ");
+				}else{
+					str.append("select aa.webId,aa.FR_No,aa.FR_Name,aa.jy,aa.jq,aa.JB_Name,aa.jq_Name,dbo.get_hj_UseCount(aa.FR_No) as use1,aa.HJ_JB,aa.Monitor_Flag,aa.HJ_Count,aa.HJ_Last_Time,aa.HJ_Use from (select jl.webId,jl.FR_No,jl.FR_Name,jl.jy,jl.jq,jb.JB_Name,jq.jq_Name,jl.HJ_JB,jl.Monitor_Flag,jb.HJ_Count,jl.HJ_Last_Time,jl.HJ_Use from JL_FR jl,JL_JB jb,JL_Jq jq,SYS_USER_JQ suj where jb.JB_No=jl.JB_No and jq.jq_No=jl.jq and jq.jq_no=suj.JQ_No and suj.Group_No='");
+					str.append(user.getGroupNo());
+					str.append("') as aa left join (select * from JL_QS qs where 1=1 ) as qs on aa.FR_No=qs.FR_No where 1=1 ");
+				}
+				if(ff.getJq()!=null  && !ff.getJq().equals("null")){
+					str.append("and aa.jq='"+ff.getJq()+"' ");
+				}
+				if(ff.getFrName()!=null && !ff.getFrName().trim().equals("")){
+					str.append("and aa.FR_Name like '%"+ff.getFrName().trim()+"%' ");
+				}
+				if(frNo!=null){
+					str.append("and aa.FR_No='"+frNo.trim()+"' ");
+				}
+				if(ff.getQsName()!=null && !ff.getQsName().trim().equals("")){
+					str.append("and qs.QS_Name like '%"+ff.getQsName().trim()+"%' ");
+				}
+				if(ff.getQssfz()!=null && !ff.getQssfz().trim().equals("")){
+					str.append("and qs.QS_SFZ ='"+ff.getQssfz().trim()+"' ");
+				}
+				str.append("group by aa.webId,aa.FR_No,aa.FR_Name,aa.jy,aa.jq,aa.JB_Name,aa.jq_Name,aa.HJ_JB,aa.Monitor_Flag,aa.HJ_Count,aa.HJ_Last_Time,aa.HJ_Use order by aa.webId desc");
+				List list3=hds.searchAllBySql(str.toString());
+				Iterator it=list3.iterator();
+				while(it.hasNext()){
+					Object[] obj=(Object[])it.next();
+					Fr fr=new Fr();
+					fr.setWebId(obj[0].toString());
+					fr.setFrNo(obj[1].toString());
+					if(obj[2]!=null && !obj[2].toString().equals("")){
+						fr.setFrName(obj[2].toString());
+					}
+					fr.setJy(obj[3].toString());
+					fr.setJq(obj[4].toString());
+					if(obj[5]!=null && !obj[5].toString().equals("")){
+						fr.setJbName(obj[5].toString());
+					}
+					if(obj[6]!=null && !obj[6].toString().equals("")){
+						fr.setJqName(obj[6].toString());
+					}
+					//fr.setHjUse(obj[7].toString());
+					fr.setHjJb(obj[8].toString());
+					fr.setMonitorFlag(obj[9].toString());
+					fr.setHjLeft(obj[10].toString());
+					if(obj[11]!=null && !obj[11].toString().equals("")){
+						fr.setHjLastTime(obj[11].toString().substring(0, 10));
+					}
+					if(obj[12]!=null && obj[12].toString()!=""){
+						if(fr.getHjLastTime()!=null && !fr.getHjLastTime().equals(loginTime.substring(0, 10))){
+							fr.setHjUse("0");
+						}else{
+							fr.setHjUse(obj[12].toString());
+						}
+					}else{
+						fr.setHjUse("0");
+					}
+					jlFrList.add(fr);
+				}
+		 	}
+			if(user.getIsSuper()==1){
+				String hql="from JlJq";
+		 	 	List<JlJq> list=hds.searchAll(hql);
+		 	 	request.setAttribute("jljqList", list);
+			}else if(user.getIsSuper()==0 && user.getGroupNo().equals("Admin")){
+				String hql="from JlJq where isTs=0";
+		 	 	List<JlJq> list=hds.searchAll(hql);
+		 	 	request.setAttribute("jljqList", list);
+			}else{
+				String hql="select jq from JlJq jq,SysUserJq suj where jq.jqNo=suj.jqNo and suj.groupNo='"+user.getGroupNo()+"'";
+		 	 	List<JlJq> list=hds.searchAll(hql);
+		 	 	request.setAttribute("jljqList", list);
+			}
+		 	request.setAttribute("jlFrList", jlFrList);
+		 	if(jlFrList.size()<5){
+		 		for(int i=0;i<5-jlFrList.size();i++){
+		 			Fr fr=new Fr();
+					fr.setWebId("");
+					fr.setFrNo("");
+					fr.setFrName("");
+					fr.setJy("");
+					fr.setJq("");
+					fr.setJbName("");
+					fr.setQqUse("");
+					fr.setQqLeft("");
+					fr.setJqName("");
+					fr.setHjUse("");
+					fr.setHjLeft("");
+					fr.setHjJb("");
+					fr.setHjLastTime("");
+					unjlFrList.add(fr);
+		 		}
+		 	}
+		 	request.setAttribute("unjlFrList", unjlFrList);
+		 	if(frNo!=null){
+		 		String hql2="from JlQs where frNo='"+frNo+"'";
+			 	List<JlQs> listJlQs=hds.searchAll(hql2);
+			 	List<JlQs> unjlListJlQs=new ArrayList<JlQs>();
+			 	if(listJlQs.size()<10){
+			 		for(int i=0;i<10-listJlQs.size();i++){
+			 			JlQs jlQs=new JlQs();
+						unjlListJlQs.add(jlQs);
+			 		}
+			 	}
+			 	int hjTime=hds.getLineNo("get_HJ_SJ", frNo);
+			 	Fr fr=(Fr)jlFrList.get(0);
+			 	request.setAttribute("monitorFlag", fr.getMonitorFlag());
+			 	request.setAttribute("hjTime", hjTime);
+			 	request.setAttribute("listJlQs", listJlQs);
+			 	request.setAttribute("unjlListJlQs", unjlListJlQs);
+			 	request.setAttribute("frNo", frNo);
+		 	}
+		 	if(jlFrList.size()==1){
+		 		Fr fr=jlFrList.get(0);
+		 		String hql3="from JlQs where frNo='"+fr.getFrNo()+"'";
+			 	List<JlQs> listJlQs=hds.searchAll(hql3);
+			 	List<JlQs> unjlListJlQs=new ArrayList<JlQs>();
+			 	if(listJlQs.size()<10){
+			 		for(int i=0;i<10-listJlQs.size();i++){
+			 			JlQs jlQs=new JlQs();
+						unjlListJlQs.add(jlQs);
+			 		}
+			 	}
+			 	request.setAttribute("listJlQs", listJlQs);
+			 	request.setAttribute("unjlListJlQs", unjlListJlQs);
+			 	request.setAttribute("frNo", frNo);
+		 	}
+		 	String isDjck="from HjdjAcdWindowsInfo where acdip='"+request.getRemoteAddr()+"'";
+		 	List<HjdjAcdWindowsInfo> listHjdjAcdWindowsInfo=hds.searchAll(isDjck);
+		 	if(listHjdjAcdWindowsInfo.size()>0){
+		 		HjdjAcdWindowsInfo hjdjAcdWindowsInfo=(HjdjAcdWindowsInfo)listHjdjAcdWindowsInfo.get(0);
+		 		request.setAttribute("hjdjAcdWindowsInfo", hjdjAcdWindowsInfo);
+		 		List<HjdjAcdInfo> listHjdjAcdInfo=hds.searchAll("from HjdjAcdInfo");
+				if(listHjdjAcdInfo.size()>0){
+					HjdjAcdInfo hjdjAcdInfo=(HjdjAcdInfo)listHjdjAcdInfo.get(0);
+					request.setAttribute("hjdjAcdInfo", hjdjAcdInfo);
+				}
+		 	}
+		 	return mapping.findForward("addHjdj");
+	}
+	public ActionForward checkJqueryFr(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+			String frName = java.net.URLDecoder.decode((String)request.getParameter("frName"),"UTF-8");
+		 	String qsSfz = java.net.URLDecoder.decode((String)request.getParameter("qsSfz"),"UTF-8");
+		 	String qsName = java.net.URLDecoder.decode((String)request.getParameter("qsName"),"UTF-8");
+		 	String jq=request.getParameter("jq");
+		 	Calendar c = Calendar.getInstance();
+		 	SimpleDateFormat simpleDateTimeFormat  =   new  SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );   
+		 	c  =  Calendar.getInstance(Locale.CHINESE);   
+		 	String loginTime = simpleDateTimeFormat.format(c.getTime());
+		 	StringBuffer str=new StringBuffer("select aa.webId,aa.FR_No,aa.FR_Name,aa.jy,aa.jq,aa.JB_Name,aa.jq_Name,dbo.get_hj_UseCount(aa.FR_No) as use1,aa.HJ_JB,aa.Monitor_Flag,aa.HJ_Count,aa.HJ_Last_Time,aa.HJ_Use from (select jl.webId,jl.FR_No,jl.FR_Name,jl.jy,jl.jq,jb.JB_Name,jq.jq_Name,jl.HJ_JB,jl.Monitor_Flag,jb.HJ_Count,jl.HJ_Last_Time,jl.HJ_Use from JL_FR jl,JL_JB jb,JL_Jq jq where jb.JB_No=jl.JB_No and jq.jq_No=jl.jq ) as aa left join (select * from JL_QS qs where 1=1 ) as qs on aa.FR_No=qs.FR_No where 1=1 ");
+			if(!jq.equals("null")){
+				str.append("and aa.jq='"+jq+"' ");
+			}
+			if(!frName.trim().equals("")){
+				str.append("and aa.FR_Name like '%"+frName.trim()+"%' ");
+			}
+			if(!qsName.trim().equals("")){
+				str.append("and qs.QS_Name like '%"+qsName.trim()+"%' ");
+			}
+			if(!qsSfz.trim().equals("")){
+				str.append("and qs.QS_SFZ ='"+qsSfz.trim()+"' ");
+			}
+			str.append("group by aa.webId,aa.FR_No,aa.FR_Name,aa.jy,aa.jq,aa.JB_Name,aa.jq_Name,aa.HJ_JB,aa.Monitor_Flag,aa.HJ_Count,aa.HJ_Last_Time,aa.HJ_Use order by aa.webId desc");
+			List list3=hds.searchAllBySql(str.toString());
+			Iterator it=list3.iterator();
+			List<Fr> listFrList=new ArrayList<Fr>();
+			while(it.hasNext()){
+				Object[] obj=(Object[])it.next();
+				Fr fr=new Fr();
+				fr.setWebId(obj[0].toString());
+				fr.setFrNo(obj[1].toString());
+				if(obj[2]!=null && !obj[2].toString().equals("")){
+					fr.setFrName(obj[2].toString());
+				}
+				fr.setJy(obj[3].toString());
+				fr.setJq(obj[4].toString());
+				if(obj[5]!=null && !obj[5].toString().equals("")){
+					fr.setJbName(obj[5].toString());
+				}
+				if(obj[6]!=null && !obj[6].toString().equals("")){
+					fr.setJqName(obj[6].toString());
+				}
+				fr.setHjUse(obj[7].toString());
+				fr.setHjJb(obj[8].toString());
+				fr.setMonitorFlag(obj[9].toString());
+				fr.setHjLeft(obj[10].toString());
+				if(obj[11]!=null && !obj[11].toString().equals("")){
+					fr.setHjLastTime(obj[11].toString().substring(0, 10));
+				}
+				if(obj[12]!=null && obj[12].toString()!=""){
+					if(fr.getHjLastTime()!=null && !fr.getHjLastTime().equals(loginTime.substring(0, 10))){
+						fr.setHjUse("0");
+					}else{
+						fr.setHjUse(obj[12].toString());
+					}
+				}else{
+					fr.setHjUse("0");
+				}
+				listFrList.add(fr);
+			}
+			response.setContentType("text/json; charset=utf-8");
+			JSONArray json=JSONArray.fromObject(listFrList);
+			response.getWriter().println(json.toString());
+			return null;
+	}
+	//单击查询犯人亲属
+	public ActionForward checkFrQs(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		 	SysUser user=(SysUser)request.getSession().getAttribute("users");
+		 	if(user==null){
+		 		return mapping.findForward("sessionFailure");
+		 	}
+		 	String frNo = java.net.URLDecoder.decode((String)request.getParameter("frNo"),"UTF-8");
+		 	String hql="from JlQs where frNo='"+frNo+"'";
+		 	List<JlQs> list=hds.searchAll(hql);
+		 	QueryQs queryQs=new QueryQs();
+		 	queryQs.setList(list);
+		 	queryQs.setHjTime(hds.getLineNo("get_HJ_SJ", frNo));
+		 	String hql1="from SysParam where paramName='HJ_Client'";
+		 	List<SysParam> list1=hds.searchAll(hql1);
+		 	if(list1.size()>0){
+		 		SysParam sysParam=(SysParam)list1.get(0);
+		 		queryQs.setEnter(sysParam.getParamData2());
+		 	}
+		 	List<QueryQs> list2=new ArrayList<QueryQs>();
+		 	list2.add(queryQs);
+		 	response.setContentType("text/json; charset=utf-8");   
+		 	JSONArray jsonArray=JSONArray.fromObject(list2);
+		 	response.getWriter().println(jsonArray.toString());
+		 	return null;
+	}
+	//双击查询犯人亲属
+	public ActionForward checkQs(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+			SysUser user=(SysUser)request.getSession().getAttribute("users");
+			if(user==null){
+				return mapping.findForward("sessionFailure");
+			}
+			String frNo = java.net.URLDecoder.decode((String)request.getParameter("frNo"),"UTF-8");
+			List<FrQs> frQsList=new ArrayList();
+			StringBuffer str=new StringBuffer("select jl.webId,jl.frNo,jl.qsSfz,jl.qsName,jl.qsCard,jl.gx,jl.xb,jl.dz,jl.tele,jl.sw,jlFr.frName from JlFr jlFr,JlQs jl where jlFr.frNo=jl.frNo and jlFr.frNo='");
+			str.append(frNo+"'");
+			List<JlQs> list=hds.searchAll(str.toString());
+			Iterator it=list.iterator();
+			while(it.hasNext()){
+				Object[] obj=(Object[])it.next();
+				FrQs frQs=new FrQs();
+				frQs.setWebId(Integer.parseInt(obj[0].toString()));
+				frQs.setFrNo(obj[1].toString());
+				if(obj[2]!=null && obj[2].toString().trim()!=""){
+					frQs.setQsSfz(obj[2].toString());
+				}
+				if(obj[3]!=null && obj[3].toString().trim()!=""){
+					frQs.setQsName(obj[3].toString());
+				}
+				if( obj[4]!=null && obj[4].toString().trim()!=""){
+					frQs.setQsCard(obj[4].toString());
+				}
+				if( obj[5]!=null && obj[5].toString().trim()!=""){
+					frQs.setGx(obj[5].toString());
+				}
+				if(obj[6]!=null && obj[6].toString().trim()!=""){
+					frQs.setXb(obj[6].toString());
+				}
+				if( obj[7]!=null && obj[7].toString().trim()!=""){
+					frQs.setDz(obj[7].toString());
+				}
+				if(obj[8]!=null && obj[8].toString().trim()!=""){
+					frQs.setTele(obj[8].toString());
+				}
+				if( obj[9]!=null && obj[9].toString().trim()!=""){
+					frQs.setSw(Integer.parseInt(obj[9].toString()));
+				}
+				if(obj[10]!=null && obj[10].toString().trim()!=""){
+					frQs.setFrName(obj[10].toString());
+				}
+				frQsList.add(frQs);
+			}
+			request.setAttribute("qsList",frQsList);
+			request.setAttribute("frNo",frNo);
+			
+			String hql4="from SysParam where paramName='HJ_Client1'";
+			List<SysParam> list4=hds.searchAll(hql4);
+			if(list4.size()>0){
+				SysParam sysParam1=(SysParam)list4.get(0);
+				request.setAttribute("sysParam", sysParam1);
+			}
+			return mapping.findForward("qsMain");
+	}
+	//添加亲属
+	public ActionForward addQs(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		    SysUser user=(SysUser)request.getSession().getAttribute("users");
+		    if(user==null){
+		    	return mapping.findForward("sessionFailure");
+		    }
+			String frNo=request.getParameter("frNo");
+			StringBuffer str=new StringBuffer(" from JlFr jl where jl.frNo='");
+			str.append(frNo+"'");
+			List<JlFr> list=hds.searchAll(str.toString());
+			JlFr jlFr=(JlFr)list.get(0);
+			List<Integer> qjswList=new ArrayList();
+			for(int i=1;i<=9;i++){
+				qjswList.add(i);
+			}
+			List<Integer> unswList=new ArrayList();
+			unswList=qjswList;
+			StringBuffer str1=new StringBuffer(" from JlQs jl where jl.frNo='");
+			str1.append(frNo+"'");
+			List<JlQs> swlist=hds.searchAll(str1.toString());
+			if(swlist!=null){
+				for(int i=0;i<unswList.size();i++)
+					for(int j=0;j<swlist.size();j++){
+						JlQs jlQs=(JlQs)swlist.get(j);
+						if(jlQs.getSw()!=null){
+							if(jlQs.getSw().intValue()==unswList.get(i)){
+							unswList.remove(i);
+							i=0;
+							}
+						}
+					}
+			}
+			String hql3="from SysParam where paramName='System_Set'";
+			List<SysParam> list3=hds.searchAll(hql3);
+			SysParam sysParam=(SysParam)list3.get(0);
+			String qsSfz="";
+			if(sysParam.getParamData5().equals("1")){
+				qsSfz=System.currentTimeMillis()+"";
+			}
+			String hql4="from SysParam where paramName='HJ_Client'";
+			List<SysParam> list4=hds.searchAll(hql4);
+			if(list4.size()>0){
+				SysParam sysParam1=(SysParam)list4.get(0);
+				request.setAttribute("sysParam", sysParam1);
+			}
+			request.setAttribute("qsSfz", qsSfz);
+			request.setAttribute("unswList",unswList);
+			request.setAttribute("jlFr", jlFr);
+		    return mapping.findForward("addFrQs");
+	}
+	//添加保存亲属
+	public ActionForward addSaveFrQs(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+			SysUser user=(SysUser)request.getSession().getAttribute("users");
+		    if(user==null){
+		    	return mapping.findForward("sessionFailure");
+		    }
+		 	String frNo = java.net.URLDecoder.decode((String)request.getParameter("frNo"),"UTF-8");
+		 	String qsSfz = java.net.URLDecoder.decode((String)request.getParameter("qsSfz"),"UTF-8");
+		 	String qsName = java.net.URLDecoder.decode((String)request.getParameter("qsName"),"UTF-8");
+		 	String qsCard = java.net.URLDecoder.decode((String)request.getParameter("qsCard"),"UTF-8");
+		 	String dz = java.net.URLDecoder.decode((String)request.getParameter("dz"),"UTF-8");
+		 	String tele = java.net.URLDecoder.decode((String)request.getParameter("tele"),"UTF-8");
+		 	String gx = java.net.URLDecoder.decode((String)request.getParameter("gx"),"UTF-8");
+		 	String xb = java.net.URLDecoder.decode((String)request.getParameter("xb"),"UTF-8");
+		 	String sw = java.net.URLDecoder.decode((String)request.getParameter("sw"),"UTF-8");
+		 	String photoAddress=request.getParameter("photoAddress");
+		 	String jz=request.getParameter("jz");
+		 	if(!qsSfz.trim().equals("")){
+		 		String hql="from JlQs where frNo='"+frNo+"' and qsSfz='"+qsSfz.trim()+"'";
+			 	List list=hds.searchAll(hql);
+		 		if(list.size()>0){
+		 			  JSONArray json=JSONArray.fromObject(1);
+		 		 	  response.getWriter().println(json.toString());
+			 	}else{
+			 		JlQs jlQs=new JlQs();
+			 		jlQs.setFrNo(frNo);
+			 		jlQs.setQsSfz(qsSfz);
+			 		if(!qsName.trim().equals("")){
+			 			jlQs.setQsName(qsName);
+			 	    }
+			 		if(!qsCard.trim().equals("")){
+			 			jlQs.setQsCard(qsCard);
+			 		}
+			 		if(!dz.trim().equals("")){
+			 			jlQs.setDz(dz);
+			 	    }
+			 		if(!tele.trim().equals("")){
+			 			jlQs.setTele(tele);
+			 		}
+			 		jlQs.setGx(gx);
+			 		jlQs.setXb(xb);
+			 	    if(!sw.equals("null")){
+			 	    	jlQs.setSw(Integer.parseInt(sw));
+			 	    }
+			 	    if(!photoAddress.trim().equals("")){
+			 		   String khdIp=request.getRemoteAddr();
+			 		   String url1="http://"+khdIp+":9009/"+photoAddress.replace(":", "").replace("\\", "/");
+			 		   URL url=new URL(url1);
+			 		   HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+			 		   if(connection.getResponseCode()==200){
+			 			  InputStream fis = url.openStream();
+			 			  Thread.sleep(2000);
+				 		  byte[] byte1 = new byte[fis.available()];
+				 		  fis.read(byte1);
+				 		  jlQs.setZp(byte1);
+			 		   }
+			 	    }
+			 	   if(jz.length()>2){
+			 		   sun.misc.BASE64Decoder decode=new sun.misc.BASE64Decoder();
+			 		   byte[] datas=decode.decodeBuffer(jz.substring(1, jz.length()-2));
+			 		   jlQs.setJz(datas);
+			 	    }
+			 	   	jlQs.setSpState(1);
+			 	    hds.save(jlQs);
+			 	    StringBuffer str1=new StringBuffer("");
+			 	    Calendar c = Calendar.getInstance();   
+			 	    SimpleDateFormat simpleDateTimeFormat  =   new  SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );   
+			 	    c  =  Calendar.getInstance(Locale.CHINESE);   
+			 	    String loginTime = simpleDateTimeFormat.format(c.getTime());
+			 	    SysLog sl=new SysLog();
+			 	    sl.setType("正常");
+			 	    sl.setLogTime(loginTime);
+			 	    sl.setUserName(user.getUserName());
+			 	    sl.setUserNo(user.getUserNo());
+			 	    sl.setUserIp(request.getRemoteAddr());
+			 	    sl.setModel("犯人管理");
+			 	    sl.setInfo(str1.append("给犯人编号为").append(frNo).append("的增加亲属（亲属姓名：").append(qsName).append(" 电话号码：").append(tele).append("）").toString());
+			 	    sl.setOp("增加犯人亲属信息");
+			 	    hds.save(sl);
+			 	    JSONArray json=JSONArray.fromObject(0);
+			 	    response.getWriter().println(json.toString());
+			 	}
+		 	}else{
+		 		JlQs jlQs=new JlQs();
+		 		jlQs.setFrNo(frNo);
+		 		jlQs.setQsSfz(qsSfz.trim());
+		 		if(!qsName.trim().equals("")){
+		 			jlQs.setQsName(qsName);
+		 	    }
+		 		if(!qsCard.trim().equals("")){
+		 			jlQs.setQsCard(qsCard);
+		 		}
+		 		if(!dz.trim().equals("")){
+		 			jlQs.setDz(dz);
+		 	    }
+		 		if(!tele.trim().equals("")){
+		 			jlQs.setTele(tele);
+		 		}
+		 		jlQs.setGx(gx);
+		 		jlQs.setXb(xb);
+		 	    if(!sw.equals("null")){
+		 	    	jlQs.setSw(Integer.parseInt(sw));
+		 	    }
+		 	    if(!photoAddress.trim().equals("")){
+		 		   String khdIp=request.getRemoteAddr();
+		 		   String url1="http://"+khdIp+":9009/"+photoAddress.replace(":", "").replace("\\", "/");
+		 		   URL url=new URL(url1);
+		 		   HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+		 		   if(connection.getResponseCode()==200){
+		 			  InputStream fis = url.openStream();
+		 			  Thread.sleep(2000);
+			 		  byte[] byte1 = new byte[fis.available()];
+			 		  fis.read(byte1);
+			 		  jlQs.setZp(byte1);
+		 		   }
+		 	    }
+		 	   if(jz.length()>2){
+		 		   sun.misc.BASE64Decoder decode=new sun.misc.BASE64Decoder();
+		 		   byte[] datas=decode.decodeBuffer(jz.substring(1, jz.length()-2));
+		 		   jlQs.setJz(datas);
+		 	    }
+		 	   	jlQs.setSpState(1);
+		 	    hds.save(jlQs);
+		 	    StringBuffer str1=new StringBuffer("");
+		 	    Calendar c = Calendar.getInstance();   
+		 	    SimpleDateFormat simpleDateTimeFormat  =   new  SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );   
+		 	    c  =  Calendar.getInstance(Locale.CHINESE);   
+		 	    String loginTime = simpleDateTimeFormat.format(c.getTime());
+		 	    SysLog sl=new SysLog();
+		 	    sl.setType("正常");
+		 	    sl.setLogTime(loginTime);
+		 	    sl.setUserName(user.getUserName());
+		 	    sl.setUserNo(user.getUserNo());
+		 	    sl.setUserIp(request.getRemoteAddr());
+		 	    sl.setModel("犯人管理");
+		 	    sl.setInfo(str1.append("给犯人编号为").append(frNo).append("的增加亲属（亲属姓名：").append(qsName).append(" 电话号码：").append(tele).append("）").toString());
+		 	    sl.setOp("增加犯人亲属信息");
+		 	    hds.save(sl);
+		 	    JSONArray json=JSONArray.fromObject(0);
+		 	    response.getWriter().println(json.toString());
+		 	}
+	 	    return null;
+	}	
+	//删除亲属
+	public ActionForward delFrQs(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+			SysUser user=(SysUser)request.getSession().getAttribute("users");
+		    if(user==null){
+		    	return mapping.findForward("sessionFailure");
+		    }
+		    String frNo=request.getParameter("frNo");
+		    String webId=request.getParameter("webId");
+		    JlQs jlQs=(JlQs)hds.findById(JlQs.class, Integer.parseInt(webId));
+		    String hql="delete from JlQs jl where webId=?";
+		    Object[] obj={Integer.parseInt(webId)};
+		    Calendar c = Calendar.getInstance();   
+		    SimpleDateFormat simpleDateTimeFormat  =   new  SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );   
+		    c  =  Calendar.getInstance(Locale.CHINESE);   
+		    String loginTime = simpleDateTimeFormat.format(c.getTime());
+		    SysLog sl=new SysLog();
+		    sl.setType("严重");
+		    sl.setLogTime(loginTime);
+		    sl.setUserName(user.getUserName());
+		    sl.setUserNo(user.getUserNo());
+		    sl.setUserIp(request.getRemoteAddr());
+		    sl.setModel("犯人管理");
+		    sl.setInfo("犯人编号为"+frNo+"的亲属（姓名:"+jlQs.getQsName()+" 电话号码:"+jlQs.getTele()+"）被删除");
+		    sl.setOp("删除犯人亲属信息");
+		    hds.save(sl);
+		    hds.deleteByHql(hql, obj);
+		    request.setAttribute("frNo", frNo);
+		    return mapping.findForward("delFrQs");
+	}
+	//修改亲属
+	public ActionForward updateFrQs(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+			SysUser user=(SysUser)request.getSession().getAttribute("users");
+			if(user==null){
+				return mapping.findForward("sessionFailure");
+			}
+			String webId=request.getParameter("webId");
+			String frNo=request.getParameter("frNo");
+			StringBuffer str=new StringBuffer(" from JlFr jl where jl.frNo='");
+			str.append(frNo+"'");
+			List<JlFr> list=hds.searchAll(str.toString());
+			JlFr jlFr=(JlFr)list.get(0);
+			String hql="from JlQs jl where webId=?";
+			Object[] obj={Integer.parseInt(webId)};
+			List<JlQs> list1=hds.searchAll(hql, obj);
+			JlQs jlQs=(JlQs)list1.get(0);
+			List<Integer> qjswList=new ArrayList();
+			for(int i=1;i<=9;i++){
+				qjswList.add(i);
+			}
+			List<Integer> unswList=new ArrayList();
+			unswList=qjswList;
+			StringBuffer str1=new StringBuffer(" from JlQs jl where jl.frNo='");
+			str1.append(frNo+"'");
+			List<JlQs> swlist=hds.searchAll(str1.toString());
+			if(swlist!=null){
+				for(int i=0;i<unswList.size();i++)
+					for(int j=0;j<swlist.size();j++){
+						JlQs jlqs=(JlQs)swlist.get(j);
+						if(jlqs.getSw()!=null){
+							if(jlqs.getSw().intValue()==unswList.get(i)){
+								unswList.remove(i);
+								i=0;
+							}
+						}
+					}
+			}
+			List<String> qsList=new ArrayList();
+			qsList.add("夫妻");
+			qsList.add("父子");
+			qsList.add("母子");
+			qsList.add("父女");
+			qsList.add("母女");
+			qsList.add("爷孙");
+			qsList.add("婆孙");
+			qsList.add("兄弟");
+			qsList.add("兄妹");
+			qsList.add("姐弟");
+			qsList.add("朋友");
+			qsList.add("同事");
+			qsList.add("表哥");
+			qsList.add("表弟");
+			qsList.add("表兄");
+			qsList.add("表姐");
+			qsList.add("姨夫");
+			qsList.add("叔侄");
+			qsList.add("儿媳");
+			qsList.add("岳母");
+			qsList.add("岳父");
+			qsList.add("妹夫");
+			qsList.add("舅舅");
+			qsList.add("姐夫");
+			qsList.add("内弟");
+			qsList.add("姑侄");
+			qsList.add("姨侄");
+			qsList.add("弟媳");
+			qsList.add("嫂子");
+			qsList.add("弟媳");
+			qsList.add("堂兄");
+			qsList.add("堂弟");
+			qsList.add("侄子");
+			qsList.add("侄女");
+			qsList.add("女婿");
+			qsList.add("姨父");
+			qsList.add("姨母");
+			qsList.add("其它");
+			String hql4="from SysParam where paramName='HJ_Client'";
+			List<SysParam> list4=hds.searchAll(hql4);
+			if(list4.size()>0){
+				SysParam sysParam1=(SysParam)list4.get(0);
+				request.setAttribute("sysParam", sysParam1);
+			}
+			request.setAttribute("qsGxList",qsList);
+			request.setAttribute("unswList",unswList);
+			request.setAttribute("jlFr", jlFr);
+			request.setAttribute("jlQs", jlQs);
+			return mapping.findForward("updateFrQs");
+	}
+	//修改保存亲属
+	public ActionForward updateSaveFrQs(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+			SysUser user=(SysUser)request.getSession().getAttribute("users");
+			if(user==null){
+				return mapping.findForward("sessionFailure");
+			}
+			String qsId= request.getParameter("qsId");
+			StringBuffer str2=new StringBuffer("");
+			JlQs jlQs=(JlQs)hds.findById(JlQs.class, Integer.parseInt(qsId));
+			String qsName = java.net.URLDecoder.decode((String)request.getParameter("qsName"),"UTF-8");
+		 	String qsCard = java.net.URLDecoder.decode((String)request.getParameter("qsCard"),"UTF-8");
+		 	String dz = java.net.URLDecoder.decode((String)request.getParameter("dz"),"UTF-8");
+		 	String tele = java.net.URLDecoder.decode((String)request.getParameter("tele"),"UTF-8");
+		 	String gx = java.net.URLDecoder.decode((String)request.getParameter("gx"),"UTF-8");
+		 	String xb = java.net.URLDecoder.decode((String)request.getParameter("xb"),"UTF-8");
+		 	String sw = request.getParameter("sw");
+		 	String qsSfz = request.getParameter("qsSfz");
+			String jz = request.getParameter("jz");
+		 	String photoAddress = java.net.URLDecoder.decode((String)request.getParameter("photoAddress"),"UTF-8");
+		 	if(jlQs.getQsSfz()!=null && !jlQs.getQsSfz().equals(qsSfz.trim())){
+		 		String hql="from JlQs jl where jl.qsSfz='"+qsSfz.trim()+"'"+" and jl.frNo='"+jlQs.getFrNo()+"'";
+		 		List list=hds.searchAll(hql);
+		 		if(list.size()>0){
+				 	JSONArray json=JSONArray.fromObject(1);
+				 	response.getWriter().println(json.toString());
+		 		}else{
+		 			jlQs.setQsSfz(qsSfz.trim());
+				 	if(!qsName.equals("")){
+				 		jlQs.setQsName(qsName.trim());
+				 	}else{
+				 		jlQs.setQsName("");
+				 	}
+				 	jlQs.setQsSfz(qsSfz.trim());
+				 	if(!qsCard.equals("")){
+				 		jlQs.setQsCard(qsCard);
+				 	}else{
+				 		jlQs.setQsCard("");
+				 	}
+				 	if(!dz.equals("")){
+				 		jlQs.setDz(dz.trim());
+				 	}else{
+				 		jlQs.setDz("");
+				 	}
+				 	if(!tele.equals("")){
+				 		jlQs.setTele(tele);
+				 	}else{
+				 		jlQs.setTele("");
+				 	}
+				 	if(!sw.equals("null")){
+				 		jlQs.setSw(Integer.parseInt(sw));
+				 	}else{
+				 		jlQs.setSw(null);
+				 	}
+				 	jlQs.setGx(gx);
+				 	if(!photoAddress.trim().equals("")){
+				 		String khdIp=request.getRemoteAddr();
+				 		String url1="http://"+khdIp+":9009/"+photoAddress.replace(":", "").replace("\\", "/");
+				 		URL url=new URL(url1);
+				 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+				 		if(connection.getResponseCode()==200){
+				 			InputStream fis = url.openStream();
+				 			Thread.sleep(2000);
+				 			byte[] byte1 = new byte[fis.available()];
+				 			fis.read(byte1);
+				 			jlQs.setZp(byte1);
+				 		}
+				 	}
+				 	if(jz.length()>2){
+				 		sun.misc.BASE64Decoder decode=new sun.misc.BASE64Decoder();
+					 	byte[] datas=decode.decodeBuffer(jz.substring(1, jz.length()-2));
+					 	jlQs.setJz(datas);
+				 	}
+				 	jlQs.setXb(xb);
+				 	if((jlQs.getQsName()!=null && !jlQs.getQsName().equals(qsName)) || (jlQs.getTele()!=null && !jlQs.getTele().equals(tele.trim()))){
+				 		Calendar c = Calendar.getInstance();   
+						SimpleDateFormat simpleDateTimeFormat  =   new  SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );   
+						c  =  Calendar.getInstance(Locale.CHINESE);   
+						String loginTime = simpleDateTimeFormat.format(c.getTime());
+						SysLog sl=new SysLog();
+						sl.setType("正常");
+						sl.setLogTime(loginTime);
+						sl.setUserName(user.getUserName());
+						sl.setUserNo(user.getUserNo());
+						sl.setUserIp(request.getRemoteAddr());
+						sl.setModel("犯人管理");
+						str2.append("犯人编号为"+jlQs.getFrNo()+"的亲属身份证为"+jlQs.getQsSfz()+"的亲属");
+						if(jlQs.getQsName()!=null && !jlQs.getQsName().equals(qsName)){
+							str2.append(" 亲属姓名由"+jlQs.getQsName()+"修改为"+qsName);
+						}
+						if(jlQs.getTele()!=null && !jlQs.getTele().equals(tele.trim())){
+							str2.append(" 亲属电话由"+jlQs.getTele()+"修改为"+tele);
+						}
+						sl.setInfo(str2.toString());
+					    sl.setOp("修改犯人亲属信息");
+					    hds.save(sl);
+				 	}
+				 	hds.update(jlQs);
+				 	JSONArray json=JSONArray.fromObject(0);
+				 	response.getWriter().println(json.toString());
+		 		}
+		 	}else{
+		 		if(jlQs.getQsSfz()==null){
+		 			String hql="from JlQs jl where jl.qsSfz='"+qsSfz.trim()+"'"+" and jl.frNo='"+jlQs.getFrNo()+"'";
+			 		List list=hds.searchAll(hql);
+			 		if(list.size()>0){
+					 	JSONArray json=JSONArray.fromObject(1);
+					 	response.getWriter().println(json.toString());
+			 		}else{
+			 			jlQs.setQsSfz(qsSfz.trim());
+					 	if(!qsName.equals("")){
+					 		jlQs.setQsName(qsName.trim());
+					 	}else{
+					 		jlQs.setQsName("");
+					 	}
+					 	jlQs.setQsSfz(qsSfz.trim());
+					 	if(!qsCard.equals("")){
+					 		jlQs.setQsCard(qsCard);
+					 	}else{
+					 		jlQs.setQsCard("");
+					 	}
+					 	if(!dz.equals("")){
+					 		jlQs.setDz(dz.trim());
+					 	}else{
+					 		jlQs.setDz("");
+					 	}
+					 	if(!tele.equals("")){
+					 		jlQs.setTele(tele);
+					 	}else{
+					 		jlQs.setTele("");
+					 	}
+					 	if(!sw.equals("null")){
+					 		jlQs.setSw(Integer.parseInt(sw));
+					 	}else{
+					 		jlQs.setSw(null);
+					 	}
+					 	jlQs.setGx(gx);
+					 	if(!photoAddress.trim().equals("")){
+					 		String khdIp=request.getRemoteAddr();
+					 		String url1="http://"+khdIp+":9009/"+photoAddress.replace(":", "").replace("\\", "/");
+					 		URL url=new URL(url1);
+					 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+					 		if(connection.getResponseCode()==200){
+					 			InputStream fis = url.openStream();
+					 			Thread.sleep(2000);
+					 			byte[] byte1 = new byte[fis.available()];
+					 			fis.read(byte1);
+					 			jlQs.setZp(byte1);
+					 		}
+					 	}
+					 	if(jz.length()>2){
+					 		sun.misc.BASE64Decoder decode=new sun.misc.BASE64Decoder();
+						 	byte[] datas=decode.decodeBuffer(jz.substring(1, jz.length()-2));
+						 	jlQs.setJz(datas);
+					 	}
+					 	jlQs.setXb(xb);
+					 	if((jlQs.getQsName()!=null && !jlQs.getQsName().equals(qsName)) || (jlQs.getTele()!=null && !jlQs.getTele().equals(tele.trim()))){
+					 		Calendar c = Calendar.getInstance();   
+							SimpleDateFormat simpleDateTimeFormat  =   new  SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );   
+							c  =  Calendar.getInstance(Locale.CHINESE);   
+							String loginTime = simpleDateTimeFormat.format(c.getTime());
+							SysLog sl=new SysLog();
+							sl.setType("正常");
+							sl.setLogTime(loginTime);
+							sl.setUserName(user.getUserName());
+							sl.setUserNo(user.getUserNo());
+							sl.setUserIp(request.getRemoteAddr());
+							sl.setModel("犯人管理");
+							str2.append("犯人编号为"+jlQs.getFrNo()+"的亲属身份证为"+jlQs.getQsSfz()+"的亲属");
+							if(jlQs.getQsName()!=null && !jlQs.getQsName().equals(qsName)){
+								str2.append(" 亲属姓名由"+jlQs.getQsName()+"修改为"+qsName);
+							}
+							if(jlQs.getTele()!=null && !jlQs.getTele().equals(tele.trim())){
+								str2.append(" 亲属电话由"+jlQs.getTele()+"修改为"+tele);
+							}
+							sl.setInfo(str2.toString());
+						    sl.setOp("修改犯人亲属信息");
+						    hds.save(sl);
+					 	}
+					 	hds.update(jlQs);
+					 	JSONArray json=JSONArray.fromObject(0);
+					 	response.getWriter().println(json.toString());
+			 		}
+		 		}else{
+		 			if(!qsName.equals("")){
+				 		jlQs.setQsName(qsName.trim());
+				 	}else{
+				 		jlQs.setQsName("");
+				 	}
+				 	if(!qsCard.equals("")){
+				 		jlQs.setQsCard(qsCard);
+				 	}else{
+				 		jlQs.setQsCard("");
+				 	}
+				 	if(!dz.equals("")){
+				 		jlQs.setDz(dz.trim());
+				 	}else{
+				 		jlQs.setDz("");
+				 	}
+				 	if(!tele.equals("")){
+				 		jlQs.setTele(tele);
+				 	}else{
+				 		jlQs.setTele("");
+				 	}
+				 	if(!sw.equals("null")){
+				 		jlQs.setSw(Integer.parseInt(sw));
+				 	}else{
+				 		jlQs.setSw(null);
+				 	}
+				 	jlQs.setGx(gx);
+				 	if(!photoAddress.trim().equals("")){
+				 		String khdIp=request.getRemoteAddr();
+				 		String url1="http://"+khdIp+":9009/"+photoAddress.replace(":", "").replace("\\", "/");
+				 		URL url=new URL(url1);
+				 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+				 		if(connection.getResponseCode()==200){
+				 			InputStream fis = url.openStream();
+				 			Thread.sleep(2000);
+				 			byte[] byte1 = new byte[fis.available()];
+				 			fis.read(byte1);
+				 			jlQs.setZp(byte1);
+				 		}
+				 	}
+				 	if(jz.length()>2){
+				 		sun.misc.BASE64Decoder decode=new sun.misc.BASE64Decoder();
+					 	byte[] datas=decode.decodeBuffer(jz.substring(1, jz.length()-2));
+					 	jlQs.setJz(datas);
+//					 	String savePath=request.getRealPath("/")+"images/";
+//						String filename=String.valueOf(System.currentTimeMillis())+".jpg";
+//						File file=new File(savePath+filename);
+//						OutputStream fos=new FileOutputStream(file);
+//						System.out.println("图片文件名称:"+filename);
+//						fos.write(datas);
+//						fos.close();
+				 	}
+				 	jlQs.setXb(xb);
+				 	Object[] obj={Integer.parseInt(qsId)};
+				 	if((jlQs.getQsName()!=null && !jlQs.getQsName().equals(qsName)) || (jlQs.getTele()!=null && !jlQs.getTele().equals(tele.trim()))){
+				 		Calendar c = Calendar.getInstance();   
+						SimpleDateFormat simpleDateTimeFormat  =   new  SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );   
+						c  =  Calendar.getInstance(Locale.CHINESE);   
+						String loginTime = simpleDateTimeFormat.format(c.getTime());
+						SysLog sl=new SysLog();
+						sl.setType("正常");
+						sl.setLogTime(loginTime);
+						sl.setUserName(user.getUserName());
+						sl.setUserNo(user.getUserNo());
+						sl.setUserIp(request.getRemoteAddr());
+						sl.setModel("犯人管理");
+						str2.append("犯人编号为"+jlQs.getFrNo()+"的亲属身份证为"+jlQs.getQsSfz()+"的亲属");
+						if(jlQs.getQsName()!=null && !jlQs.getQsName().equals(qsName)){
+							str2.append(" 亲属姓名由"+jlQs.getQsName()+"修改为"+qsName);
+						}
+						if(jlQs.getTele()!=null && !jlQs.getTele().equals(tele.trim())){
+							str2.append(" 亲属电话由"+jlQs.getTele()+"修改为"+tele);
+						}
+						sl.setInfo(str2.toString());
+					    sl.setOp("修改犯人亲属信息");
+					    hds.save(sl);
+				 	}
+				 	hds.update(jlQs);
+				 	JSONArray json=JSONArray.fromObject(0);
+				 	response.getWriter().println(json.toString());
+		 		}
+		 		
+		 	}
+		 	return null;
+	}
+	//远程更新亲属数据
+	public ActionForward updateDownQs(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+			SysUser user=(SysUser)request.getSession().getAttribute("users");
+			if(user==null){
+				return mapping.findForward("sessionFailure");
+			}
+			String returnName="updateDownSuccess";
+			String frNo = request.getParameter("frNo");
+			int i=hds.getLineNo("import_qs", frNo);
+			if(i==0 || i==-1){
+				returnName="updateDownError";
+			}
+			request.setAttribute("frNo", frNo);
+			return mapping.findForward(returnName);
+	}
+	//添加保存会见登记
+	public ActionForward addSaveHjdj(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+			SysUser user=(SysUser)request.getSession().getAttribute("users");
+			if(user==null){
+				return mapping.findForward("sessionFailure");
+			}
+			String selectFrId=request.getParameter("selectFrId");
+			String isNo = java.net.URLDecoder.decode((String)request.getParameter("isNo"),"UTF-8");
+			String hjsc=request.getParameter("hjsc");
+			String hjsm = java.net.URLDecoder.decode((String)request.getParameter("hjsm"),"UTF-8");
+			String hjType=request.getParameter("hjType");
+			String monitor = java.net.URLDecoder.decode((String)request.getParameter("monitor"),"UTF-8");
+			String callNo=request.getParameter("callNo");
+			boolean flag=true;
+			JlHjDj jlHjDj= new JlHjDj();
+			String hql="from JlFr where frNo='"+selectFrId+"'";
+			String hql3="from JlHjDj where frNo='"+selectFrId+"' and State=0";
+			List<JlFr> list=hds.searchAll(hql);
+			List<JlHjDj> list3=hds.searchAll(hql3);
+			if(list.size()>0 && list3.size()==0){
+				JlFr jlFr=(JlFr)list.get(0);
+				jlHjDj.setJy(jlFr.getJy());
+				jlHjDj.setFrNo(jlFr.getFrNo());
+				if(jlFr.getFrName()!=null){
+					jlHjDj.setFrName(jlFr.getFrName());
+				}
+				jlHjDj.setJqNo(jlFr.getJq());
+				String hql1="from JlJq where jqNo='"+jlFr.getJq()+"'";
+				List<JlJq> list1=hds.searchAll(hql1);
+				if(list1.size()>0){
+					JlJq jlJq=list1.get(0);
+					if(jlJq.getJqName()!=null){
+						jlHjDj.setJqName(jlJq.getJqName());
+					}
+				}else{
+					flag=false;
+				}
+			}else{
+				flag=false;
+			}
+			if(flag){
+				String[] isNo1=isNo.split(",");
+				for(int i=0;i<isNo1.length;i++){
+					String hql2="from JlQs where webId="+Integer.parseInt(isNo1[i]);
+					List<JlQs> list2=hds.searchAll(hql2);
+					switch (i) {
+						case 0:
+							if(list2.size()>0){
+								JlQs jlQs=list2.get(0);
+								String name="";
+								if(jlQs.getGx()!=null && !jlQs.getGx().trim().equals("")){
+									name+="["+jlQs.getGx()+"]";
+								}
+								if(jlQs.getQsName()!=null){
+									name+=jlQs.getQsName();
+								}
+								jlHjDj.setQsInfo1(name);
+							}
+							break;
+						case 1:
+							if(list2.size()>0){
+								JlQs jlQs=list2.get(0);
+								String name="";
+								if(jlQs.getGx()!=null && !jlQs.getGx().trim().equals("")){
+									name+="["+jlQs.getGx()+"]";
+								}
+								if(jlQs.getQsName()!=null){
+									name+=jlQs.getQsName();
+								}
+								jlHjDj.setQsInfo2(name);
+							}
+							break;
+						case 2:
+							if(list2.size()>0){
+								JlQs jlQs=list2.get(0);
+								String name="";
+								if(jlQs.getGx()!=null && !jlQs.getGx().trim().equals("")){
+									name+="["+jlQs.getGx()+"]";
+								}
+								if(jlQs.getQsName()!=null){
+									name+=jlQs.getQsName();
+								}
+								jlHjDj.setQsInfo3(name);
+							}
+							break;
+						case 3:
+							if(list2.size()>0){
+								JlQs jlQs=list2.get(0);
+								String name="";
+								if(jlQs.getGx()!=null && !jlQs.getGx().trim().equals("")){
+									name+="["+jlQs.getGx()+"]";
+								}
+								if(jlQs.getQsName()!=null){
+									name+=jlQs.getQsName();
+								}
+								jlHjDj.setQsInfo4(name);
+							}
+							break;
+						case 4:
+							if(list2.size()>0){
+								JlQs jlQs=list2.get(0);
+								String name="";
+								if(jlQs.getGx()!=null && !jlQs.getGx().trim().equals("")){
+									name+="["+jlQs.getGx()+"]";
+								}
+								if(jlQs.getQsName()!=null){
+									name+=jlQs.getQsName();
+								}
+								jlHjDj.setQsInfo5(name);
+							}
+							break;
+						case 5:
+							if(list2.size()>0){
+								JlQs jlQs=list2.get(0);
+								String name="";
+								if(jlQs.getGx()!=null && !jlQs.getGx().trim().equals("")){
+									name+="["+jlQs.getGx()+"]";
+								}
+								if(jlQs.getQsName()!=null){
+									name+=jlQs.getQsName();
+								}
+								jlHjDj.setQsInfo6(name);
+							}
+							break;
+						case 6:
+							if(list2.size()>0){
+								JlQs jlQs=list2.get(0);
+								String name="";
+								if(jlQs.getGx()!=null && !jlQs.getGx().trim().equals("")){
+									name+="["+jlQs.getGx()+"]";
+								}
+								if(jlQs.getQsName()!=null){
+									name+=jlQs.getQsName();
+								}
+								jlHjDj.setQsInfo7(name);
+							}
+							break;
+						case 7:
+							if(list2.size()>0){
+								JlQs jlQs=list2.get(0);
+								String name="";
+								if(jlQs.getGx()!=null && !jlQs.getGx().trim().equals("")){
+									name+="["+jlQs.getGx()+"]";
+								}
+								if(jlQs.getQsName()!=null){
+									name+=jlQs.getQsName();
+								}
+								jlHjDj.setQsInfo8(name);
+							}
+							break;
+						case 8:
+							if(list2.size()>0){
+								JlQs jlQs=list2.get(0);
+								String name="";
+								if(jlQs.getGx()!=null && !jlQs.getGx().trim().equals("")){
+									name+="["+jlQs.getGx()+"]";
+								}
+								if(jlQs.getQsName()!=null){
+									name+=jlQs.getQsName();
+								}
+								jlHjDj.setQsInfo9(name);
+							}
+							break;
+						default:
+							break;
+					}
+				}
+				jlHjDj.setHjTime(Integer.parseInt(hjsc)*60);
+				if(!hjsm.trim().equals("")){
+					jlHjDj.setHjInfo(hjsm.trim());
+				}
+				jlHjDj.setHjType(Integer.parseInt(hjType));
+				jlHjDj.setDjType(0);
+				jlHjDj.setDjUser(user.getUserNo());
+				Timestamp now=new Timestamp(System.currentTimeMillis());
+				jlHjDj.setDjTime(now);
+				jlHjDj.setFpFlag(0);
+				jlHjDj.setFpTzfrFlag(0);
+				jlHjDj.setFpTzqsFlag(0);
+				jlHjDj.setHjOrder(Integer.parseInt(callNo));
+				jlHjDj.setMonitorFlag(monitor);
+				jlHjDj.setState(0);
+				jlHjDj.setHjIndex(hds.getIndex("get_hj_index", jlHjDj.getFrNo()));
+				jlHjDj.setImportFlag(0);
+				hds.save(jlHjDj);
+//					int result=hds.getLineNo("set_ZW",jlHjDj.getFrNo());
+//					if(result==0){
+//						List list2=hds.searchAll("from JlHjDj where state=0 and frNo='"+jlHjDj.getFrNo()+"'");
+//						if(list2.size()>0){
+//							JlHjDj jlHjDj1=(JlHjDj)list2.get(0);
+//							System.out.println(jlHjDj1.getHjid());
+//							JSONArray json=JSONArray.fromObject(jlHjDj1.getHjid());
+//							response.getWriter().println(json.toString());
+//						}else{
+//							JSONArray json=JSONArray.fromObject(0);
+//							response.getWriter().println(json.toString());
+//						}
+//						
+//					}else{
+//						JSONArray json=JSONArray.fromObject(-2);
+//						response.getWriter().println(json.toString());
+//					}
+				JSONArray json=JSONArray.fromObject(-1);
+				response.getWriter().println(json.toString());
+			}else{
+				JSONArray json=JSONArray.fromObject(0);
+				response.getWriter().println(json.toString());
+			}
+			Thread.sleep(2000);
+			return null;
+	}
+	//打印
+	public ActionForward printXp(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+			SysUser user=(SysUser)request.getSession().getAttribute("users");
+			if(user==null){
+				return mapping.findForward("sessionFailure");
+			}
+			String webId=request.getParameter("webId");
+			String frNo=request.getParameter("webId1");
+			JlHjDj jlHjDj=null;
+			if(webId!=null){
+				jlHjDj=(JlHjDj)hds.findById(JlHjDj.class, Long.parseLong(webId));
+			}else{
+				String hql="from JlHjDj where frNo='"+frNo+"' and state=0";
+				List<JlHjDj> list=hds.searchAll(hql);
+				if(list.size()>0){
+					jlHjDj=(JlHjDj)list.get(0);
+				}
+			}
+			
+			//boolean flag=true;
+			String returnName="printView";
+			if(jlHjDj!=null){
+				List<String> list1=new ArrayList<String>();
+				list1.add("会见准见证");
+				Calendar c = Calendar.getInstance();   
+				SimpleDateFormat simpleDateTimeFormat  =   new  SimpleDateFormat( "yyyy-MM-dd HH:mm:ss" );   
+				c  =  Calendar.getInstance(Locale.CHINESE);   
+				String loginTime = simpleDateTimeFormat.format(c.getTime());
+				list1.add(loginTime.substring(0, 16));
+				if(jlHjDj.getFrName()!=null){
+					String nameString="会见编号:"+jlHjDj.getHjIndex();
+					list1.add(nameString);
+				}
+				if(jlHjDj.getFrName()!=null){
+					String nameString="服刑人员姓名:"+jlHjDj.getFrName();
+					list1.add(nameString);
+				}
+				if(jlHjDj.getJqName()!=null){
+					String nameString="监区:"+jlHjDj.getJqName();
+					list1.add(nameString);
+				}
+//				String sql="select jb.JB_No,jb.JB_Name from JL_FR fr,JL_JB jb where fr.JB_No=jb.JB_No and fr.FR_No='"+jlHjDj.getFrNo()+"'";
+//				List list=hds.searchAllBySql(sql);
+//				if(list.size()>0){
+//					Object[] objects=(Object[])list.get(0);
+//					if(objects[1]!=null){
+//						nameString+="   "+objects[1].toString();
+//					}
+//				}
+				list1.add("本次会见时长:"+jlHjDj.getHjTime()/60+"分钟");
+				int i=0;
+				String name="";
+				if(jlHjDj.getQsInfo1()!=null && jlHjDj.getQsInfo1()!=""){
+					i++;
+					list1.add(i+"号亲属姓名:"+jlHjDj.getQsInfo1().substring(jlHjDj.getQsInfo1().lastIndexOf("]")+1));
+				}
+				if(jlHjDj.getQsInfo2()!=null && jlHjDj.getQsInfo2()!=""){
+					i++;
+					list1.add(i+"号亲属姓名:"+jlHjDj.getQsInfo2().substring(jlHjDj.getQsInfo2().lastIndexOf("]")+1));
+				}
+				if(jlHjDj.getQsInfo3()!=null && jlHjDj.getQsInfo3()!=""){
+					i++;
+					list1.add(i+"号亲属姓名:"+jlHjDj.getQsInfo3().substring(jlHjDj.getQsInfo3().lastIndexOf("]")+1));
+				}
+				if(jlHjDj.getQsInfo4()!=null && jlHjDj.getQsInfo4()!=""){
+					i++;
+					list1.add(i+"号亲属姓名:"+jlHjDj.getQsInfo4().substring(jlHjDj.getQsInfo4().lastIndexOf("]")+1));
+				}
+				if(jlHjDj.getQsInfo5()!=null && jlHjDj.getQsInfo5()!=""){
+					i++;
+					list1.add(i+"号亲属姓名:"+jlHjDj.getQsInfo5().substring(jlHjDj.getQsInfo5().lastIndexOf("]")+1));
+				}
+				if(jlHjDj.getQsInfo6()!=null && jlHjDj.getQsInfo6()!=""){
+					i++;
+					list1.add(i+"号亲属姓名:"+jlHjDj.getQsInfo6().substring(jlHjDj.getQsInfo6().lastIndexOf("]")+1));
+				}
+				if(jlHjDj.getQsInfo7()!=null && jlHjDj.getQsInfo7()!=""){
+					i++;
+					list1.add(i+"号亲属姓名:"+jlHjDj.getQsInfo7().substring(jlHjDj.getQsInfo7().lastIndexOf("]")+1));
+				}
+				if(jlHjDj.getQsInfo8()!=null && jlHjDj.getQsInfo8()!=""){
+					i++;
+					list1.add(i+"号会见人姓名:"+jlHjDj.getQsInfo8().substring(jlHjDj.getQsInfo8().lastIndexOf("]")+1));
+				}
+				if(jlHjDj.getQsInfo9()!=null && jlHjDj.getQsInfo9()!=""){
+					i++;
+					list1.add(i+"号亲属姓名:"+jlHjDj.getQsInfo9().substring(jlHjDj.getQsInfo9().lastIndexOf("]")+1));
+				}
+				list1.add("会见总人数:"+i+"人");
+				request.setAttribute("list1", list1);
+			}else{
+				returnName="djDel";
+			}
+		    return mapping.findForward(returnName);
+	}
+	//删除登记
+	public ActionForward deleteDj(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+			SysUser user=(SysUser)request.getSession().getAttribute("users");
+			if(user==null){
+				return mapping.findForward("sessionFailure");
+			}
+			String webId=request.getParameter("webId");
+			JlHjDj jlHjDj=(JlHjDj)hds.findById(JlHjDj.class, Long.parseLong(webId));
+			if(jlHjDj.getFpFlag()==0){
+				hds.delete(JlHjDj.class, Long.parseLong(webId));
+				JSONArray json=JSONArray.fromObject(0);
+				response.getWriter().println(json.toString());
+			}else if(jlHjDj.getFpFlag()==1){
+				String hql="update SysHjLine set hjid=null where hjid="+jlHjDj.getHjid();
+				Object[] objects={};
+				hds.updates(hql, objects);
+				hds.delete(JlHjDj.class, Long.parseLong(webId));
+				JSONArray json=JSONArray.fromObject(0);
+				response.getWriter().println(json.toString());
+			}else{
+				JSONArray json=JSONArray.fromObject(1);
+				response.getWriter().println(json.toString());
+			}
+			return null;
+	}
+	//取消登记
+	public ActionForward cancelDj(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+			SysUser user=(SysUser)request.getSession().getAttribute("users");
+			if(user==null){
+				return mapping.findForward("sessionFailure");
+			}
+			String webId=request.getParameter("webId");
+			String returnName="cancelDj";
+			JlHjDj jlHjDj=(JlHjDj)hds.findById(JlHjDj.class, Long.parseLong(webId));
+			if(jlHjDj.getFpFlag()==2){
+				returnName="ingHj";
+			}else{
+				HjDjVO hjDjVO=new HjDjVO();
+		    	hjDjVO.setHjid(jlHjDj.getHjid()+"");
+		    	hjDjVO.setJy(jlHjDj.getJy());
+		    	hjDjVO.setJqNo(jlHjDj.getJqNo());
+		    	if(jlHjDj.getFrName()!=null && !jlHjDj.getFrName().equals("")){
+		    		hjDjVO.setFrName(jlHjDj.getFrName());
+		    	}
+		    	String qsName="";
+		    	if(jlHjDj.getQsInfo1()!=null && !jlHjDj.getQsInfo1().equals("")){
+		    		qsName+=jlHjDj.getQsInfo1();
+		    	}
+		    	if(jlHjDj.getQsInfo2()!=null && !jlHjDj.getQsInfo2().equals("")){
+		    		qsName+=jlHjDj.getQsInfo2();
+		    	}
+		    	if(jlHjDj.getQsInfo3()!=null && !jlHjDj.getQsInfo3().equals("")){
+		    		qsName+=jlHjDj.getQsInfo3();
+		    	}
+		    	if(jlHjDj.getQsInfo4()!=null && !jlHjDj.getQsInfo4().equals("")){
+		    		qsName+=jlHjDj.getQsInfo4();
+		    	}
+		    	if(jlHjDj.getQsInfo5()!=null && !jlHjDj.getQsInfo5().equals("")){
+		    		qsName+=jlHjDj.getQsInfo5();
+		    	}
+		    	if(jlHjDj.getQsInfo6()!=null && !jlHjDj.getQsInfo6().equals("")){
+		    		qsName+=jlHjDj.getQsInfo6();
+		    	}
+		    	if(jlHjDj.getQsInfo7()!=null && !jlHjDj.getQsInfo7().equals("")){
+		    		qsName+=jlHjDj.getQsInfo7();
+		    	}
+		    	if(jlHjDj.getQsInfo8()!=null && !jlHjDj.getQsInfo8().equals("")){
+		    		qsName+=jlHjDj.getQsInfo8();
+		    	}
+		    	if(jlHjDj.getQsInfo9()!=null && !jlHjDj.getQsInfo9().equals("")){
+		    		qsName+=jlHjDj.getQsInfo9();
+		    	}
+		    	hjDjVO.setQsInfo1(qsName);
+		    	hjDjVO.setHjTime(jlHjDj.getHjTime()/60+"");
+		    	hjDjVO.setDjUser(jlHjDj.getDjUser());
+		    	hjDjVO.setDjTime(jlHjDj.getDjTime().toString().substring(0, 19));
+				request.setAttribute("hjDjVO", hjDjVO);
+				String hql="from JlJq";
+				List<JlJq> list=hds.searchAll(hql);
+				request.setAttribute("list", list);
+			}
+			return mapping.findForward(returnName);
+	}
+	public ActionForward qxdj(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+			SysUser user=(SysUser)request.getSession().getAttribute("users");
+			if(user==null){
+				return mapping.findForward("sessionFailure");
+			}
+			String webId=request.getParameter("djId");
+			String cancelInfo = java.net.URLDecoder.decode((String)request.getParameter("cancelInfo"),"UTF-8");
+			JlHjDj jlHjDj=(JlHjDj)hds.findById(JlHjDj.class, Long.parseLong(webId));
+			if(jlHjDj.getFpFlag()==0){
+				jlHjDj.setState(2);
+				jlHjDj.setCancelInfo(cancelInfo);
+				hds.update(jlHjDj);
+				JSONArray json=JSONArray.fromObject(0);
+				response.getWriter().println(json.toString());
+			}else if(jlHjDj.getFpFlag()==1){
+				String hql="update SysHjLine set hjid=null where hjid="+jlHjDj.getHjid();
+				Object[] objects={};
+				hds.updates(hql, objects);
+				jlHjDj.setState(2);
+				jlHjDj.setCancelInfo(cancelInfo);
+				hds.update(jlHjDj);
+				JSONArray json=JSONArray.fromObject(0);
+				response.getWriter().println(json.toString());
+			}else{
+				JSONArray json=JSONArray.fromObject(1);
+				response.getWriter().println(json.toString());
+			}
+			return null;
+	}
+	//分配座位
+	public ActionForward giveZw(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+			SysUser user=(SysUser)request.getSession().getAttribute("users");
+			if(user==null){
+				return mapping.findForward("sessionFailure");
+			}
+			String webId=request.getParameter("webId");
+			JlHjDj jlHjDj=(JlHjDj)hds.findById(JlHjDj.class, Long.parseLong(webId));
+			int result=hds.getLineNo("set_ZW",jlHjDj.getFrNo());
+			if(result==0){
+				JSONArray json=JSONArray.fromObject(0);
+				response.getWriter().println(json.toString());
+			}else{
+				JSONArray json=JSONArray.fromObject(1);
+				response.getWriter().println(json.toString());
+			}
+			return null;
+	}
+	public ActionForward showPhoto(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		    String webId=request.getParameter("qsid");
+			String sql="from JlQs where webId="+webId;
+			List<JlQs> list=hds.searchAll(sql);
+			if(list.size()>0){
+				JlQs jlQs=(JlQs)list.get(0);
+				if(jlQs.getZp()!=null){
+					response.setContentType( "image/jpg");
+					response.getOutputStream().write(jlQs.getZp()); 
+				}
+			}
+			return null;
+	}
+	public ActionForward showPhotoJZ(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		    String webId=request.getParameter("qsid");
+			String sql="from JlQs where webId="+webId;
+			List<JlQs> list=hds.searchAll(sql);
+			if(list.size()>0){
+				JlQs jlQs=(JlQs)list.get(0);
+				if(jlQs.getJz()!=null){
+//					String savePath=request.getRealPath("/")+"images/";
+//					String filename=String.valueOf(System.currentTimeMillis())+".jpg";
+//					File file=new File(savePath+filename);
+//					OutputStream fos=new FileOutputStream(file);
+//					System.out.println("图片文件名称:"+filename);
+//					fos.write(jlQs.getJz());
+//					fos.close();
+					response.setContentType( "image/jpg");
+					response.getOutputStream().write(jlQs.getJz()); 
+				}
+			}
+			return null;
+	}
+	public  ActionForward nextCallNum(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+			String windowsIndex=request.getParameter("windowsIndex");
+			//Thread.sleep(3000*Integer.parseInt(windowsIndex));
+			int acdNo=hds.getAcdNo("hjdj_acd_set", Integer.parseInt(windowsIndex));
+			if(acdNo!=0){
+				List<String> list=new ArrayList<String>();
+				String url="http://192.168.1.99:9009/D/please.mp3";
+				String url1="http://192.168.1.99:9009/D/"+acdNo+".mp3";
+				String url2="http://192.168.1.99:9009/D/window"+windowsIndex+".mp3";
+				list.add(url);
+				list.add(url1);
+				list.add(url2);
+				writeFile(list,request.getRealPath("/"));
+		        List<HjdjAcdInfo> list1=hds.searchAll("from HjdjAcdInfo");
+		        if(list1.size()>0){
+		        	HjdjAcdInfo hjdjAcdInfo=(HjdjAcdInfo)list1.get(0);
+					CallResult callResult=new CallResult();
+					callResult.setAcdNo(hjdjAcdInfo.getAcdgetNo());
+					callResult.setAcdCount(hjdjAcdInfo.getAcdsetNo());
+					List<CallResult> list2=new ArrayList<CallResult>();
+					list2.add(callResult);
+					JSONArray json=JSONArray.fromObject(list2);
+					response.getWriter().println(json.toString());
+				}
+			}else{
+				JSONArray jsonArray=JSONArray.fromObject(0);
+				response.getWriter().println(jsonArray.toString());
+			}
+			return null;
+	}
+	public ActionForward refreshMeetInfo(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+			List<HjdjAcdInfo> list=hds.searchAll("from HjdjAcdInfo");
+			if(list.size()>0){
+				HjdjAcdInfo hjdjAcdInfo=(HjdjAcdInfo)list.get(0);
+				CallResult callResult=new CallResult();
+				callResult.setAcdNo(hjdjAcdInfo.getAcdgetNo());
+				callResult.setAcdCount(hjdjAcdInfo.getAcdsetNo());
+				List<CallResult> list1=new ArrayList<CallResult>();
+				list1.add(callResult);
+				JSONArray json=JSONArray.fromObject(list1);
+				response.getWriter().println(json.toString());
+			}
+			return null;
+		
+	}
+	public synchronized void writeFile(List list,String dir) throws Exception{
+		Element root = new Element("list");
+	    Document Doc = new Document(root);
+        for (int i = 0; i < list.size(); i++) {
+        	// 创建节点 user;
+        	Element elements = new Element("sound");
+           // 给 user 节点添加属性 id;
+        	elements.setAttribute("id", "" + i);
+        	// 给  节点添加子节点并赋值；
+        	elements.addContent(new Element("url").setText((String)list.get(i)));
+        	// 给父节点list添加子节点;
+        	root.addContent(elements);
+        }
+        XMLOutputter XMLOut = new XMLOutputter();
+        XMLOut.output(Doc, new FileOutputStream(dir+"soundList.xml"));
+	}
+	public ActionForward updateHjDj(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+			SysUser user=(SysUser)request.getSession().getAttribute("users");
+			if(user==null){
+				return mapping.findForward("sessionFailure");
+			}
+			String webId=request.getParameter("webId");
+			JlHjDj jlHjDj=(JlHjDj)hds.findById(JlHjDj.class, Long.parseLong(webId));
+			jlHjDj.setHjTime(jlHjDj.getHjTime()/60);
+			request.setAttribute("jlHjDj", jlHjDj);
+			String hql="from JlQs where frNo='"+jlHjDj.getFrNo()+"'";
+			List<JlQs> list=hds.searchAll(hql);
+			request.setAttribute("listJlQs", list);
+			return mapping.findForward("updateHjDj");
+	}
+	public ActionForward saveupdateHjDj(ActionMapping mapping, ActionForm form,
+			HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+			SysUser user=(SysUser)request.getSession().getAttribute("users");
+			if(user==null){
+				return mapping.findForward("sessionFailure");
+			}
+			String djId=request.getParameter("djId");
+			String isNo = java.net.URLDecoder.decode((String)request.getParameter("isNo"),"UTF-8");
+			String hjTime=request.getParameter("hjTime");
+			String hjInfo = java.net.URLDecoder.decode((String)request.getParameter("hjInfo"),"UTF-8");
+			String hjType=request.getParameter("hjType");
+			JlHjDj jlHjDj=(JlHjDj)hds.findById(JlHjDj.class, Long.parseLong(djId));
+			jlHjDj.setHjTime(Integer.parseInt(hjTime)*60);
+			jlHjDj.setHjInfo(hjInfo);
+			jlHjDj.setHjType(Integer.parseInt(hjType));
+			if(!isNo.trim().equals("")){
+				String[] isNo1=isNo.split(",");
+				for(int i=0;i<isNo1.length;i++){
+					if(i==0){
+						jlHjDj.setQsInfo1(null);
+						jlHjDj.setQsInfo2(null);
+						jlHjDj.setQsInfo3(null);
+						jlHjDj.setQsInfo4(null);
+						jlHjDj.setQsInfo5(null);
+						jlHjDj.setQsInfo6(null);
+						jlHjDj.setQsInfo7(null);
+						jlHjDj.setQsInfo8(null);
+						jlHjDj.setQsInfo9(null);
+					}
+					
+					String hql2="from JlQs where webId="+Integer.parseInt(isNo1[i]);
+					List<JlQs> list2=hds.searchAll(hql2);
+					switch (i) {
+						case 0:
+							if(list2.size()>0){
+								JlQs jlQs=list2.get(0);
+								String name="";
+								if(jlQs.getGx()!=null && !jlQs.getGx().trim().equals("")){
+									name+="["+jlQs.getGx()+"]";
+								}
+								if(jlQs.getQsName()!=null){
+									name+=jlQs.getQsName();
+								}
+								jlHjDj.setQsInfo1(name);
+							}
+							break;
+						case 1:
+							if(list2.size()>0){
+								JlQs jlQs=list2.get(0);
+								String name="";
+								if(jlQs.getGx()!=null && !jlQs.getGx().trim().equals("")){
+									name+="["+jlQs.getGx()+"]";
+								}
+								if(jlQs.getQsName()!=null){
+									name+=jlQs.getQsName();
+								}
+								jlHjDj.setQsInfo2(name);
+							}
+							break;
+						case 2:
+							if(list2.size()>0){
+								JlQs jlQs=list2.get(0);
+								String name="";
+								if(jlQs.getGx()!=null && !jlQs.getGx().trim().equals("")){
+									name+="["+jlQs.getGx()+"]";
+								}
+								if(jlQs.getQsName()!=null){
+									name+=jlQs.getQsName();
+								}
+								jlHjDj.setQsInfo3(name);
+							}
+							break;
+						case 3:
+							if(list2.size()>0){
+								JlQs jlQs=list2.get(0);
+								String name="";
+								if(jlQs.getGx()!=null && !jlQs.getGx().trim().equals("")){
+									name+="["+jlQs.getGx()+"]";
+								}
+								if(jlQs.getQsName()!=null){
+									name+=jlQs.getQsName();
+								}
+								jlHjDj.setQsInfo4(name);
+							}
+							break;
+						case 4:
+							if(list2.size()>0){
+								JlQs jlQs=list2.get(0);
+								String name="";
+								if(jlQs.getGx()!=null && !jlQs.getGx().trim().equals("")){
+									name+="["+jlQs.getGx()+"]";
+								}
+								if(jlQs.getQsName()!=null){
+									name+=jlQs.getQsName();
+								}
+								jlHjDj.setQsInfo5(name);
+							}
+							break;
+						case 5:
+							if(list2.size()>0){
+								JlQs jlQs=list2.get(0);
+								String name="";
+								if(jlQs.getGx()!=null && !jlQs.getGx().trim().equals("")){
+									name+="["+jlQs.getGx()+"]";
+								}
+								if(jlQs.getQsName()!=null){
+									name+=jlQs.getQsName();
+								}
+								jlHjDj.setQsInfo6(name);
+							}
+							break;
+						case 6:
+							if(list2.size()>0){
+								JlQs jlQs=list2.get(0);
+								String name="";
+								if(jlQs.getGx()!=null && !jlQs.getGx().trim().equals("")){
+									name+="["+jlQs.getGx()+"]";
+								}
+								if(jlQs.getQsName()!=null){
+									name+=jlQs.getQsName();
+								}
+								jlHjDj.setQsInfo7(name);
+							}
+							break;
+						case 7:
+							if(list2.size()>0){
+								JlQs jlQs=list2.get(0);
+								String name="";
+								if(jlQs.getGx()!=null && !jlQs.getGx().trim().equals("")){
+									name+="["+jlQs.getGx()+"]";
+								}
+								if(jlQs.getQsName()!=null){
+									name+=jlQs.getQsName();
+								}
+								jlHjDj.setQsInfo8(name);
+							}
+							break;
+						case 8:
+							if(list2.size()>0){
+								JlQs jlQs=list2.get(0);
+								String name="";
+								if(jlQs.getGx()!=null && !jlQs.getGx().trim().equals("")){
+									name+="["+jlQs.getGx()+"]";
+								}
+								if(jlQs.getQsName()!=null){
+									name+=jlQs.getQsName();
+								}
+								jlHjDj.setQsInfo9(name);
+							}
+							break;
+						default:
+							break;
+					}
+				}
+			}
+			hds.update(jlHjDj);
+			SysParam sysParam=(SysParam)request.getSession().getAttribute("hJClient");
+			if(sysParam!=null && sysParam.getParamData3().equals("1")){
+				JSONArray json=JSONArray.fromObject(Integer.parseInt(djId));
+				response.getWriter().println(json.toString());
+			}else{
+				JSONArray json=JSONArray.fromObject(-1);
+				response.getWriter().println(json.toString());
+			}
+		
+			return null;
+	}
+}

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<bean id="loginService" class="com.slxt.rs.svc.LoginService">
+			<property name="rsDAO" ref="loginDAO"></property>
+	</bean>
+	<bean id="loginDAO"  class="com.slxt.rs.dao.LoginDAO">
+			<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="mmService" class="com.slxt.rs.svc.MaterialMessageService">
+			<property name="rsDAO" ref="mmDAO"></property>
+	</bean>
+	<bean id="mmDAO"  class="com.slxt.rs.dao.MaterialMessageDAO">
+			<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="yms" class="com.slxt.rs.svc.YjMessageService">
+			<property name="rsDAO" ref="ymsDAO"></property>
+	</bean>
+	<bean id="ymsDAO"  class="com.slxt.rs.dao.YjMessageDAO">
+			<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="jqSetService" class="com.slxt.rs.svc.JqSetService">
+			<property name="rsDAO" ref="jqSetDAO"></property>
+	</bean>
+	<bean id="jqSetDAO"  class="com.slxt.rs.dao.JqSetDAO">
+			<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="gmService" class="com.slxt.rs.svc.GradeMessageService">
+			<property name="rsDAO" ref="gmDAO"></property>
+	</bean>
+	<bean id="gmDAO"  class="com.slxt.rs.dao.GradeMessageDAO">
+			<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="hdsService" class="com.slxt.rs.svc.HjDjService">
+			<property name="rsDAO" ref="hdsDAO"></property>
+	</bean>
+	<bean id="hdsDAO"  class="com.slxt.rs.dao.HjDjDAO">
+			<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="hnsService" class="com.slxt.rs.svc.HjNoticeService">
+			<property name="rsDAO" ref="hnsDAO"></property>
+	</bean>
+	<bean id="hnsDAO"  class="com.slxt.rs.dao.HjNoticeDAO">
+			<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="cdsService" class="com.slxt.rs.svc.CancelDjService">
+			<property name="rsDAO" ref="cdsDAO"></property>
+	</bean>
+	<bean id="cdsDAO"  class="com.slxt.rs.dao.CancelDjDAO">
+			<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="ycsService" class="com.slxt.rs.svc.YjComeService">
+			<property name="rsDAO" ref="ycsDAO"></property>
+	</bean>
+	<bean id="ycsDAO"  class="com.slxt.rs.dao.YjComeDAO">
+			<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="hmsService" class="com.slxt.rs.svc.HjMonitorService">
+			<property name="rsDAO" ref="hmsDAO"></property>
+	</bean>
+	<bean id="hmsDAO"  class="com.slxt.rs.dao.HjMonitorDAO">
+			<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="hrsService" class="com.slxt.rs.svc.HjRecordService">
+			<property name="rsDAO" ref="hrsDAO"></property>
+	</bean>
+	<bean id="hrsDAO"  class="com.slxt.rs.dao.HjRecordDAO">
+			<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="hrpsService" class="com.slxt.rs.svc.HjReportService">
+			<property name="rsDAO" ref="hrpsDAO"></property>
+	</bean>
+	<bean id="hrpsDAO"  class="com.slxt.rs.dao.HjReportDAO">
+			<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="utService" class="com.slxt.rs.svc.UserTeamService">
+			<property name="rsDAO" ref="utDAO"></property>
+	</bean>
+	<bean id="utDAO" class="com.slxt.rs.dao.UserTeamDAO">
+			<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="us" class="com.slxt.rs.svc.UserService">
+			<property name="rsDAO" ref="usDAO"></property>
+	</bean>
+	<bean id="usDAO"  class="com.slxt.rs.dao.UserDAO">
+			<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="lineSetService" class="com.slxt.rs.svc.LineSetService">
+			<property name="rsDAO" ref="lsSetDAO"></property>
+	</bean>
+	<bean id="lsSetDAO"  class="com.slxt.rs.dao.LineSetDAO">
+			<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="jySetService" class="com.slxt.rs.svc.JySetService">
+			<property name="rsDAO" ref="jySetDAO"></property>
+	</bean>
+	<bean id="jySetDAO"  class="com.slxt.rs.dao.JySetDAO">
+			<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="dmsService" class="com.slxt.rs.svc.DiaryMessageService">
+			<property name="rsDAO" ref="dmsDAO"></property>
+	</bean>
+	<bean id="dmsDAO"  class="com.slxt.rs.dao.DiaryMessageDAO">
+			<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="ulus" class="com.slxt.rs.svc.UpdateLoginUserService">
+			<property name="rsDAO" ref="ulusDAO"></property>
+	</bean>
+	<bean id="ulusDAO" class="com.slxt.rs.dao.UpdateLoginUserDAO">
+			<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	</beans>

@@ -1,0 +1,165 @@
+﻿@charset "utf-8";
+/*
+* Author:北秋;
+* Email:hibeiqiu@gmail.com;
+* Date：2010-03-25;
+* StyleName:layout.css 全局;
+*/
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, textarea, p, blockquote, th, td {
+	margin:0;
+	padding:0;
+}
+table {
+	border-collapse:collapse;
+	border-spacing:0;
+}
+fieldset, img {
+	border:0;
+}
+address, caption, cite, code, dfn, em, strong, th, var {
+	font-style:normal;
+	font-weight:normal;
+}
+li {
+	list-style:none;
+}
+caption, th {
+	text-align:left;
+}
+h1, h2, h3, h4, h5, h6 {
+	font-size:100%;
+	font-weight:normal;
+}
+q:before, q:after {
+	content:'';
+}
+abbr, acronym {
+	border:0;
+	font-variant:normal;
+}
+sup {
+	vertical-align:text-top;
+}
+sub {
+	vertical-align:text-bottom;
+}
+input, textarea, select {
+	font-family:inherit;
+	font-size:inherit;
+	font-weight:inherit;
+}
+input, textarea, select {
+*font-size:100%;
+}
+legend {
+	color:#000;
+}
+body { font:12px Arial, Helvetica, sans-serif,"宋体";}
+select, input, button, textarea {
+	font:99% arial, helvetica, clean, sans-serif;
+}
+table {
+	font-size:inherit;
+	font:100%;
+}
+pre, code, kbd, samp, tt {
+	font-family:monospace;
+*font-size:108%;
+	line-height:100%;
+}
+
+.f_l{ float:left;}
+.f_r{ float:right;}
+/* Copyright (c) 2010, beiqiu! Inc.  All rights reserved. */
+
+
+/** 系统登录 */
+#login{ background:#50d9ae url(../images/login_bg.jpg) left top repeat-x;}
+#l{ width:900px; height:560px; overflow:hidden; background:url(../images/hjlogin_frambg5.png) no-repeat; position:absolute; top:0%; left:10%;}
+#l table{ float:right; margin:255px 40px 0 0;}
+#l table td{ height:50px; line-height:30px; font-size:14px; font-weight:bold; color:#FFFFFF;}
+#l table td .btn{ background:url(../images/login_input.jpg) no-repeat; width:161px;  padding:4px; color:#060; border:0;}
+
+/** 后台header**/
+#header{ width:100%; background:url(../images/admin_top_bg.jpg) left top repeat-x; overflow:hidden;}
+#header #top{ float:right; margin:0 25px 0 0; background:url(../images/admin_title.png) no-repeat; width:290px; height:35px; text-indent:-9999px;}
+#header h1{ background:url(../images/hj7.png) no-repeat; width:650px; height:100px; text-indent:-9999px; margin:0 0 0 0;}
+#header p{ float:right; width:326px; height:30px; line-height:30px; margin-top:-30px;  }
+#header p a{ color:#71d2f0; text-decoration:none; background:url(../images/admin_top_link.jpg) no-repeat; width:67px; height:30px; text-align:center; line-height:25px; margin-left:5px; display:block; float:left; }
+#header p a:hover{ color: #900; text-decoration:underline;}
+
+/** 后台left**/
+#left{  width:130px; overflow:hidden; text-align:center;padding:5px 0 15px 0;}
+#left_bg{background:#f0f0f0;}
+#left h1{ color:#31709C; font-size:14px; font-weight:bold; margin-bottom:10px;}
+#left ul li{ line-height:40px; height:35px; margin:10px 0 0 5px;}
+#left ul li a{ text-decoration:none; background:url(../images/admin_left_hover.jpg) no-repeat; display:block; color:#737373; font-family:微软雅黑; font-size:14px; font-weight:bold; }
+/** 后台middle**/
+#middle{  width:17px;  overflow: hidden;}
+#middle_bg{background: url(../images/admin_small_bg.jpg) repeat-y;}
+#middle a{ position:absolute; top:50%; margin-left:2px;}
+
+
+
+/** 后台main**/
+#user_info{ background:url(../images/admin_userinfo_bg.jpg) repeat-x; height:31px; line-height:31px;}
+#user_info span{color:#1E4482; background:url(../images/admin_icon.jpg) 5px center no-repeat; padding-left:40px; }
+#lm_info{ background:url(../images/admin_lm_bg.jpg) left center repeat-x;height:30px; line-height:30px;}
+#lm_info span{color:#1E4482; background:url(../images/admin_lm_icon.jpg) 20px center no-repeat; padding-left:40px; } 
+#content{ margin-top:10px;}
+#content table{ border-style:solid; border-color:#76a5af; border-width:1px 0 0 1px; width:95%; margin:0 auto;}
+#content table th,td{border-style:solid; border-color:#76a5af; border-width:0 1px 1px 0; text-align:center; height:25px; line-height:25px;}
+#content table td{border-style:solid; border-color:#76a5af; border-width:0 1px 1px 0; text-align:center; height:25px; line-height:25px;}
+#content table th{ font-weight:bold; background:#76a5af; color:#FFFFFF;}
+
+/** 后台bottom**/
+#bottom{ background:url(../images/admin_bottom_bg.jpg) left center repeat-x; height:30px; text-align:center; color:#2E3385; font-weight:bold; font-size:14px; line-height:30px;}
+/** #bottom_tp{ margin-left: 50px;margin-top: 7px;background:url(../images/bottom-logo.jpg) no-repeat;height:15px;}**/
+
+#user_info1{ background:url(../images/admin_userinfo_bg.jpg) repeat-x; height:31px; line-height:31px;}
+#user_info1 span{color:#1E4482; background:url(../images/admin_icon.jpg) 5px center no-repeat; padding-left:40px; }
+#lm_info1{ background:url(../images/admin_lm_bg.jpg) left center repeat-x;height:30px; line-height:30px;}
+#lm_info1 span{color:#1E4482; background:url(../images/admin_lm_icon.jpg) 20px center no-repeat; padding-left:40px; } 
+#content1{ margin-top:10px;}
+#content1 table{ border-style:solid; border-color:#76a5af; border-width:1px 0 0 1px; width:60%; margin:0 auto;}
+#content1 table th,td{border-style:solid; border-color:#76a5af; border-width:0 1px 1px 0; height:25px; line-height:25px;}
+#content1 table th{ font-weight:bold; background:#76a5af; color:#FFFFFF;}
+
+#user_info2{ background:url(../images/admin_userinfo_bg.jpg) repeat-x; height:31px; line-height:31px;}
+#user_info2 span{color:#1E4482; background:url(../images/admin_icon.jpg) 5px center no-repeat; padding-left:40px; }
+#lm_info2{ background:url(../images/admin_lm_bg.jpg) left center repeat-x;height:30px; line-height:30px;}
+#lm_info2 span{color:#1E4482; background:url(../images/admin_lm_icon.jpg) 20px center no-repeat; padding-left:40px; } 
+#content2{ margin-top:10px;}
+#content2 table{ border-style:solid; border-color:#76a5af; border-width:1px 0 0 1px; width:96%; margin:0 auto;}
+#content2 table th,td{border-style:solid; border-color:#76a5af; border-width:0 1px 1px 0;height:25px; text-align:center;}
+#content2 table td{border-style:solid; border-color:#76a5af; border-width:0 1px 1px 0;height:25px; text-align:center;}
+#content2 table th{ font-weight:bold; background:#76a5af; color:#FFFFFF}
+
+#user_info3{ background:url(../images/admin_userinfo_bg.jpg) repeat-x; height:31px; line-height:31px;}
+#user_info3 span{color:#1E4482; background:url(../images/admin_icon.jpg) 5px center no-repeat; padding-left:40px; }
+#lm_info3{ background:url(../images/admin_lm_bg.jpg) left center repeat-x;height:30px; line-height:30px;}
+#lm_info3 span{color:#1E4482; background:url(../images/admin_lm_icon.jpg) 20px center no-repeat; padding-left:40px; } 
+#content3{ height:160px; overflow-y:scroll;}
+#content3 table{ border-style:solid; border-color:#76a5af; width:96%; border-width:1px 0 0 1px; margin:0 auto;}
+#content3 table th,td{border-style:solid; border-color:#76a5af; border-width:0 1px 1px 0; height:25px; text-align:center;}
+#content3 table td{border-style:solid; border-color:#76a5af; border-width:0 1px 1px 0; height:25px; text-align:center;}
+#content3 table th{ font-weight:bold; background:#76a5af; color:#FFFFFF;}
+
+#user_info6{ background:url(../images/admin_userinfo_bg.jpg) repeat-x; height:31px; line-height:31px;}
+#user_info6 span{color:#1E4482; background:url(../images/admin_icon.jpg) 5px center no-repeat; padding-left:40px; }
+#lm_info6{ background:url(../images/admin_lm_bg.jpg) left center repeat-x;height:30px; line-height:30px;}
+#lm_info6 span{color:#1E4482; background:url(../images/admin_lm_icon.jpg) 20px center no-repeat; padding-left:40px; } 
+#content6{ height:275px; overflow-y:scroll;}
+#content6 table{ border-style:solid; border-color:#76a5af; width:96%; border-width:1px 0 0 1px; margin:0 auto;}
+#content6 table th,td{border-style:solid; border-color:#76a5af; border-width:0 1px 1px 0; height:25px; text-align:center;}
+#content6 table td{border-style:solid; border-color:#76a5af; border-width:0 1px 1px 0; height:25px; text-align:center;}
+#content6 table th{ font-weight:bold; background:#76a5af; color:#FFFFFF;}
+
+#user_info5{ background:url(../images/admin_userinfo_bg.jpg) repeat-x; height:31px; line-height:31px;}
+#user_info5 span{color:#1E4482; background:url(../images/admin_icon.jpg) 5px center no-repeat; padding-left:40px; }
+#lm_info5{ background:url(../images/admin_lm_bg.jpg) left center repeat-x;height:30px; line-height:30px;}
+#lm_info5 span{color:#1E4482; background:url(../images/admin_lm_icon.jpg) 20px center no-repeat; padding-left:40px; } 
+#content5{ margin-top:10px; height:300px; overflow-y:auto;}
+#content5 table{ border-style:solid; border-color:#76a5af; width:96%; border-width:1px 0 0 1px; margin:0 auto;}
+#content5 table th,td{border-style:solid; border-color:#76a5af; border-width:0 1px 1px 0; height:25px; text-align:center;}
+#content5 table th{ font-weight:bold; background:#76a5af; color:#FFFFFF;}

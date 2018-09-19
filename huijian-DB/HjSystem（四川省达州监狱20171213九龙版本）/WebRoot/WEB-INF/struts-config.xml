@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://struts.apache.org/dtds/struts-config_1_2.dtd">
+
+<struts-config>
+  <data-sources />
+  <form-beans>
+  	 <form-bean name="frForm" type="com.slxt.rs.form.FrForm"></form-bean>
+  	 <form-bean name="DiaryMessageForm" type="com.slxt.rs.form.DiaryMessageForm"></form-bean>
+  	 <form-bean name="yjMessageForm" type="com.slxt.rs.form.YjMessageForm"></form-bean>
+  	 <form-bean name="hjdjForm" type="com.slxt.rs.form.HjdjForm"></form-bean>
+  	 <form-bean name="hjRecordForm" type="com.slxt.rs.form.HjRecordForm"></form-bean>
+  	 <form-bean name="hjReportForm" type="com.slxt.rs.form.HjReportForm"></form-bean>
+  	 <form-bean name="cancelDjForm" type="com.slxt.rs.form.CancelDjForm"></form-bean>
+  	 <form-bean name="userForm" type="com.slxt.rs.form.UserForm"></form-bean>
+  	 <form-bean name="yjComeForm" type="com.slxt.rs.form.YjComeForm"></form-bean>
+  	 <form-bean name="cardMessageForm" type="com.slxt.rs.form.CardMessageForm"></form-bean>
+  	 <form-bean name="accessControlMessageForm" type="com.slxt.rs.form.AccessControlMessageForm"></form-bean>
+  	 <form-bean name="hjrSpForm" type="com.slxt.rs.form.HjrSpForm"></form-bean>
+  </form-beans>
+  <global-exceptions />
+  <global-forwards />
+  <action-mappings >
+  		<action path="/login"
+  		        scope="request"
+  		        parameter="method"
+  		        type="org.springframework.web.struts.DelegatingActionProxy">
+	  			<forward name="success" path="/jsp/rsleft.jsp"></forward>
+	  			<forward name="showPhoto" path="/jsp/hjdj/showPhoto.jsp"></forward>
+  		</action>
+  		<!--犯人信息-->	
+  		<action path="/materialMessage"
+  				scope="request"
+  		        parameter="method"
+  		        name="frForm"
+  		        type="org.springframework.web.struts.DelegatingActionProxy">
+  		        <forward name="materialMessageMain" path="/jsp/materialMessage/materialMessageMain.jsp"></forward>
+  		        <forward name="materialMessageMain1" path="/jsp/materialMessage/materialMessageMain1.jsp"></forward>
+  		        <forward name="addMaterialMessage" path="/jsp/materialMessage/addMaterialMessage.jsp"></forward>
+  		        <forward name="delSuccess" path="/jsp/materialMessage/delSuccess.jsp"></forward>
+  		        <forward name="updateFr" path="/jsp/materialMessage/updateMaterialMessage.jsp"></forward>
+  		        <forward name="updateFr1" path="/jsp/materialMessage/updateMaterialMessage1.jsp"></forward>
+  		        <forward name="qsMain" path="/jsp/materialMessage/qsMain.jsp"></forward>
+  		        <forward name="addFrQs" path="/jsp/materialMessage/addFrQs.jsp"></forward>
+  		        <forward name="delFrQs" path="/jsp/materialMessage/delFrQs.jsp"></forward>
+  		        <forward name="updateFrQs" path="/jsp/materialMessage/updateFrQs.jsp"></forward>
+  		        <forward name="frTsdhMain" path="/jsp/materialMessage/frTsdhMain.jsp"></forward>
+  		        <forward name="addFrTpdh" path="/jsp/materialMessage/addFrTpdh.jsp"></forward>
+  		        <forward name="delfrTsdh" path="/jsp/materialMessage/delfrTsdh.jsp"></forward>
+  		        <forward name="updatefrTsdh" path="/jsp/materialMessage/updatefrTsdh.jsp"></forward>
+  		        <forward name="bdTeleCard" path="/jsp/materialMessage/bdTeleCard.jsp"></forward>
+  		        <forward name="sessionFailure" path="/jsp/sessionFailure.jsp"></forward> 
+  		        <forward name="flagPage" path="/jsp/materialMessage/flagPage.jsp"></forward>
+  		        <forward name="drSuccess" path="/jsp/materialMessage/drSuccess.jsp"></forward>
+  		        <forward name="updateDownSuccess" path="/jsp/materialMessage/updateDownSuccess.jsp"></forward>
+  		        <forward name="updateDownError" path="/jsp/materialMessage/updateDownError.jsp"></forward>
+  		 </action>
+  		 <!--狱警信息-->	
+  		 <action path="/yjMessage"
+  				 scope="request"
+  		         parameter="method"
+  		         name="yjMessageForm"
+  		         type="org.springframework.web.struts.DelegatingActionProxy">
+  		         <forward name="sessionFailure" path="/jsp/sessionFailure.jsp"></forward> 
+  		         <forward name="yjMessageMain" path="/jsp/yjMessage/yjMessageMain.jsp"></forward> 
+  		         <forward name="addyjMessage" path="/jsp/yjMessage/addyjMessage.jsp"></forward>
+  		         <forward name="updateYjMessage" path="/jsp/yjMessage/updateYjMessage.jsp"></forward>
+  		         <forward name="updateYjMessage1" path="/jsp/yjMessage/updateYjMessage1.jsp"></forward>
+  		         <forward name="delSuccess" path="/jsp/yjMessage/delSuccess.jsp"></forward>
+  		</action>
+  		<!--监区设置-->
+  		<action path="/jqSet"
+  		        scope="request"
+  		        parameter="method"
+  		        type="org.springframework.web.struts.DelegatingActionProxy">
+  		<forward name="jqSetMain" path="/jsp/jqSet/jqSetMain.jsp"></forward>
+  		<forward name="delSuceess" path="/jsp/jqSet/delSuccess.jsp"></forward>
+  		<forward name="addJq" path="/jsp/jqSet/addJq.jsp"></forward>
+  		<forward name="updateJq" path="/jsp/jqSet/updateJq.jsp"></forward>
+  		<forward name="jqWeekMain" path="/jsp/jqSet/jqWeekMain.jsp"></forward>
+  		<forward name="addjqWeek" path="/jsp/jqSet/addjqWeek.jsp"></forward>
+  		<forward name="delSuccessJqWeek" path="/jsp/jqSet/delSuccessJqWeek.jsp"></forward>
+  		<forward name="updateJqWeek" path="/jsp/jqSet/updateJqWeek.jsp"></forward>
+  		<forward name="sessionFailure" path="/jsp/sessionFailure.jsp"></forward> 
+  		</action>
+  		<!--犯人级别-->	
+  		<action path="/gradeMessage"
+  				scope="request"
+  		        parameter="method"
+  		        type="org.springframework.web.struts.DelegatingActionProxy">
+  		        <forward name="jlJbMain" path="/jsp/jlJb/jlJbMain.jsp"></forward>
+  		        <forward name="delSuccess" path="/jsp/jlJb/delSuccess.jsp"></forward>
+  		        <forward name="updateJlJb" path="/jsp/jlJb/updateJlJb.jsp"></forward>
+  		        <forward name="sessionFailure" path="/jsp/sessionFailure.jsp"></forward> 
+  		        <forward name="plAddQqCount" path="/jsp/jlJb/plAddQqCount.jsp"></forward> 
+  		        <forward name="plAddSuccess" path="/jsp/jlJb/plAddSuccess.jsp"></forward> 
+  		        <forward name="addJlJb" path="/jsp/jlJb/addJlJb.jsp"></forward>
+  		 </action>
+  		 <!--会见登记-->
+  		<action path="/hjdj"
+  		        scope="request"
+  		        parameter="method"
+  		        name="hjdjForm"
+  		        type="org.springframework.web.struts.DelegatingActionProxy">
+  				<forward name="sessionFailure" path="/jsp/sessionFailure.jsp"></forward> 
+  				<forward name="hjDjMain" path="/jsp/hjdj/hjdjMain.jsp"></forward> 
+  				<forward name="addHjdj" path="/jsp/hjdj/addHjdj.jsp"></forward> 
+		  		<forward name="qsMain" path="/jsp/hjdj/qsMain.jsp"></forward>
+		  		<forward name="addFrQs" path="/jsp/hjdj/addFrQs.jsp"></forward>
+		  		<forward name="delFrQs" path="/jsp/hjdj/delFrQs.jsp"></forward>
+		  		<forward name="updateFrQs" path="/jsp/hjdj/updateFrQs.jsp"></forward>
+		  		<forward name="printView" path="/jsp/hjdj/printView.jsp"></forward>
+		  		<forward name="printView1" path="/jsp/hjdj/printView1.jsp"></forward>
+		  		<forward name="printView2" path="/jsp/hjdj/printView2.jsp"></forward>
+		  		<forward name="cancelDj" path="/jsp/hjdj/cancelDj.jsp"></forward>
+		  		<forward name="ingHj" path="/jsp/hjdj/ingHj.jsp"></forward>
+		  		<forward name="updateHjDj" path="/jsp/hjdj/updateHjDj.jsp"></forward>
+		  		<forward name="updateDownSuccess" path="/jsp/hjdj/updateDownSuccess.jsp"></forward>
+  		        <forward name="updateDownError" path="/jsp/hjdj/updateDownError.jsp"></forward>
+  		        <forward name="updateFrQs1" path="/jsp/hjdj/updateFrQs1.jsp"></forward>
+  		        <forward name="printXPError" path="/jsp/hjdj/printXPError.jsp"></forward>
+  		         <forward name="tohjsp" path="/jsp/hjdj/tohjsp.jsp"></forward>
+  		        <forward name="toaddtpqs" path="/jsp/hjdj/toaddtpqs.jsp"></forward>
+  		        <forward name="toaddspyy" path="/jsp/hjdj/toaddspyy.jsp"></forward>
+  		        
+  		</action>
+  		<!--会见通知-->
+  		<action path="/hjNotice"
+  		        scope="request"
+  		        parameter="method"
+  		        type="org.springframework.web.struts.DelegatingActionProxy">
+  				<forward name="sessionFailure" path="/jsp/sessionFailure.jsp"></forward> 
+  				<forward name="hjNoticeMain" path="/jsp/hjNotice/hjNoticeMain.jsp"></forward> 
+  		</action>
+  		<!-- 登记查询-->
+  		<action path="/cancelDj"
+  		        scope="request"
+  		        name="cancelDjForm"
+  		        parameter="method"
+  		        type="org.springframework.web.struts.DelegatingActionProxy">
+  				<forward name="sessionFailure" path="/jsp/sessionFailure.jsp"></forward> 
+  				<forward name="cancelDjMain" path="/jsp/cancelDj/cancelDjMain.jsp"></forward> 
+  				<forward name="cancelDjMain1" path="/jsp/cancelDj/cancelDjMain1.jsp"></forward> 
+  				<forward name="plQdlk" path="/jsp/cancelDj/plQdlk.jsp"></forward>
+  				<forward name="fpMessage" path="/jsp/cancelDj/fpMessage.jsp"></forward>
+  				<forward name="cancelDjMain4" path="/jsp/cancelDj/cancelDjMain4.jsp"></forward> 
+  		</action>
+  		<!-- 狱警签到 -->
+  		<action path="/yjCome"
+  		        scope="request"
+  		        name="yjComeForm"
+  		        parameter="method"
+  		        type="org.springframework.web.struts.DelegatingActionProxy">
+  				<forward name="sessionFailure" path="/jsp/sessionFailure.jsp"></forward> 
+  				<forward name="yjComeMain" path="/jsp/yjCome/yjComeMain.jsp"></forward> 
+  				<forward name="goToYjCome" path="/jsp/yjCome/goToYjCome.jsp"></forward> 
+  				<forward name="rgfp" path="/jsp/yjCome/rgfp.jsp"></forward> 
+  				<forward name="printView" path="/jsp/yjCome/printView.jsp"></forward>
+  				<forward name="yjComeMain1" path="/jsp/yjCome/yjComeMain1.jsp"></forward>
+  				<forward name="rgfp1" path="/jsp/yjCome/rgfp1.jsp"></forward>
+  				<forward name="setCard" path="/jsp/yjCome/setCard.jsp"></forward>
+  				<forward name="plQd" path="/jsp/yjCome/plQd.jsp"></forward>
+  				<forward name="plQd1" path="/jsp/yjCome/plQd1.jsp"></forward>
+  				<forward name="yjComeMain2" path="/jsp/yjCome/yjComeMain2.jsp"></forward>
+  				<forward name="fpMessage" path="/jsp/yjCome/fpMessage.jsp"></forward>
+  				
+  		</action>
+  		<!--会见监控 -->
+  		<action path="/hjMonitor"
+  		        scope="request"
+  		        parameter="method"
+  		        type="org.springframework.web.struts.DelegatingActionProxy">
+		  		<forward name="sessionFailure" path="/jsp/sessionFailure.jsp"></forward> 
+		  		<forward name="hjMonitorMain" path="/jsp/hjMonitor/hjMonitorMain.jsp"></forward>
+		  		<forward name="hjMonitorMain1" path="/jsp/hjMonitor/hjMonitorMain1.jsp"></forward>
+		  		<forward name="hjMonitorMain3" path="/jsp/hjMonitor/hjMonitorMain3.jsp"></forward>
+		  		<forward name="hjMonitorMain5" path="/jsp/hjMonitor/hjMonitorMain5.jsp"></forward>
+		  		<forward name="spMonitor" path="/jsp/hjMonitor/spMonitor.jsp"></forward>
+  		</action> 
+  		<!--会见记录-->
+  		<action path="/hjRecord"
+  		        scope="request"
+  		        parameter="method"
+  		        name="hjRecordForm"
+  		        type="org.springframework.web.struts.DelegatingActionProxy">
+		  		<forward name="sessionFailure" path="/jsp/sessionFailure.jsp"></forward> 
+		  		<forward name="hjReocrdMain" path="/jsp/hjRecord/hjRecordMain.jsp"></forward> 
+		  		<forward name="playRecord" path="/jsp/hjRecord/playRecord.jsp"></forward>
+		  		<forward name="playRecord1" path="/jsp/hjRecord/playRecord1.jsp"></forward>
+		  		<forward name="playRecord2" path="/jsp/hjRecord/playRecord2.jsp"></forward>
+		  		<forward name="addRecordFlag" path="/jsp/hjRecord/addRecordFlag.jsp"></forward>
+		  		<forward name="updateRecordFlag" path="/jsp/hjRecord/updateRecordFlag.jsp"></forward>
+		  		<forward name="allZhushi" path="/jsp/hjRecord/allZhushi.jsp"></forward>
+		  		<forward name="fileIsNoExist" path="/jsp/hjRecord/fileNo.jsp"></forward>
+		  		<forward name="updateRatingState" path="/jsp/hjRecord/updateRatingState.jsp"></forward>
+		  		<forward name="allRatingInfo" path="/jsp/hjRecord/allRatingInfo.jsp"></forward>
+		  		<forward name="allAssessmentInfo" path="/jsp/hjRecord/allAssessmentInfo.jsp"></forward>
+		  		<forward name="recordOtherInfo" path="/jsp/hjRecord/recordOtherInfo.jsp"></forward>
+  		</action>
+  		<action path="/hjReport"
+  		        scope="request"
+  		        name="hjReportForm"
+  		        parameter="method"
+  		        type="org.springframework.web.struts.DelegatingActionProxy">
+		  		<forward name="sessionFailure" path="/jsp/sessionFailure.jsp"></forward> 
+		  		<forward name="hjReportMain" path="/jsp/hjReport/hjReportMain.jsp"></forward>
+		  		<forward name="countMap" path="/jsp/hjReport/countMap.jsp"></forward>  
+		  		<forward name="jqcountMap" path="/jsp/hjReport/jqcountMap.jsp"></forward>  
+		  		<forward name="whjfrMap" path="/jsp/hjReport/whjfrMap.jsp"></forward>  
+		  		
+  		</action>
+  		<!--用户管理-->	
+  		<action path="/user"
+  				scope="request"
+  		        parameter="method"
+  		        name="userForm"
+  		        type="org.springframework.web.struts.DelegatingActionProxy">
+  		        <forward name="showUser" path="/jsp/user/showUser.jsp"></forward>
+  		        <forward name="addUser" path="/jsp/user/addUser.jsp"></forward>
+  		        <forward name="updateUser" path="/jsp/user/updateUser.jsp"></forward>
+  		        <forward name="delUserSuccess" path="/jsp/user/delUserSuccess.jsp"></forward>
+  		        <forward name="sessionFailure" path="/jsp/sessionFailure.jsp"></forward> 
+  		</action>
+  		<!--权限管理-->	
+  		<action path="/userTeam"
+  				scope="request"
+  				name="userTeam"
+  		        parameter="method"
+  		        type="org.springframework.web.struts.DelegatingActionProxy">
+	  		    <forward name="success" path="/jsp/userGroup/userTeam.jsp"></forward>
+	  		    <forward name="delSuccess" path="/jsp/userGroup/delSuccess.jsp"></forward>
+	  		    <forward name="delError" path="/jsp/userGroup/delError.jsp"></forward>
+	  		    <forward name="showgroupUser" path="/jsp/userGroup/showGroupUser.jsp"></forward>
+	  		    <forward name="addUserGroup" path="/jsp/userGroup/addUserGroup.jsp"></forward>
+	  		    <forward name="updateUserGroup" path="/jsp/userGroup/updateUserGroup.jsp"></forward>
+	  		    <forward name="selectSlicGroupPage" path="/jsp/userGroup/selectSlicGroupPage.jsp"></forward> 
+	  		    <forward name="sessionFailure" path="/jsp/sessionFailure.jsp"></forward> 
+  		</action>
+  		<!--线路设置-->
+  		<action path="/lineSet"
+  		        scope="request"
+  		        parameter="method"
+  		        type="org.springframework.web.struts.DelegatingActionProxy">
+		  		<forward name="lineSetMain" path="/jsp/lineSet/lineSetMain.jsp"></forward>
+		  		<forward name="updateLineSet" path="/jsp/lineSet/updateLineSet.jsp"></forward>
+		  		<forward name="sessionFailure" path="/jsp/sessionFailure.jsp"></forward> 
+  				<forward name="updateCardNo" path="/jsp/lineSet/updateCardNo.jsp"></forward>
+  		
+  		</action>
+   		<!--系统参数-->
+  		<action path="/jySet"
+  		        scope="request"
+  		        parameter="method"
+  		        type="org.springframework.web.struts.DelegatingActionProxy">
+	  			<forward name="jySetMain" path="/jsp/jySet/jySetMain.jsp"></forward>
+	  			<forward name="updateJySet" path="/jsp/jySet/updateJySet.jsp"></forward>
+	  			<forward name="sessionFailure" path="/jsp/sessionFailure.jsp"></forward> 
+	  			<forward name="hjSpParam" path="/jsp/jySet/hjSpParam.jsp"></forward> 
+  		</action>
+  	 	<!--日志管理-->	
+  		<action path="/diaryMessage"
+  				scope="request"
+  		        parameter="method"
+  		        name="DiaryMessageForm"
+  		        type="org.springframework.web.struts.DelegatingActionProxy">
+		        <forward name="sessionFailure" path="/jsp/sessionFailure.jsp"></forward>
+		        <forward name="diaryMessageMain" path="/jsp/diaryMessage/diaryMessageMain.jsp"></forward>
+		        <forward name="diaryXiangxiMain" path="/jsp/diaryMessage/diaryXiangxiMain.jsp"></forward>
+  		</action>
+  		<!--修改登陆用户密码-->
+  		<action path="/updateLoginUser"
+  				scope="request"
+  				parameter="method"
+  		        type="org.springframework.web.struts.DelegatingActionProxy">
+  		        <forward name="success" path="/jsp/updateLoginUserSuccess.jsp"></forward>
+  		        <forward name="successYj" path="/jsp/updateYjSuccess.jsp"></forward>
+  		        <forward name="sessionFailure" path="/jsp/sessionFailure.jsp"></forward> 
+  		</action>
+  		
+  		<!--身份验证-->
+  		<action path="/sfYz"
+  				scope="request"
+  				parameter="method"
+  		        type="org.springframework.web.struts.DelegatingActionProxy">
+  		        <forward name="success" path="/jsp/updateLoginUserSuccess.jsp"></forward>
+  		        <forward name="sfYzMain" path="/jsp/sfYz/sfYzMain.jsp"></forward>
+  		        <forward name="sfYzMain1" path="/jsp/sfYz/sfYzMain1.jsp"></forward>
+  		        <forward name="sfYzMain2" path="/jsp/sfYz/sfYzMain2.jsp"></forward>
+  		        <forward name="sfYzMain3" path="/jsp/sfYz/sfYzMain3.jsp"></forward>
+  		        <forward name="sfYzMain4" path="/jsp/sfYz/sfYzMain4.jsp"></forward>
+  		        <forward name="sfYzMain5" path="/jsp/sfYz/sfYzMain5.jsp"></forward>
+  		</action>
+  		
+  		<!--卡号管理-->
+  		<action path="/cardMessage"
+  				scope="request"
+  				parameter="method"
+  				name="cardMessageForm"
+  		        type="org.springframework.web.struts.DelegatingActionProxy">
+  		        <forward name="cardMessageMain" path="/jsp/cardMessage/cardMessageMain.jsp"></forward>
+  		       
+  		</action>
+  		<!--门禁刷卡记录-->
+  		<action path="/accessControlMessage"
+  				scope="request"
+  				parameter="method"
+  				name="accessControlMessageForm"
+  		        type="org.springframework.web.struts.DelegatingActionProxy">
+  		        <forward name="accessControlMessageMain" path="/jsp/accessControlMessage/accessControlMessageMain.jsp"></forward>
+  		       
+  		</action>
+  		<action path="/wpdj"
+  				scope="request"
+  				parameter="method"
+  		        type="org.springframework.web.struts.DelegatingActionProxy">
+  		        <forward name="wpdjMain" path="/jsp/wpdj/wpdjMain.jsp"></forward>
+  		        <forward name="updateWpdj" path="/jsp/wpdj/updateWpdj.jsp"></forward>
+  		        <forward name="printView" path="/jsp/wpdj/printView.jsp"></forward>
+  		       
+  		</action>
+  		<!-- 会见人审批 -->
+  		<action path="/hjrsp"
+  				scope="request"
+  				parameter="method"
+  				name="hjrSpForm"
+  		        type="org.springframework.web.struts.DelegatingActionProxy">
+  		       <forward name="sessionFailure" path="/jsp/sessionFailure.jsp"></forward> 
+  		        <forward name="hjrspMain" path="/jsp/hjrsp/hjrspMain.jsp"></forward>
+  		        <forward name="tohjsp" path="/jsp/hjrsp/tohjsp.jsp"></forward>
+  		        <forward name="seeHjSp" path="/jsp/hjrsp/seeHjSp.jsp"></forward>
+  		</action>
+  		<!--陪同干警-->
+  		<action path="/yjABDoorMessage"
+  		        scope="request"
+  		        parameter="method"
+  		        type="org.springframework.web.struts.DelegatingActionProxy">
+	  			<forward name="jlYjABDoorMain" path="/jsp/yjABDoorSet/yjABDoorSetMain.jsp"></forward>
+	  			<forward name="updateJlYjABDoor" path="/jsp/yjABDoorSet/updateYjABDoor.jsp"></forward>
+	  			<forward name="sessionFailure" path="/jsp/sessionFailure.jsp"></forward>
+	  			<forward name="delSuceess" path="/jsp/yjABDoorSet/delSuccess.jsp"></forward>
+		  		<forward name="addYjABDoor" path="/jsp/yjABDoorSet/addYjABDoor.jsp"></forward> 
+  		</action>
+  	</action-mappings>
+  <message-resources parameter="com.slxt.struts.ApplicationResources" />
+</struts-config>
+

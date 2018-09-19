@@ -1,0 +1,18 @@
+package com.slxt.rs.util;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class Constant {
+    
+	public static final String CCTV_MENU="1" ;
+	public static final Integer PAGESIZE=15;
+	public static final String PAGETOP="select count(*) " ;
+	public static final String SQLTOP="select count(*) from ( " ;
+	public static final String SQLDOWN=" )  t" ;
+	public static final String RESULTLIST = "resultList" ;
+	public static final String ALLFILEDCOUNT = "allcount" ;
+	public static Map<String,Object> map = new HashMap<String,Object>();
+	
+}
+

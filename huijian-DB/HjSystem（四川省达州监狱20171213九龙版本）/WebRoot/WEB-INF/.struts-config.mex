@@ -1,0 +1,1311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FlowViewLayout Version="1.2">
+  <StrutsActivity path="/login.do" location="50,50" dimension="362,104" />
+  <StrutsActivity path="/materialMessage.do" location="650,50" dimension="362,104" />
+  <StrutsActivity path="/yjMessage.do" location="1250,50" dimension="362,104" />
+  <StrutsActivity path="/jqSet.do" location="1850,50" dimension="362,104" />
+  <StrutsActivity path="/gradeMessage.do" location="2450,50" dimension="362,104" />
+  <StrutsActivity path="/hjdj.do" location="50,250" dimension="362,104" />
+  <StrutsActivity path="/hjNotice.do" location="650,250" dimension="362,104" />
+  <StrutsActivity path="/cancelDj.do" location="1250,250" dimension="362,104" />
+  <StrutsActivity path="/yjCome.do" location="1850,250" dimension="362,104" />
+  <StrutsActivity path="/hjMonitor.do" location="2450,250" dimension="362,104" />
+  <StrutsActivity path="/hjRecord.do" location="50,450" dimension="362,104" />
+  <StrutsActivity path="/hjReport.do" location="650,450" dimension="362,104" />
+  <StrutsActivity path="/user.do" location="1250,450" dimension="362,104" />
+  <StrutsActivity path="/userTeam.do" location="1850,450" dimension="362,104" />
+  <StrutsActivity path="/lineSet.do" location="2450,450" dimension="362,104" />
+  <StrutsActivity path="/jySet.do" location="50,650" dimension="362,104" />
+  <StrutsActivity path="/diaryMessage.do" location="650,650" dimension="362,104" />
+  <StrutsActivity path="/updateLoginUser.do" location="1250,650" dimension="362,104" />
+  <StrutsActivity path="/sfYz.do" location="1250,2650" dimension="362,104" />
+  <StrutsActivity path="/cardMessage.do" location="2450,2850" dimension="362,104" />
+  <StrutsActivity path="/wpdj.do" location="650,3050" dimension="362,104" />
+  <StrutsActivity path="/hjrsp.do" location="3050,1650" dimension="362,104" />
+  <StrutsActivity path="/jsp/hjdj/showPhoto.jsp" location="1850,650" dimension="169,53" />
+  <StrutsActivity path="/jsp/rsleft.jsp" location="2150,650" dimension="108,53" />
+  <StrutsActivity path="/jsp/materialMessage/addMaterialMessage.jsp" location="2450,1050" dimension="308,53" />
+  <StrutsActivity path="/jsp/materialMessage/qsMain.jsp" location="650,1250" dimension="227,53" />
+  <StrutsActivity path="/jsp/materialMessage/frTsdhMain.jsp" location="2750,650" dimension="250,53" />
+  <StrutsActivity path="/jsp/materialMessage/addFrTpdh.jsp" location="1850,1050" dimension="248,53" />
+  <StrutsActivity path="/jsp/sessionFailure.jsp" location="2450,850" dimension="160,53" />
+  <StrutsActivity path="/jsp/materialMessage/drSuccess.jsp" location="2150,1050" dimension="242,53" />
+  <StrutsActivity path="/jsp/materialMessage/delFrQs.jsp" location="1550,850" dimension="229,53" />
+  <StrutsActivity path="/jsp/materialMessage/updatefrTsdh.jsp" location="1850,850" dimension="262,53" />
+  <StrutsActivity path="/jsp/materialMessage/delSuccess.jsp" location="50,850" dimension="247,53" />
+  <StrutsActivity path="/jsp/materialMessage/updateDownSuccess.jsp" location="950,850" dimension="303,53" />
+  <StrutsActivity path="/jsp/materialMessage/addFrQs.jsp" location="2450,650" dimension="234,53" />
+  <StrutsActivity path="/jsp/materialMessage/delfrTsdh.jsp" location="350,850" dimension="239,53" />
+  <StrutsActivity path="/jsp/materialMessage/flagPage.jsp" location="650,850" dimension="235,53" />
+  <StrutsActivity path="/jsp/materialMessage/updateMaterialMessage.jsp" location="50,1050" dimension="326,53" />
+  <StrutsActivity path="/jsp/materialMessage/updateFrQs.jsp" location="2750,850" dimension="252,53" />
+  <StrutsActivity path="/jsp/materialMessage/updateDownError.jsp" location="650,1050" dimension="288,53" />
+  <StrutsActivity path="/jsp/materialMessage/materialMessageMain.jsp" location="50,1250" dimension="313,53" />
+  <StrutsActivity path="/jsp/materialMessage/bdTeleCard.jsp" location="1250,1050" dimension="252,53" />
+  <StrutsActivity path="/jsp/yjMessage/addyjMessage.jsp" location="2450,1250" dimension="231,53" />
+  <StrutsActivity path="/jsp/yjMessage/yjMessageMain.jsp" location="950,1250" dimension="237,53" />
+  <StrutsActivity path="/jsp/yjMessage/updateYjMessage1.jsp" location="1850,1250" dimension="257,53" />
+  <StrutsActivity path="/jsp/yjMessage/delSuccess.jsp" location="1250,1250" dimension="209,53" />
+  <StrutsActivity path="/jsp/yjMessage/updateYjMessage.jsp" location="1550,1250" dimension="250,53" />
+  <StrutsActivity path="/jsp/jqSet/addJq.jsp" location="650,1450" dimension="149,53" />
+  <StrutsActivity path="/jsp/jqSet/addjqWeek.jsp" location="1850,1450" dimension="180,53" />
+  <StrutsActivity path="/jsp/jqSet/updateJqWeek.jsp" location="1250,1450" dimension="200,53" />
+  <StrutsActivity path="/jsp/jqSet/delSuccessJqWeek.jsp" location="2750,1250" dimension="222,53" />
+  <StrutsActivity path="/jsp/jqSet/delSuccess.jsp" location="350,1450" dimension="176,53" />
+  <StrutsActivity path="/jsp/jqSet/jqWeekMain.jsp" location="950,1450" dimension="186,53" />
+  <StrutsActivity path="/jsp/jqSet/updateJq.jsp" location="1550,1450" dimension="167,53" />
+  <StrutsActivity path="/jsp/jqSet/jqSetMain.jsp" location="50,1450" dimension="171,53" />
+  <StrutsActivity path="/jsp/jlJb/plAddSuccess.jsp" location="2450,1450" dimension="183,53" />
+  <StrutsActivity path="/jsp/jlJb/plAddQqCount.jsp" location="650,1650" dimension="190,53" />
+  <StrutsActivity path="/jsp/jlJb/addJlJb.jsp" location="2150,1450" dimension="147,53" />
+  <StrutsActivity path="/jsp/jlJb/delSuccess.jsp" location="50,1650" dimension="166,53" />
+  <StrutsActivity path="/jsp/jlJb/jlJbMain.jsp" location="350,1650" dimension="151,53" />
+  <StrutsActivity path="/jsp/jlJb/updateJlJb.jsp" location="2750,1450" dimension="165,53" />
+  <StrutsActivity path="/jsp/hjdj/qsMain.jsp" location="650,1850" dimension="148,53" />
+  <StrutsActivity path="/jsp/hjdj/spHjDjMain.jsp" location="1850,2850" dimension="172,53" />
+  <StrutsActivity path="/jsp/hjdj/addHjdj.jsp" location="1250,1850" dimension="151,53" />
+  <StrutsActivity path="/jsp/hjdj/hjdjMain.jsp" location="350,1850" dimension="155,53" />
+  <StrutsActivity path="/jsp/hjdj/printView1.jsp" location="3050,3050" dimension="166,53" />
+  <StrutsActivity path="/jsp/hjdj/ingHj.jsp" location="1250,1650" dimension="135,53" />
+  <StrutsActivity path="/jsp/hjdj/updateFrQs1.jsp" location="350,2850" dimension="180,53" />
+  <StrutsActivity path="/jsp/hjdj/delFrQs.jsp" location="1850,1650" dimension="150,53" />
+  <StrutsActivity path="/jsp/hjdj/addHjr.jsp" location="3050,2650" dimension="145,53" />
+  <StrutsActivity path="/jsp/hjdj/printView.jsp" location="950,1850" dimension="159,53" />
+  <StrutsActivity path="/jsp/hjdj/addFrQs.jsp" location="950,1650" dimension="155,53" />
+  <StrutsActivity path="/jsp/hjdj/cancelDj.jsp" location="2450,1650" dimension="153,53" />
+  <StrutsActivity path="/jsp/hjdj/updateHjDj.jsp" location="50,1850" dimension="170,53" />
+  <StrutsActivity path="/jsp/hjdj/updateDownSuccess.jsp" location="1550,1650" dimension="224,53" />
+  <StrutsActivity path="/jsp/hjdj/spMain.jsp" location="3050,550" dimension="148,53" />
+  <StrutsActivity path="/jsp/hjdj/updateFrQs.jsp" location="2150,1650" dimension="173,53" />
+  <StrutsActivity path="/jsp/hjdj/updateDownError.jsp" location="2750,1650" dimension="209,53" />
+  <StrutsActivity path="/jsp/hjNotice/hjNoticeMain.jsp" location="1550,1850" dimension="209,53" />
+  <StrutsActivity path="/jsp/cancelDj/plQdlk.jsp" location="1550,3050" dimension="171,53" />
+  <StrutsActivity path="/jsp/cancelDj/cancelDjMain.jsp" location="1850,1850" dimension="209,53" />
+  <StrutsActivity path="/jsp/cancelDj/fpMessage.jsp" location="1250,3250" dimension="197,53" />
+  <StrutsActivity path="/jsp/cancelDj/cancelDjMain1.jsp" location="2150,3050" dimension="216,53" />
+  <StrutsActivity path="/jsp/yjCome/fpMessage.jsp" location="2450,3050" dimension="192,53" />
+  <StrutsActivity path="/jsp/yjCome/rgfp.jsp" location="2450,2650" dimension="152,53" />
+  <StrutsActivity path="/jsp/yjCome/yjComeMain1.jsp" location="950,2850" dimension="206,53" />
+  <StrutsActivity path="/jsp/yjCome/yjComeMain.jsp" location="2450,1850" dimension="199,53" />
+  <StrutsActivity path="/jsp/yjCome/plQd.jsp" location="1850,3150" dimension="156,53" />
+  <StrutsActivity path="/jsp/yjCome/setCard.jsp" location="2150,2850" dimension="172,53" />
+  <StrutsActivity path="/jsp/yjCome/yjComeMain2.jsp" location="2750,3150" dimension="206,53" />
+  <StrutsActivity path="/jsp/yjCome/rgfp1.jsp" location="1250,2850" dimension="159,53" />
+  <StrutsActivity path="/jsp/yjCome/goToYjCome.jsp" location="2150,1850" dimension="202,53" />
+  <StrutsActivity path="/jsp/yjCome/printView.jsp" location="2750,2650" dimension="181,53" />
+  <StrutsActivity path="/jsp/hjMonitor/hjMonitorMain.jsp" location="50,2050" dimension="227,53" />
+  <StrutsActivity path="/jsp/hjMonitor/spMonitor.jsp" location="2750,1850" dimension="202,53" />
+  <StrutsActivity path="/jsp/hjRecord/playRecord.jsp" location="350,2050" dimension="202,53" />
+  <StrutsActivity path="/jsp/hjRecord/fileNo.jsp" location="950,2050" dimension="171,53" />
+  <StrutsActivity path="/jsp/hjRecord/updateRecordFlag.jsp" location="1250,2050" dimension="243,53" />
+  <StrutsActivity path="/jsp/hjRecord/addRecordFlag.jsp" location="1550,2050" dimension="225,53" />
+  <StrutsActivity path="/jsp/hjRecord/playRecord2.jsp" location="2450,2050" dimension="209,53" />
+  <StrutsActivity path="/jsp/hjRecord/hjRecordMain.jsp" location="650,2050" dimension="217,53" />
+  <StrutsActivity path="/jsp/hjRecord/allZhushi.jsp" location="2150,2050" dimension="186,53" />
+  <StrutsActivity path="/jsp/hjRecord/playRecord1.jsp" location="1850,2050" dimension="209,53" />
+  <StrutsActivity path="/jsp/hjReport/jqcountMap.jsp" location="1550,3450" dimension="204,53" />
+  <StrutsActivity path="/jsp/hjReport/hjReportMain.jsp" location="2750,2050" dimension="213,53" />
+  <StrutsActivity path="/jsp/hjReport/countMap.jsp" location="50,2250" dimension="193,53" />
+  <StrutsActivity path="/jsp/user/delUserSuccess.jsp" location="950,2250" dimension="199,53" />
+  <StrutsActivity path="/jsp/user/addUser.jsp" location="350,2250" dimension="159,53" />
+  <StrutsActivity path="/jsp/user/showUser.jsp" location="650,2250" dimension="166,53" />
+  <StrutsActivity path="/jsp/user/updateUser.jsp" location="1250,2250" dimension="177,53" />
+  <StrutsActivity path="/jsp/userGroup/showGroupUser.jsp" location="950,2450" dimension="240,53" />
+  <StrutsActivity path="/jsp/userGroup/delError.jsp" location="350,2450" dimension="194,53" />
+  <StrutsActivity path="/jsp/userGroup/selectSlicGroupPage.jsp" location="1550,2250" dimension="264,53" />
+  <StrutsActivity path="/jsp/userGroup/userTeam.jsp" location="650,2450" dimension="203,53" />
+  <StrutsActivity path="/jsp/userGroup/updateUserGroup.jsp" location="2150,2250" dimension="251,53" />
+  <StrutsActivity path="/jsp/userGroup/addUserGroup.jsp" location="50,2450" dimension="233,53" />
+  <StrutsActivity path="/jsp/userGroup/delSuccess.jsp" location="2750,2250" dimension="209,53" />
+  <StrutsActivity path="/jsp/lineSet/updateCardNo.jsp" location="50,2850" dimension="209,53" />
+  <StrutsActivity path="/jsp/lineSet/updateLineSet.jsp" location="1550,2450" dimension="204,53" />
+  <StrutsActivity path="/jsp/lineSet/lineSetMain.jsp" location="1250,2450" dimension="189,53" />
+  <StrutsActivity path="/jsp/jySet/jySetMain.jsp" location="1850,2450" dimension="167,53" />
+  <StrutsActivity path="/jsp/jySet/updateJySet.jsp" location="2150,2450" dimension="181,53" />
+  <StrutsActivity path="/jsp/diaryMessage/diaryMessageMain.jsp" location="2450,2450" dimension="277,53" />
+  <StrutsActivity path="/jsp/diaryMessage/diaryXiangxiMain.jsp" location="50,2650" dimension="266,53" />
+  <StrutsActivity path="/jsp/updateYjSuccess.jsp" location="650,2650" dimension="175,53" />
+  <StrutsActivity path="/jsp/updateLoginUserSuccess.jsp" location="950,2650" dimension="224,53" />
+  <StrutsActivity path="/jsp/sfYz/sfYzMain.jsp" location="2150,2650" dimension="159,53" />
+  <StrutsActivity path="/jsp/sfYz/sfYzMain2.jsp" location="1550,2850" dimension="166,53" />
+  <StrutsActivity path="/jsp/sfYz/sfYzMain1.jsp" location="650,2850" dimension="166,53" />
+  <StrutsActivity path="/jsp/sfYz/sfYzMain3.jsp" location="1250,3550" dimension="166,53" />
+  <StrutsActivity path="/jsp/cardMessage/cardMessageMain.jsp" location="50,3050" dimension="271,53" />
+  <StrutsActivity path="/jsp/wpdj/updateWpdj.jsp" location="3050,1250" dimension="184,53" />
+  <StrutsActivity path="/jsp/wpdj/wpdjMain.jsp" location="3050,1050" dimension="169,53" />
+  <StrutsActivity path="/jsp/wpdj/printView.jsp" location="3050,1450" dimension="166,53" />
+  <StrutsActivity path="/jsp/hjrsp/checkMx.jsp" location="3050,2250" dimension="164,53" />
+  <StrutsActivity path="/jsp/hjrsp/xxxx1.jsp" location="1250,3050" dimension="144,53" />
+  <StrutsActivity path="/jsp/hjrsp/fileNo.jsp" location="50,3650" dimension="148,53" />
+  <StrutsActivity path="/jsp/hjrsp/xxxx.jsp" location="3050,2850" dimension="137,53" />
+  <StrutsActivity path="/jsp/hjrsp/hjrspMain.jsp" location="3050,2050" dimension="171,53" />
+  <StrutsActivity path="/jsp/hjrsp/spPage.jsp" location="3050,2450" dimension="156,53" />
+  <StrutsActivity path="/jsp/sfYz/updateYjSuccess.jsp" location="1850,2650" dimension="203,53" />
+  <StrutsActivity path="/jsp/wpdj/hjrspMain.jsp" location="3050,1850" dimension="170,53" />
+  <StrutsActivity path="/jsp/cancelD/fpMessage.jsp" location="50,3850" dimension="194,53" />
+  <StrutsActivity path="/jsp/hjReport/whjfrMap.jsp" />
+  <StrutsTransition id="/hjMonitor.do,spMonitor,/jsp/hjMonitor/spMonitor.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2631,302" />
+      <AbsolutePoint location="2631,1876" />
+      <AbsolutePoint location="2851,1876" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/hjReport.do,whjfrMap,/jsp/hjReport/whjfrMap.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="831,502" />
+      <AbsolutePoint location="0,0" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/sfYz.do,success,/jsp/updateLoginUserSuccess.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1250,2688" />
+      <AbsolutePoint location="1174,2688" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/hjRecord.do,updateRecordFlag,/jsp/hjRecord/updateRecordFlag.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="231,502" />
+      <AbsolutePoint location="231,2076" />
+      <AbsolutePoint location="1371,2076" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/jqSet.do,jqSetMain,/jsp/jqSet/jqSetMain.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2212,102" />
+      <AbsolutePoint location="2212,1450" />
+      <AbsolutePoint location="135,1450" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/hjRecord.do,playRecord,/jsp/hjRecord/playRecord.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="237,554" />
+      <AbsolutePoint location="237,569" />
+      <AbsolutePoint location="1057,569" />
+      <AbsolutePoint location="1057,847" />
+      <AbsolutePoint location="947,847" />
+      <AbsolutePoint location="947,1930" />
+      <AbsolutePoint location="451,1930" />
+      <AbsolutePoint location="451,2050" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/wpdj.do,wpdjMain,/jsp/wpdj/wpdjMain.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="879,3050" />
+      <AbsolutePoint location="879,1178" />
+      <AbsolutePoint location="3125,1178" />
+      <AbsolutePoint location="3125,1103" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/sfYz.do,sfYzMain,/jsp/sfYz/sfYzMain.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1612,2718" />
+      <AbsolutePoint location="2229,2718" />
+      <AbsolutePoint location="2229,2703" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/jySet.do,updateJySet,/jsp/jySet/updateJySet.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="313,754" />
+      <AbsolutePoint location="313,1008" />
+      <AbsolutePoint location="567,1008" />
+      <AbsolutePoint location="567,2378" />
+      <AbsolutePoint location="2240,2378" />
+      <AbsolutePoint location="2240,2450" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/hjrsp.do,xxxx1,/jsp/hjrsp/xxxx1.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="3338,1754" />
+      <AbsolutePoint location="3338,3029" />
+      <AbsolutePoint location="1322,3029" />
+      <AbsolutePoint location="1322,3050" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/userTeam.do,delError,/jsp/userGroup/delError.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2031,502" />
+      <AbsolutePoint location="2031,2476" />
+      <AbsolutePoint location="447,2476" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/diaryMessage.do,diaryMessageMain,/jsp/diaryMessage/diaryMessageMain.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="922,754" />
+      <AbsolutePoint location="922,956" />
+      <AbsolutePoint location="1817,956" />
+      <AbsolutePoint location="1817,2178" />
+      <AbsolutePoint location="2588,2178" />
+      <AbsolutePoint location="2588,2450" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/updateLoginUser.do,sessionFailure,/jsp/sessionFailure.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1612,720" />
+      <AbsolutePoint location="2530,720" />
+      <AbsolutePoint location="2530,850" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/hjdj.do,addFrQs,/jsp/hjdj/addFrQs.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="241,250" />
+      <AbsolutePoint location="241,247" />
+      <AbsolutePoint location="1847,247" />
+      <AbsolutePoint location="1847,1620" />
+      <AbsolutePoint location="1027,1620" />
+      <AbsolutePoint location="1027,1650" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/cancelDj.do,plQdlk,/jsp/cancelDj/plQdlk.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1431,302" />
+      <AbsolutePoint location="1431,3076" />
+      <AbsolutePoint location="1635,3076" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/hjRecord.do,playRecord2,/jsp/hjRecord/playRecord2.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="231,502" />
+      <AbsolutePoint location="231,2076" />
+      <AbsolutePoint location="2554,2076" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/cardMessage.do,cardMessageMain,/jsp/cardMessage/cardMessageMain.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2450,2905" />
+      <AbsolutePoint location="185,2905" />
+      <AbsolutePoint location="185,3050" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/jqSet.do,sessionFailure,/jsp/sessionFailure.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2212,102" />
+      <AbsolutePoint location="2333,102" />
+      <AbsolutePoint location="2333,876" />
+      <AbsolutePoint location="2450,876" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/userTeam.do,success,/jsp/userGroup/userTeam.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2031,502" />
+      <AbsolutePoint location="2031,2476" />
+      <AbsolutePoint location="751,2476" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/diaryMessage.do,sessionFailure,/jsp/sessionFailure.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="932,754" />
+      <AbsolutePoint location="932,924" />
+      <AbsolutePoint location="2199,924" />
+      <AbsolutePoint location="2199,738" />
+      <AbsolutePoint location="2673,738" />
+      <AbsolutePoint location="2673,866" />
+      <AbsolutePoint location="2610,866" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/user.do,addUser,/jsp/user/addUser.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1431,502" />
+      <AbsolutePoint location="1431,2276" />
+      <AbsolutePoint location="429,2276" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/hjdj.do,spMain,/jsp/hjdj/spMain.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="231,302" />
+      <AbsolutePoint location="231,576" />
+      <AbsolutePoint location="3124,576" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/userTeam.do,sessionFailure,/jsp/sessionFailure.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2145,554" />
+      <AbsolutePoint location="2145,618" />
+      <AbsolutePoint location="3125,618" />
+      <AbsolutePoint location="3125,918" />
+      <AbsolutePoint location="2608,918" />
+      <AbsolutePoint location="2608,903" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/hjrsp.do,checkMx,/jsp/hjrsp/checkMx.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="3248,1754" />
+      <AbsolutePoint location="3248,2276" />
+      <AbsolutePoint location="3214,2276" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/jqSet.do,jqWeekMain,/jsp/jqSet/jqWeekMain.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2043,50" />
+      <AbsolutePoint location="2043,1450" />
+      <AbsolutePoint location="1043,1450" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/user.do,showUser,/jsp/user/showUser.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1431,502" />
+      <AbsolutePoint location="1431,2276" />
+      <AbsolutePoint location="733,2276" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/yjMessage.do,sessionFailure,/jsp/sessionFailure.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1612,102" />
+      <AbsolutePoint location="1729,102" />
+      <AbsolutePoint location="1729,729" />
+      <AbsolutePoint location="2513,729" />
+      <AbsolutePoint location="2513,850" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/yjCome.do,rgfp,/jsp/yjCome/rgfp.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2212,254" />
+      <AbsolutePoint location="2227,254" />
+      <AbsolutePoint location="2227,35" />
+      <AbsolutePoint location="3457,35" />
+      <AbsolutePoint location="3457,2518" />
+      <AbsolutePoint location="2526,2518" />
+      <AbsolutePoint location="2526,2650" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/yjMessage.do,yjMessageMain,/jsp/yjMessage/yjMessageMain.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1250,102" />
+      <AbsolutePoint location="1250,1250" />
+      <AbsolutePoint location="1068,1250" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/materialMessage.do,sessionFailure,/jsp/sessionFailure.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1012,102" />
+      <AbsolutePoint location="1117,102" />
+      <AbsolutePoint location="1117,799" />
+      <AbsolutePoint location="2478,799" />
+      <AbsolutePoint location="2478,850" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/jqSet.do,updateJqWeek,/jsp/jqSet/updateJqWeek.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2212,80" />
+      <AbsolutePoint location="2212,1450" />
+      <AbsolutePoint location="1350,1450" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/updateLoginUser.do,success,/jsp/updateLoginUserSuccess.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1431,754" />
+      <AbsolutePoint location="1431,950" />
+      <AbsolutePoint location="1206,950" />
+      <AbsolutePoint location="1206,2670" />
+      <AbsolutePoint location="1174,2670" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/userTeam.do,addUserGroup,/jsp/userGroup/addUserGroup.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2031,502" />
+      <AbsolutePoint location="2031,2476" />
+      <AbsolutePoint location="166,2476" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/gradeMessage.do,plAddQqCount,/jsp/jlJb/plAddQqCount.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2812,132" />
+      <AbsolutePoint location="2935,132" />
+      <AbsolutePoint location="2935,569" />
+      <AbsolutePoint location="2699,569" />
+      <AbsolutePoint location="2699,948" />
+      <AbsolutePoint location="2987,948" />
+      <AbsolutePoint location="2987,1718" />
+      <AbsolutePoint location="745,1718" />
+      <AbsolutePoint location="745,1703" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/cancelDj.do,fpMessage,/jsp/cancelDj/fpMessage.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1431,302" />
+      <AbsolutePoint location="1431,3276" />
+      <AbsolutePoint location="1348,3276" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/lineSet.do,lineSetMain,/jsp/lineSet/lineSetMain.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2812,507" />
+      <AbsolutePoint location="3231,507" />
+      <AbsolutePoint location="3231,1208" />
+      <AbsolutePoint location="1200,1208" />
+      <AbsolutePoint location="1200,2476" />
+      <AbsolutePoint location="1250,2476" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/hjReport.do,jqcountMap,/jsp/hjReport/jqcountMap.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="831,502" />
+      <AbsolutePoint location="831,3476" />
+      <AbsolutePoint location="1652,3476" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/yjMessage.do,addyjMessage,/jsp/yjMessage/addyjMessage.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1250,132" />
+      <AbsolutePoint location="1250,1276" />
+      <AbsolutePoint location="2450,1276" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/hjdj.do,delFrQs,/jsp/hjdj/delFrQs.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="231,250" />
+      <AbsolutePoint location="231,235" />
+      <AbsolutePoint location="433,235" />
+      <AbsolutePoint location="433,138" />
+      <AbsolutePoint location="569,138" />
+      <AbsolutePoint location="569,591" />
+      <AbsolutePoint location="2438,591" />
+      <AbsolutePoint location="2438,1538" />
+      <AbsolutePoint location="1925,1538" />
+      <AbsolutePoint location="1925,1650" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/hjdj.do,addHjdj,/jsp/hjdj/addHjdj.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="412,332" />
+      <AbsolutePoint location="517,332" />
+      <AbsolutePoint location="517,829" />
+      <AbsolutePoint location="1517,829" />
+      <AbsolutePoint location="1517,1876" />
+      <AbsolutePoint location="1401,1876" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/materialMessage.do,updatefrTsdh,/jsp/materialMessage/updatefrTsdh.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="861,154" />
+      <AbsolutePoint location="861,229" />
+      <AbsolutePoint location="1829,229" />
+      <AbsolutePoint location="1829,876" />
+      <AbsolutePoint location="1850,876" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/hjReport.do,sessionFailure,/jsp/sessionFailure.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1012,502" />
+      <AbsolutePoint location="1219,502" />
+      <AbsolutePoint location="1219,847" />
+      <AbsolutePoint location="2458,847" />
+      <AbsolutePoint location="2458,850" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/wpdj.do,updateWpdj,/jsp/wpdj/updateWpdj.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="896,3050" />
+      <AbsolutePoint location="896,1223" />
+      <AbsolutePoint location="3142,1223" />
+      <AbsolutePoint location="3142,1250" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/hjdj.do,hjDjMain,/jsp/hjdj/hjdjMain.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="261,354" />
+      <AbsolutePoint location="261,399" />
+      <AbsolutePoint location="3487,399" />
+      <AbsolutePoint location="3487,1799" />
+      <AbsolutePoint location="427,1799" />
+      <AbsolutePoint location="427,1850" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/user.do,delUserSuccess,/jsp/user/delUserSuccess.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1431,502" />
+      <AbsolutePoint location="1431,2276" />
+      <AbsolutePoint location="1049,2276" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/hjRecord.do,sessionFailure,/jsp/sessionFailure.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="231,554" />
+      <AbsolutePoint location="231,636" />
+      <AbsolutePoint location="2717,636" />
+      <AbsolutePoint location="2717,876" />
+      <AbsolutePoint location="2610,876" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/userTeam.do,selectSlicGroupPage,/jsp/userGroup/selectSlicGroupPage.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2031,502" />
+      <AbsolutePoint location="2031,2276" />
+      <AbsolutePoint location="1682,2276" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/gradeMessage.do,jlJbMain,/jsp/jlJb/jlJbMain.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2812,72" />
+      <AbsolutePoint location="3291,72" />
+      <AbsolutePoint location="3291,1602" />
+      <AbsolutePoint location="425,1602" />
+      <AbsolutePoint location="425,1650" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/lineSet.do,updateCardNo,/jsp/lineSet/updateCardNo.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2812,497" />
+      <AbsolutePoint location="3408,497" />
+      <AbsolutePoint location="3408,1555" />
+      <AbsolutePoint location="34,1555" />
+      <AbsolutePoint location="34,2876" />
+      <AbsolutePoint location="50,2876" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/yjCome.do,fpMessage,/jsp/yjCome/fpMessage.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2031,250" />
+      <AbsolutePoint location="2031,229" />
+      <AbsolutePoint location="3517,229" />
+      <AbsolutePoint location="3517,2999" />
+      <AbsolutePoint location="2546,2999" />
+      <AbsolutePoint location="2546,3050" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/hjrsp.do,spPage,/jsp/hjrsp/spPage.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="3278,1754" />
+      <AbsolutePoint location="3278,2476" />
+      <AbsolutePoint location="3206,2476" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/materialMessage.do,addFrQs,/jsp/materialMessage/addFrQs.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1012,72" />
+      <AbsolutePoint location="1177,72" />
+      <AbsolutePoint location="1177,569" />
+      <AbsolutePoint location="2567,569" />
+      <AbsolutePoint location="2567,650" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/hjRecord.do,fileIsNoExist,/jsp/hjRecord/fileNo.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="225,554" />
+      <AbsolutePoint location="225,642" />
+      <AbsolutePoint location="547,642" />
+      <AbsolutePoint location="547,847" />
+      <AbsolutePoint location="-25,847" />
+      <AbsolutePoint location="-25,2020" />
+      <AbsolutePoint location="1035,2020" />
+      <AbsolutePoint location="1035,2050" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/materialMessage.do,addFrTpdh,/jsp/materialMessage/addFrTpdh.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="650,102" />
+      <AbsolutePoint location="604,102" />
+      <AbsolutePoint location="604,978" />
+      <AbsolutePoint location="1974,978" />
+      <AbsolutePoint location="1974,1050" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/hjdj.do,updateHjDj,/jsp/hjdj/updateHjDj.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="231,302" />
+      <AbsolutePoint location="231,1876" />
+      <AbsolutePoint location="135,1876" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/jySet.do,sessionFailure,/jsp/sessionFailure.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="304,754" />
+      <AbsolutePoint location="304,1030" />
+      <AbsolutePoint location="2645,1030" />
+      <AbsolutePoint location="2645,886" />
+      <AbsolutePoint location="2610,886" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/materialMessage.do,delFrQs,/jsp/materialMessage/delFrQs.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="831,50" />
+      <AbsolutePoint location="831,-85" />
+      <AbsolutePoint location="1664,-85" />
+      <AbsolutePoint location="1664,850" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/hjMonitor.do,hjMonitorMain,/jsp/hjMonitor/hjMonitorMain.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2812,302" />
+      <AbsolutePoint location="3267,302" />
+      <AbsolutePoint location="3267,918" />
+      <AbsolutePoint location="3309,918" />
+      <AbsolutePoint location="3309,1442" />
+      <AbsolutePoint location="224,1442" />
+      <AbsolutePoint location="224,2050" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/yjCome.do,yjComeMain,/jsp/yjCome/yjComeMain.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1850,272" />
+      <AbsolutePoint location="1746,272" />
+      <AbsolutePoint location="1746,-85" />
+      <AbsolutePoint location="3339,-85" />
+      <AbsolutePoint location="3339,1518" />
+      <AbsolutePoint location="2618,1518" />
+      <AbsolutePoint location="2618,1850" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/gradeMessage.do,addJlJb,/jsp/jlJb/addJlJb.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2812,78" />
+      <AbsolutePoint location="3285,78" />
+      <AbsolutePoint location="3285,1130" />
+      <AbsolutePoint location="2223,1130" />
+      <AbsolutePoint location="2223,1450" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/hjRecord.do,allZhushi,/jsp/hjRecord/allZhushi.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="231,502" />
+      <AbsolutePoint location="231,2076" />
+      <AbsolutePoint location="2243,2076" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/gradeMessage.do,sessionFailure,/jsp/sessionFailure.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2450,102" />
+      <AbsolutePoint location="2363,102" />
+      <AbsolutePoint location="2363,918" />
+      <AbsolutePoint location="2470,918" />
+      <AbsolutePoint location="2470,903" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/materialMessage.do,drSuccess,/jsp/materialMessage/drSuccess.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="891,50" />
+      <AbsolutePoint location="891,5" />
+      <AbsolutePoint location="2273,5" />
+      <AbsolutePoint location="2273,1050" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/gradeMessage.do,plAddSuccess,/jsp/jlJb/plAddSuccess.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2812,102" />
+      <AbsolutePoint location="3213,102" />
+      <AbsolutePoint location="3213,799" />
+      <AbsolutePoint location="3249,799" />
+      <AbsolutePoint location="3249,1354" />
+      <AbsolutePoint location="2541,1354" />
+      <AbsolutePoint location="2541,1450" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/materialMessage.do,updateFrQs,/jsp/materialMessage/updateFrQs.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="921,154" />
+      <AbsolutePoint location="921,169" />
+      <AbsolutePoint location="3309,169" />
+      <AbsolutePoint location="3309,876" />
+      <AbsolutePoint location="3002,876" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/gradeMessage.do,updateJlJb,/jsp/jlJb/updateJlJb.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2812,66" />
+      <AbsolutePoint location="3387,66" />
+      <AbsolutePoint location="3387,1430" />
+      <AbsolutePoint location="2832,1430" />
+      <AbsolutePoint location="2832,1450" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/yjMessage.do,updateYjMessage1,/jsp/yjMessage/updateYjMessage1.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1612,102" />
+      <AbsolutePoint location="1612,1276" />
+      <AbsolutePoint location="2107,1276" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/yjCome.do,plQd,/jsp/yjCome/plQd.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1850,302" />
+      <AbsolutePoint location="1768,302" />
+      <AbsolutePoint location="1768,738" />
+      <AbsolutePoint location="2171,738" />
+      <AbsolutePoint location="2171,954" />
+      <AbsolutePoint location="1835,954" />
+      <AbsolutePoint location="1835,3176" />
+      <AbsolutePoint location="1850,3176" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/hjrsp.do,fileIsNoExist,/jsp/hjrsp/fileNo.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="3368,1754" />
+      <AbsolutePoint location="3368,3676" />
+      <AbsolutePoint location="198,3676" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/materialMessage.do,qsMain,/jsp/materialMessage/qsMain.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="650,132" />
+      <AbsolutePoint location="634,132" />
+      <AbsolutePoint location="634,1276" />
+      <AbsolutePoint location="650,1276" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/yjMessage.do,delSuccess,/jsp/yjMessage/delSuccess.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1250,80" />
+      <AbsolutePoint location="1250,1276" />
+      <AbsolutePoint location="1459,1276" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/hjMonitor.do,sessionFailure,/jsp/sessionFailure.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2812,320" />
+      <AbsolutePoint location="3249,320" />
+      <AbsolutePoint location="3249,769" />
+      <AbsolutePoint location="2590,769" />
+      <AbsolutePoint location="2590,850" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/lineSet.do,sessionFailure,/jsp/sessionFailure.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2735,554" />
+      <AbsolutePoint location="2735,978" />
+      <AbsolutePoint location="2590,978" />
+      <AbsolutePoint location="2590,903" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/sfYz.do,sfYzMain2,/jsp/sfYz/sfYzMain2.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1565,2754" />
+      <AbsolutePoint location="1565,2850" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/hjdj.do,printView1,/jsp/hjdj/printView1.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="231,354" />
+      <AbsolutePoint location="231,429" />
+      <AbsolutePoint location="3017,429" />
+      <AbsolutePoint location="3017,3076" />
+      <AbsolutePoint location="3050,3076" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/hjNotice.do,hjNoticeMain,/jsp/hjNotice/hjNoticeMain.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="831,302" />
+      <AbsolutePoint location="831,1876" />
+      <AbsolutePoint location="1654,1876" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/hjrsp.do,sessionFailure,/jsp/sessionFailure.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="3267,1650" />
+      <AbsolutePoint location="3267,1008" />
+      <AbsolutePoint location="2560,1008" />
+      <AbsolutePoint location="2560,903" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/sfYz.do,sfYzMain3,/jsp/sfYz/sfYzMain3.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1462,2754" />
+      <AbsolutePoint location="1462,3576" />
+      <AbsolutePoint location="1416,3576" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/user.do,updateUser,/jsp/user/updateUser.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1431,502" />
+      <AbsolutePoint location="1431,2276" />
+      <AbsolutePoint location="1338,2276" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/yjCome.do,sessionFailure,/jsp/sessionFailure.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2212,350" />
+      <AbsolutePoint location="2303,350" />
+      <AbsolutePoint location="2303,948" />
+      <AbsolutePoint location="2500,948" />
+      <AbsolutePoint location="2500,903" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/userTeam.do,updateUserGroup,/jsp/userGroup/updateUserGroup.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2031,502" />
+      <AbsolutePoint location="2031,2276" />
+      <AbsolutePoint location="2275,2276" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/yjMessage.do,updateYjMessage,/jsp/yjMessage/updateYjMessage.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1612,112" />
+      <AbsolutePoint location="1612,1250" />
+      <AbsolutePoint location="1675,1250" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/materialMessage.do,updateDownSuccess,/jsp/materialMessage/updateDownSuccess.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1012,132" />
+      <AbsolutePoint location="1087,132" />
+      <AbsolutePoint location="1087,850" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/yjCome.do,yjComeMain1,/jsp/yjCome/yjComeMain1.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2212,272" />
+      <AbsolutePoint location="2303,272" />
+      <AbsolutePoint location="2303,5" />
+      <AbsolutePoint location="3547,5" />
+      <AbsolutePoint location="3547,2799" />
+      <AbsolutePoint location="1053,2799" />
+      <AbsolutePoint location="1053,2850" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/login.do,success,/jsp/rsleft.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="231,154" />
+      <AbsolutePoint location="231,650" />
+      <AbsolutePoint location="2227,650" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/hjRecord.do,addRecordFlag,/jsp/hjRecord/addRecordFlag.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="231,502" />
+      <AbsolutePoint location="231,2076" />
+      <AbsolutePoint location="1662,2076" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/lineSet.do,updateLineSet,/jsp/lineSet/updateLineSet.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2812,502" />
+      <AbsolutePoint location="3393,502" />
+      <AbsolutePoint location="3393,1318" />
+      <AbsolutePoint location="1823,1318" />
+      <AbsolutePoint location="1823,2476" />
+      <AbsolutePoint location="1754,2476" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/wpdj.do,printView,/jsp/wpdj/printView.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1012,3088" />
+      <AbsolutePoint location="1235,3088" />
+      <AbsolutePoint location="1235,1394" />
+      <AbsolutePoint location="3133,1394" />
+      <AbsolutePoint location="3133,1450" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/sfYz.do,sfYzMain1,/jsp/sfYz/sfYzMain1.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1250,2718" />
+      <AbsolutePoint location="733,2718" />
+      <AbsolutePoint location="733,2850" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/materialMessage.do,addMaterialMessage,/jsp/materialMessage/addMaterialMessage.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="861,50" />
+      <AbsolutePoint location="861,-25" />
+      <AbsolutePoint location="2416,-25" />
+      <AbsolutePoint location="2416,1076" />
+      <AbsolutePoint location="2450,1076" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/hjdj.do,updateFrQs1,/jsp/hjdj/updateFrQs1.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="50,272" />
+      <AbsolutePoint location="-55,272" />
+      <AbsolutePoint location="-55,-55" />
+      <AbsolutePoint location="3427,-55" />
+      <AbsolutePoint location="3427,2578" />
+      <AbsolutePoint location="440,2578" />
+      <AbsolutePoint location="440,2850" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/yjCome.do,printView,/jsp/yjCome/printView.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1850,334" />
+      <AbsolutePoint location="1716,334" />
+      <AbsolutePoint location="1716,748" />
+      <AbsolutePoint location="3047,748" />
+      <AbsolutePoint location="3047,2682" />
+      <AbsolutePoint location="2931,2682" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/yjCome.do,rgfp1,/jsp/yjCome/rgfp1.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2212,302" />
+      <AbsolutePoint location="2387,302" />
+      <AbsolutePoint location="2387,1046" />
+      <AbsolutePoint location="1217,1046" />
+      <AbsolutePoint location="1217,2876" />
+      <AbsolutePoint location="1250,2876" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/yjCome.do,yjComeMain2,/jsp/yjCome/yjComeMain2.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2049,250" />
+      <AbsolutePoint location="2049,247" />
+      <AbsolutePoint location="3035,247" />
+      <AbsolutePoint location="3035,3176" />
+      <AbsolutePoint location="2956,3176" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/materialMessage.do,flagPage,/jsp/materialMessage/flagPage.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="771,154" />
+      <AbsolutePoint location="771,169" />
+      <AbsolutePoint location="-25,169" />
+      <AbsolutePoint location="-25,799" />
+      <AbsolutePoint location="767,799" />
+      <AbsolutePoint location="767,850" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/hjReport.do,hjReportMain,/jsp/hjReport/hjReportMain.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="831,502" />
+      <AbsolutePoint location="831,2076" />
+      <AbsolutePoint location="2856,2076" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/materialMessage.do,delSuccess,/jsp/materialMessage/delSuccess.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="650,72" />
+      <AbsolutePoint location="487,72" />
+      <AbsolutePoint location="487,829" />
+      <AbsolutePoint location="173,829" />
+      <AbsolutePoint location="173,850" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/jqSet.do,addJq,/jsp/jqSet/addJq.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2212,84" />
+      <AbsolutePoint location="2437,84" />
+      <AbsolutePoint location="2437,-26" />
+      <AbsolutePoint location="3280,-26" />
+      <AbsolutePoint location="3280,1377" />
+      <AbsolutePoint location="724,1377" />
+      <AbsolutePoint location="724,1450" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/hjdj.do,printView,/jsp/hjdj/printView.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="412,254" />
+      <AbsolutePoint location="585,254" />
+      <AbsolutePoint location="585,847" />
+      <AbsolutePoint location="941,847" />
+      <AbsolutePoint location="941,1876" />
+      <AbsolutePoint location="950,1876" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/hjdj.do,addHjr,/jsp/hjdj/addHjr.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="201,354" />
+      <AbsolutePoint location="201,447" />
+      <AbsolutePoint location="3041,447" />
+      <AbsolutePoint location="3041,2676" />
+      <AbsolutePoint location="3050,2676" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/hjdj.do,updateDownSuccess,/jsp/hjdj/updateDownSuccess.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="231,302" />
+      <AbsolutePoint location="231,1676" />
+      <AbsolutePoint location="1662,1676" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/hjReport.do,countMap,/jsp/hjReport/countMap.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="831,502" />
+      <AbsolutePoint location="831,2276" />
+      <AbsolutePoint location="146,2276" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/hjdj.do,ingHj,/jsp/hjdj/ingHj.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="279,354" />
+      <AbsolutePoint location="279,369" />
+      <AbsolutePoint location="3369,369" />
+      <AbsolutePoint location="3369,1578" />
+      <AbsolutePoint location="1317,1578" />
+      <AbsolutePoint location="1317,1650" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/hjdj.do,spHjDjMain,/jsp/hjdj/spHjDjMain.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="412,302" />
+      <AbsolutePoint location="547,302" />
+      <AbsolutePoint location="547,618" />
+      <AbsolutePoint location="2127,618" />
+      <AbsolutePoint location="2127,2876" />
+      <AbsolutePoint location="2022,2876" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/jqSet.do,updateJq,/jsp/jqSet/updateJq.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2031,50" />
+      <AbsolutePoint location="2031,1450" />
+      <AbsolutePoint location="1633,1450" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/materialMessage.do,updateFr,/jsp/materialMessage/updateMaterialMessage.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="801,154" />
+      <AbsolutePoint location="801,199" />
+      <AbsolutePoint location="5,199" />
+      <AbsolutePoint location="5,1076" />
+      <AbsolutePoint location="50,1076" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/yjCome.do,goToYjCome,/jsp/yjCome/goToYjCome.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2212,332" />
+      <AbsolutePoint location="2381,332" />
+      <AbsolutePoint location="2381,978" />
+      <AbsolutePoint location="2145,978" />
+      <AbsolutePoint location="2145,1876" />
+      <AbsolutePoint location="2150,1876" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/gradeMessage.do,delSuccess,/jsp/jlJb/delSuccess.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2812,84" />
+      <AbsolutePoint location="3273,84" />
+      <AbsolutePoint location="3273,1638" />
+      <AbsolutePoint location="133,1638" />
+      <AbsolutePoint location="133,1650" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/materialMessage.do,updateDownError,/jsp/materialMessage/updateDownError.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="771,50" />
+      <AbsolutePoint location="771,35" />
+      <AbsolutePoint location="-85,35" />
+      <AbsolutePoint location="-85,1178" />
+      <AbsolutePoint location="794,1178" />
+      <AbsolutePoint location="794,1103" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/hjRecord.do,playRecord1,/jsp/hjRecord/playRecord1.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="231,502" />
+      <AbsolutePoint location="231,2076" />
+      <AbsolutePoint location="1954,2076" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/materialMessage.do,materialMessageMain,/jsp/materialMessage/materialMessageMain.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="801,50" />
+      <AbsolutePoint location="801,5" />
+      <AbsolutePoint location="35,5" />
+      <AbsolutePoint location="35,1276" />
+      <AbsolutePoint location="50,1276" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/diaryMessage.do,diaryXiangxiMain,/jsp/diaryMessage/diaryXiangxiMain.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="831,702" />
+      <AbsolutePoint location="831,2676" />
+      <AbsolutePoint location="183,2676" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/hjdj.do,qsMain,/jsp/hjdj/qsMain.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="50,302" />
+      <AbsolutePoint location="-55,302" />
+      <AbsolutePoint location="-55,1978" />
+      <AbsolutePoint location="724,1978" />
+      <AbsolutePoint location="724,1903" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/userTeam.do,showgroupUser,/jsp/userGroup/showGroupUser.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2144,554" />
+      <AbsolutePoint location="2144,939" />
+      <AbsolutePoint location="1189,939" />
+      <AbsolutePoint location="1189,2450" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/hjdj.do,cancelDj,/jsp/hjdj/cancelDj.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="412,272" />
+      <AbsolutePoint location="579,272" />
+      <AbsolutePoint location="579,642" />
+      <AbsolutePoint location="2395,642" />
+      <AbsolutePoint location="2395,1676" />
+      <AbsolutePoint location="2450,1676" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/jqSet.do,delSuccessJqWeek,/jsp/jqSet/delSuccessJqWeek.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2037,50" />
+      <AbsolutePoint location="2037,1250" />
+      <AbsolutePoint location="2861,1250" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/hjrsp.do,hjrspMain,/jsp/hjrsp/hjrspMain.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="3231,1754" />
+      <AbsolutePoint location="3231,2076" />
+      <AbsolutePoint location="3221,2076" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/login.do,showPhoto,/jsp/hjdj/showPhoto.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="231,50" />
+      <AbsolutePoint location="231,676" />
+      <AbsolutePoint location="1850,676" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/yjCome.do,setCard,/jsp/yjCome/setCard.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1850,324" />
+      <AbsolutePoint location="1633,324" />
+      <AbsolutePoint location="1633,835" />
+      <AbsolutePoint location="1539,835" />
+      <AbsolutePoint location="1539,2628" />
+      <AbsolutePoint location="2316,2628" />
+      <AbsolutePoint location="2316,2850" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/user.do,sessionFailure,/jsp/sessionFailure.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1612,502" />
+      <AbsolutePoint location="1700,502" />
+      <AbsolutePoint location="1700,710" />
+      <AbsolutePoint location="2560,710" />
+      <AbsolutePoint location="2560,850" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/materialMessage.do,bdTeleCard,/jsp/materialMessage/bdTeleCard.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="921,50" />
+      <AbsolutePoint location="921,35" />
+      <AbsolutePoint location="1794,35" />
+      <AbsolutePoint location="1794,1076" />
+      <AbsolutePoint location="1502,1076" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/materialMessage.do,frTsdhMain,/jsp/materialMessage/frTsdhMain.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="891,154" />
+      <AbsolutePoint location="891,199" />
+      <AbsolutePoint location="2875,199" />
+      <AbsolutePoint location="2875,650" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/hjrsp.do,xxxx,/jsp/hjrsp/xxxx.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="3308,1754" />
+      <AbsolutePoint location="3308,2876" />
+      <AbsolutePoint location="3187,2876" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/jySet.do,jySetMain,/jsp/jySet/jySetMain.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="330,754" />
+      <AbsolutePoint location="330,909" />
+      <AbsolutePoint location="2109,909" />
+      <AbsolutePoint location="2109,2476" />
+      <AbsolutePoint location="2017,2476" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/cancelDj.do,sessionFailure,/jsp/sessionFailure.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1612,302" />
+      <AbsolutePoint location="1746,302" />
+      <AbsolutePoint location="1746,829" />
+      <AbsolutePoint location="2468,829" />
+      <AbsolutePoint location="2468,850" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/updateLoginUser.do,successYj,/jsp/updateYjSuccess.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1437,754" />
+      <AbsolutePoint location="1437,1040" />
+      <AbsolutePoint location="604,1040" />
+      <AbsolutePoint location="604,2676" />
+      <AbsolutePoint location="650,2676" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/jqSet.do,addjqWeek,/jsp/jqSet/addjqWeek.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2212,119" />
+      <AbsolutePoint location="2442,119" />
+      <AbsolutePoint location="2442,-15" />
+      <AbsolutePoint location="3399,-15" />
+      <AbsolutePoint location="3399,1336" />
+      <AbsolutePoint location="1940,1336" />
+      <AbsolutePoint location="1940,1450" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/hjdj.do,updateFrQs,/jsp/hjdj/updateFrQs.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="231,302" />
+      <AbsolutePoint location="231,1676" />
+      <AbsolutePoint location="2236,1676" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/hjRecord.do,hjReocrdMain,/jsp/hjRecord/hjRecordMain.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="231,502" />
+      <AbsolutePoint location="231,2076" />
+      <AbsolutePoint location="758,2076" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/cancelDj.do,cancelDjMain1,/jsp/cancelDj/cancelDjMain1.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1431,302" />
+      <AbsolutePoint location="1431,3076" />
+      <AbsolutePoint location="2258,3076" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/hjdj.do,updateDownError,/jsp/hjdj/updateDownError.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="231,302" />
+      <AbsolutePoint location="231,1676" />
+      <AbsolutePoint location="2854,1676" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/cancelDj.do,cancelDjMain,/jsp/cancelDj/cancelDjMain.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1431,302" />
+      <AbsolutePoint location="1431,1876" />
+      <AbsolutePoint location="1954,1876" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/hjNotice.do,sessionFailure,/jsp/sessionFailure.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1012,302" />
+      <AbsolutePoint location="1027,302" />
+      <AbsolutePoint location="1027,799" />
+      <AbsolutePoint location="900,799" />
+      <AbsolutePoint location="900,1008" />
+      <AbsolutePoint location="2530,1008" />
+      <AbsolutePoint location="2530,903" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/userTeam.do,delSuccess,/jsp/userGroup/delSuccess.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="2031,502" />
+      <AbsolutePoint location="2031,2276" />
+      <AbsolutePoint location="2854,2276" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/hjdj.do,sessionFailure,/jsp/sessionFailure.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="412,350" />
+      <AbsolutePoint location="427,350" />
+      <AbsolutePoint location="427,769" />
+      <AbsolutePoint location="2496,769" />
+      <AbsolutePoint location="2496,850" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/jqSet.do,delSuceess,/jsp/jqSet/delSuccess.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="1850,102" />
+      <AbsolutePoint location="1811,102" />
+      <AbsolutePoint location="1811,1413" />
+      <AbsolutePoint location="438,1413" />
+      <AbsolutePoint location="438,1450" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+  <StrutsTransition id="/materialMessage.do,delfrTsdh,/jsp/materialMessage/delfrTsdh.jsp,1" routingType="0">
+    <AutomaticBendpoints>
+      <AbsolutePoint location="831,154" />
+      <AbsolutePoint location="831,229" />
+      <AbsolutePoint location="457,229" />
+      <AbsolutePoint location="457,850" />
+    </AutomaticBendpoints>
+  </StrutsTransition>
+</FlowViewLayout>
+

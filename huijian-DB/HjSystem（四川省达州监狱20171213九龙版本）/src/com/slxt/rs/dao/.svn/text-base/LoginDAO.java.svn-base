@@ -1,0 +1,9 @@
+package com.slxt.rs.dao;
+
+import java.util.List;
+import com.slxt.rs.idao.IdaoSupport;
+public class LoginDAO extends AbstractDAO implements IdaoSupport{
+
+
+	
+}

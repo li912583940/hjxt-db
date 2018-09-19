@@ -1,0 +1,102 @@
+package com.slxt.rs.vo;
+
+public class Fr {
+	private String webId;
+	private String frNo;
+	private String frName;
+	private String jy;
+	private String jq;
+	private String jbName;
+	private String qqUse;
+	private String qqLeft;
+	private String jqName;
+	private String hjUse;
+	private String hjLeft;
+	private String hjJb;
+	private String monitorFlag;
+	private String hjLastTime;
+	public String getHjLastTime() {
+		return hjLastTime;
+	}
+	public void setHjLastTime(String hjLastTime) {
+		this.hjLastTime = hjLastTime;
+	}
+	public String getMonitorFlag() {
+		return monitorFlag;
+	}
+	public void setMonitorFlag(String monitorFlag) {
+		this.monitorFlag = monitorFlag;
+	}
+	public String getHjJb() {
+		return hjJb;
+	}
+	public void setHjJb(String hjJb) {
+		this.hjJb = hjJb;
+	}
+	public String getHjUse() {
+		return hjUse;
+	}
+	public void setHjUse(String hjUse) {
+		this.hjUse = hjUse;
+	}
+	public String getHjLeft() {
+		return hjLeft;
+	}
+	public void setHjLeft(String hjLeft) {
+		this.hjLeft = hjLeft;
+	}
+	public String getJqName() {
+		return jqName;
+	}
+	public void setJqName(String jqName) {
+		this.jqName = jqName;
+	}
+	public String getWebId() {
+		return webId;
+	}
+	public void setWebId(String webId) {
+		this.webId = webId;
+	}
+	public String getFrNo() {
+		return frNo;
+	}
+	public void setFrNo(String frNo) {
+		this.frNo = frNo;
+	}
+	public String getFrName() {
+		return frName;
+	}
+	public void setFrName(String frName) {
+		this.frName = frName;
+	}
+	public String getJy() {
+		return jy;
+	}
+	public void setJy(String jy) {
+		this.jy = jy;
+	}
+	public String getJq() {
+		return jq;
+	}
+	public void setJq(String jq) {
+		this.jq = jq;
+	}
+	public String getJbName() {
+		return jbName;
+	}
+	public void setJbName(String jbName) {
+		this.jbName = jbName;
+	}
+	public String getQqUse() {
+		return qqUse;
+	}
+	public void setQqUse(String qqUse) {
+		this.qqUse = qqUse;
+	}
+	public String getQqLeft() {
+		return qqLeft;
+	}
+	public void setQqLeft(String qqLeft) {
+		this.qqLeft = qqLeft;
+	}
+}
